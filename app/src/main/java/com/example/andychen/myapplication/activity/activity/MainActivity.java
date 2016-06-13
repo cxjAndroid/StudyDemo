@@ -1,10 +1,13 @@
-package com.example.andychen.myapplication.activity;
+package com.example.andychen.myapplication.activity.activity;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.event.EventMessage;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,14 +26,17 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.btn, R.id.btn1})
     void click(View v) {
+        Intent intent = new Intent(this, SecondActivity.class);
         switch (v.getId()) {
             case R.id.btn:
                 //Toast.makeText(this, "btn", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, SecondActivity.class);
                 startActivity(intent);
+                EventBus.getDefault().postSticky(new EventMessage<>("send message"));
                 break;
             case R.id.btn1:
-                Toast.makeText(this, "btn1", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "btn1", Toast.LENGTH_LONG).show();
+                intent.setClass(this,ThirdActivity.class);
+                startActivity(intent);
                 break;
         }
     }
