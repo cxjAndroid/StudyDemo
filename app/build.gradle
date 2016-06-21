@@ -1,4 +1,16 @@
+//import org.tmatesoft.svn.core.wc.*
 apply plugin: 'com.android.application'
+
+/*
+def getSvnRevision() {
+    ISVNOptions options = SVNWCUtil.createDefaultOptions(true);
+    SVNClientManager clientManager = SVNClientManager.newInstance(options);
+    SVNStatusClient statusClient = clientManager.getStatusClient();
+    SVNStatus status = statusClient.doStatus(projectDir, false);
+    SVNRevision revision = status.getCommittedRevision();
+    return revision.getNumber();
+}
+*/
 
 android {
     compileSdkVersion 23
@@ -29,7 +41,14 @@ buildscript {
     }
 }
 
+
 apply plugin: 'com.neenbedankt.android-apt'
+
+apt {
+    arguments {
+        eventBusIndex "com.example.myapp.MyEventBusIndex"
+    }
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -38,6 +57,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
 def mytask2 = project.tasks.create("mytask2")

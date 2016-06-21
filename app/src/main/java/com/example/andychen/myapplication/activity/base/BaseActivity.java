@@ -1,11 +1,15 @@
-package com.example.andychen.myapplication.activity.activity;
+package com.example.andychen.myapplication.activity.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
+
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by andychen on 2016/6/1.
@@ -13,7 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private boolean isBindEventBus;
-    private Object subscriber;
+    //private Object subscriber;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +29,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract void initDate();
 
-    public void registerEventBus(Object subscriber) {
-        this.subscriber = subscriber;
-        EventBus.getDefault().register(subscriber);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getClass().getSimpleName());
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageStart(getClass().getSimpleName());
+        MobclickAgent.onPause(this);
+    }
+
+    public void registerEventBus() {
+        EventBus.getDefault().register(this);
         isBindEventBus = true;
         Toast.makeText(this,"register eventBus",Toast.LENGTH_SHORT).show();
     }
@@ -36,8 +53,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if(isBindEventBus){
-            EventBus.getDefault().unregister(subscriber);
+            EventBus.getDefault().unregister(this);
             Toast.makeText(this,"unregister eventBus",Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

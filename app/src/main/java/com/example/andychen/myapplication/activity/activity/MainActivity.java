@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.event.EventMessage;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -21,6 +23,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initDate() {
+        MobclickAgent.openActivityDurationTrack(false);
         ButterKnife.bind(this);
     }
 
@@ -35,6 +38,7 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn1:
                 //Toast.makeText(this, "btn1", Toast.LENGTH_LONG).show();
+                EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
                 intent.setClass(this,ThirdActivity.class);
                 startActivity(intent);
                 break;
