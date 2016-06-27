@@ -20,7 +20,7 @@ public class LogUtils {
 	public static final int LEVEL_ERROR = 5;
 
 	/** 日志输出时的TAG */
-	private static String mTag = "hkqj";
+	private static String mTag = "mTag";
 	/** 是否允许输出log */
 	private static int mDebuggable = 5;
 

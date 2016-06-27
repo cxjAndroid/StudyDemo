@@ -39,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPageStart(getClass().getSimpleName());
+        MobclickAgent.onPageEnd(getClass().getSimpleName());
         MobclickAgent.onPause(this);
     }
 

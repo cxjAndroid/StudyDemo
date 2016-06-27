@@ -2,19 +2,28 @@ package com.example.andychen.myapplication.activity.activity;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.Button;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
-import com.example.andychen.myapplication.activity.event.EventMessage;
+import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
+import com.example.andychen.myapplication.activity.mvp_view.MainView;
+import com.example.andychen.myapplication.activity.utils.LogUtils;
+import com.example.andychen.myapplication.activity.utils.MetricsUtils;
+import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import org.greenrobot.eventbus.EventBus;
-
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainView{
+
+    @BindView(R.id.btn)
+    Button btn;
+    private MainPresenter mainPresenter;
 
     @Override
     public void initView() {
@@ -25,46 +34,48 @@ public class MainActivity extends BaseActivity {
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
         ButterKnife.bind(this);
+
+        mainPresenter = new MainPresenter(this,this);
+
+        //rxJAVA
+        Subscriber<String> subscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("completed");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                LogUtils.e(s);
+            }
+        };
+
+        Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext("1");
+                subscriber.onNext("2");
+                subscriber.onNext("3");
+                subscriber.onCompleted();
+            }
+        });
+
+        observable.subscribe(subscriber);
+
     }
 
     @OnClick({R.id.btn, R.id.btn1})
     void click(View v) {
-        Intent intent = new Intent(this, SecondActivity.class);
-        switch (v.getId()) {
-            case R.id.btn:
-                //Toast.makeText(this, "btn", Toast.LENGTH_LONG).show();
-                startActivity(intent);
-                EventBus.getDefault().postSticky(new EventMessage<>("send message"));
-                break;
-            case R.id.btn1:
-                //Toast.makeText(this, "btn1", Toast.LENGTH_LONG).show();
-                EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
-                intent.setClass(this,ThirdActivity.class);
-                startActivity(intent);
-                break;
-        }
+        mainPresenter.switchActivity(v);
     }
 
-
-    private void showMetrics() {
-        /*
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int       displayWidth  = displayMetrics.widthPixels;
-        int       displayHeight = displayMetrics.heightPixels;
-        Toast.makeText(this,String.valueOf(displayWidth)+"---"+String.valueOf(displayHeight),Toast.LENGTH_SHORT).show();*/
-
-        float density = getResources().getDisplayMetrics().density;
-        float xdpi = getResources().getDisplayMetrics().xdpi;
-        float ydpi = getResources().getDisplayMetrics().ydpi;
-        Toast.makeText(this, String.valueOf(xdpi) + "-------" + String.valueOf(ydpi), Toast.LENGTH_SHORT).show();
-        /*
-        Display display = getWindowManager().getDefaultDisplay(); //Activity#getWindowManager()
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        Toast.makeText(this,String.valueOf(width)+"---"+String.valueOf(height),Toast.LENGTH_SHORT).show();*/
+    @Override
+    public void switchPage(Intent intent) {
+        startActivity(intent);
     }
-
 }
