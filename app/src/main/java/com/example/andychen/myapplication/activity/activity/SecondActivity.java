@@ -36,6 +36,7 @@ public class SecondActivity extends BaseActivity {
         registerEventBus();
         ButterKnife.bind(this);
         viewConfiguration = ViewConfiguration.get(this);
+        setResult(RESULT_OK);
     }
 
 
