@@ -35,9 +35,9 @@ public abstract class ResponseCallback implements Callback<ResponseBody> {
             e.printStackTrace();
         } finally {
             if (resultCode == 1) {
-                onSuccessResponse(call, jsonObject);
+                onSuccessResp(call, jsonObject);
             } else {
-                onFailureResponse(call, jsonObject);
+                onFailureResp(call, jsonObject);
             }
         }
     }
@@ -45,13 +45,14 @@ public abstract class ResponseCallback implements Callback<ResponseBody> {
     @Override
     public  void onFailure(Call<ResponseBody> call, Throwable t){
         String message = t.getMessage();
-        onFailureNoResponse(call,t);
+        onFail(call,t);
     }
 
-    public abstract void onSuccessResponse(Call<ResponseBody> call, JSONObject response);
 
-    public abstract void onFailureResponse(Call<ResponseBody> call, JSONObject response);
+    public abstract void onSuccessResp(Call<?> call, JSONObject response);
 
-    public abstract void onFailureNoResponse(Call<ResponseBody> call, Throwable response);
+    public abstract void onFailureResp(Call<?> call, JSONObject response);
+
+    public abstract void onFail(Call<?> call, Throwable response);
 
 }

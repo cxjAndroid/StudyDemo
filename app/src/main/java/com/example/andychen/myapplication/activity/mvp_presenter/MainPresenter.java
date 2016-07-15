@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.activity.SecondActivity;
 import com.example.andychen.myapplication.activity.activity.ThirdActivity;
+import com.example.andychen.myapplication.activity.bean.People;
 import com.example.andychen.myapplication.activity.bean.User;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.retrofit.ApiInterface;
@@ -17,6 +18,7 @@ import com.example.andychen.myapplication.activity.security.Des3;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
+import com.google.gson.Gson;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -109,22 +111,50 @@ public class MainPresenter extends BasePresenter {
                 params.put("userType", "1");
                 Retrofit retrofit = new Retrofit.Builder().baseUrl("http://218.17.23.74:8089/jkyh_app/").build();
 
-                retrofit.create(ApiInterface.class).Login(params).enqueue(new ResponseCallback() {
+               /* retrofit.create(ApiInterface.class).Login(params).enqueue(new ResponseCallback() {
                     @Override
                     public void onFailureNoResponse(Call<ResponseBody> call, Throwable t) {
 
+
                     }
 
                     @Override
-                    public void onSuccessResponse(Call<ResponseBody> call, JSONObject response) {
-                        JSONObject data = response.optJSONObject("resultData");
+                    public void onSuccessResp(Call<ResponseBody> call, JSONObject response) {
+                        String dataString = response.optString("resultData");
+                        User user = new Gson().fromJson(dataString, User.class);
+                        LogUtils.i("complete");
                     }
 
                     @Override
-                    public void onFailureResponse(Call<ResponseBody> call, JSONObject response) {
+                    public void onFailureResp(Call<ResponseBody> call, JSONObject response) {
+
+                    }
+                });*/
+
+              /*  String jsonString = "{name:怪盗kidou,age:24}";
+                Gson gson = new Gson();
+                People people = gson.fromJson(jsonString, People.class);
+
+                LogUtils.i("complete");*/
+
+                Call login = retrofit.create(ApiInterface.class).Login(params);
+                login.enqueue(new ResponseCallback() {
+                    @Override
+                    public void onSuccessResp(Call<?> call, JSONObject response) {
+
+                    }
+
+                    @Override
+                    public void onFailureResp(Call<?> call, JSONObject response) {
+
+                    }
+
+                    @Override
+                    public void onFail(Call<?> call, Throwable response) {
 
                     }
                 });
+
                 break;
         }
     }

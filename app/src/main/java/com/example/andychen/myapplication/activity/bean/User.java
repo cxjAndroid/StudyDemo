@@ -5,49 +5,58 @@ package com.example.andychen.myapplication.activity.bean;
  */
 public class User {
 
-    private String mobilePhone;
-    private String password;
-    private String phoneOsType;
-    private String pushInfo;
-    private String userType;
+    private int id;
+    private String phone;
+    private String name;
+    private String portait;
+    private String pushNo;
+    private String accessToken;
 
-    public String getMobilePhone() {
-        return mobilePhone;
+    public int getId() {
+        return id;
     }
 
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getPhoneOsType() {
-        return phoneOsType;
+    public String getName() {
+        return name;
     }
 
-    public void setPhoneOsType(String phoneOsType) {
-        this.phoneOsType = phoneOsType;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPushInfo() {
-        return pushInfo;
+    public String getPortait() {
+        return portait;
     }
 
-    public void setPushInfo(String pushInfo) {
-        this.pushInfo = pushInfo;
+    public void setPortait(String portait) {
+        this.portait = portait;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getPushNo() {
+        return pushNo;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setPushNo(String pushNo) {
+        this.pushNo = pushNo;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
+import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
