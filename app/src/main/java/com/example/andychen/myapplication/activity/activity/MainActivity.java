@@ -1,37 +1,27 @@
 package com.example.andychen.myapplication.activity.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
-import com.example.andychen.myapplication.activity.mvp_presenter.BasePresenter;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
-import com.example.andychen.myapplication.activity.mvp_view.MainView;
-import com.example.andychen.myapplication.activity.utils.IntentUtils;
-import com.example.andychen.myapplication.activity.utils.LogUtils;
-import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Retrofit;
 import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
@@ -39,6 +29,8 @@ public class MainActivity extends BaseActivity {
     Button btn;
     @BindView(R.id.iv)
     ImageView iv;
+    @BindView(R.id.tv)
+    TextView tv;
     private MainPresenter mainPresenter;
     private Subscription subscribe;
 
@@ -152,8 +144,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
-            ToastUtils.show("OK");
+        if (resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            tv.setText(extras.getString("result"));
         }
     }
 
