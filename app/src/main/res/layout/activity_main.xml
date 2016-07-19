@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:text="button"
         android:layout_gravity="bottom"
+        android:background="@drawable/circular_button_red"
         />
     <ImageView
         android:id="@+id/iv"
@@ -32,6 +33,4 @@
         android:text="button1"
         android:layout_below="@id/btn"
         />
-
-
 </LinearLayout>
