@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by chenxujun on 2016/6/12.
- */
+//Created by chenxujun on 2016/6/12.
+
+
 public class ThirdActivity extends BaseActivity{
     @BindView(R.id.mViewpager)
     MyViewPager mViewPager;
@@ -59,7 +59,7 @@ public class ThirdActivity extends BaseActivity{
             pages.add(FragmentPagerItem.of(item,HealthFragment.class));
         }
 
-        mViewPager.setScrollable(true);
+        mViewPager.setScrollable(false);
         mViewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         smartTab.setViewPager(mViewPager);
 

@@ -44,7 +44,6 @@ public class MainActivity extends BaseActivity {
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
         ButterKnife.bind(this);
-
         mainPresenter = new MainPresenter(this);
 
         //被观察者

@@ -14,7 +14,7 @@ import android.view.View;
 public class MyView extends View {
 
     Paint paint = new Paint();
-    RectF rectF = new RectF(250, 10, 500, 250);
+    RectF rectF = new RectF(250, 10, 350, 50);
     RectF rectFOral = new RectF(250, 400, 500, 800);
     RectF rectFArc = new RectF(250,1200,500,1450);
 
@@ -37,7 +37,13 @@ public class MyView extends View {
         paint.setAntiAlias(true);
         canvas.drawCircle(150,100,50,paint);
 
-        paint.reset();
+
+        canvas.drawRoundRect(
+                rectF, 18,
+                18, paint);
+
+
+        /*paint.reset();
         paint.setColor(Color.RED);
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
@@ -70,7 +76,7 @@ public class MyView extends View {
         paint.setColor(getResources().getColor(android.R.color.holo_orange_dark));
         paint.setTextSize(100);
         //绘制文本
-        canvas.drawText("jEh", 800, 250, paint);
+        canvas.drawText("jEh", 800, 250, paint);*/
 
     }
 }

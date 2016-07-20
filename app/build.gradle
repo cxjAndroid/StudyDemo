@@ -66,17 +66,13 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile project(':libzxing')
-    compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
-
-    //Optional: see how to use the utility.
-    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
-
-    //Optional: see how to use the utility.
-    compile 'com.ogaclejapan.smarttablayout:utils-v13:1.6.1@aar'
+    compile project(':library')
+    compile project(':utils-v4')
 }
 
 def mytask2 = project.tasks.create("mytask2")
 def mytask = project.tasks.create("mytask")
+
 
 
 mytask << {
