@@ -59,7 +59,7 @@ public class ThirdActivity extends BaseActivity{
             pages.add(FragmentPagerItem.of(item,HealthFragment.class));
         }
 
-        mViewPager.setScrollable(false);
+        mViewPager.setScrollable(true);
         mViewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         smartTab.setViewPager(mViewPager);
 

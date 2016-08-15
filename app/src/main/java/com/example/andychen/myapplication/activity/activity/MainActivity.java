@@ -12,14 +12,21 @@ import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
+import com.example.andychen.myapplication.activity.base.BaseApplication;
+import com.example.andychen.myapplication.activity.bean.People;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
+import com.example.andychen.myapplication.activity.utils.LogUtils;
+import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
+import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -45,6 +52,9 @@ public class MainActivity extends BaseActivity {
         MobclickAgent.openActivityDurationTrack(false);
         ButterKnife.bind(this);
         mainPresenter = new MainPresenter(this);
+
+        float density = BaseApplication.getApplication().getResources().getDisplayMetrics().density;
+        float densityDpi = BaseApplication.getApplication().getResources().getDisplayMetrics().densityDpi;
 
         //被观察者
        /* Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
@@ -121,17 +131,58 @@ public class MainActivity extends BaseActivity {
         BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
         iv.setImageDrawable(bitmapDrawable);*/
 
-        subscribe = Observable.just(R.mipmap.ic_launcher).map(new Func1<Integer, Drawable>() {
+        /*subscribe = Observable.just(R.mipmap.ic_launcher).map(new Func1<Integer, Drawable>() {
             @Override
             public Drawable call(Integer integer) {
-                return new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+                return new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), integer));
             }
         }).subscribe(new Action1<Drawable>() {
             @Override
             public void call(Drawable drawable) {
                 iv.setImageDrawable(drawable);
             }
-        });
+        });*/
+
+        RxUtils.get().addList(
+                Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        subscriber.onNext(R.mipmap.ic_launcher);
+                    }
+                }).map(new Func1<Integer, Drawable>() {
+                    @Override
+                    public Drawable call(Integer resId) {
+                        return new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), resId));
+                    }
+                }).subscribe(new Action1<Drawable>() {
+                    @Override
+                    public void call(Drawable drawable) {
+                        iv.setImageDrawable(drawable);
+                    }
+                })
+        );
+
+
+        People people = new People();
+        people.setName("cxj");
+        people.setAge(26);
+      /*  Gson gson = new Gson();
+        String s = gson.toJson(people);
+
+        People people1 = gson.fromJson(s, People.class);
+        LogUtils.e(s);*/
+
+        Gson gson = new GsonBuilder().serializeNulls()
+                .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
+                .create();
+        String s = gson.toJson(people);
+        LogUtils.e(s);
+
+
+        People convertPeople = gson.fromJson(s, People.class);
+
+        LogUtils.e(s);
+        //new GsonBuilder().create().serializeNulls()
 
     }
 
