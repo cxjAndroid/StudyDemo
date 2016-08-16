@@ -23,6 +23,7 @@ import retrofit2.Response;
 public abstract class RespCallback implements Callback<ResponseBody> {
 
     private ResponseBody responseBody;
+    private String returnData;
 
     @Override
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -39,9 +40,9 @@ public abstract class RespCallback implements Callback<ResponseBody> {
             LogUtils.e(responseString);
 
             JSONObject object = new JSONObject(responseString);
-            String returnData = object.optString("ReturnData");
+            returnData = object.optString("ReturnData");
 
-            Gson gson = new Gson();
+           /* Gson gson = new Gson();
             Doctor[] doctors = gson.fromJson(returnData, Doctor[].class);
             int length = doctors.length;
             LogUtils.e(returnData);
@@ -55,7 +56,7 @@ public abstract class RespCallback implements Callback<ResponseBody> {
 
 
             List<Doctor> doctorList = res.getData();
-            doctorList.size();
+            doctorList.size();*/
 
            /* String decode = Des3.decode(response.body().string());
             if (!StringUtils.isEmpty(decode)) {
@@ -66,25 +67,24 @@ public abstract class RespCallback implements Callback<ResponseBody> {
             e.printStackTrace();
         } finally {
             responseBody.close();
-            if (resultCode == 1) {
-                onSuccessResp(call, jsonObject);
+            if (true) {
+                onSuccessResp(responseBody, returnData);
             } else {
-                onFailureResp(call, jsonObject);
+                onFailureResp(responseBody, returnData);
             }
         }
     }
 
+
     @Override
     public void onFailure(Call<ResponseBody> call, Throwable t) {
-        String message = t.getMessage();
-        onFail(call, t);
+        onFail(t);
     }
 
+    public abstract void onSuccessResp(ResponseBody body, String data);
 
-    public abstract void onSuccessResp(Call<?> call, JSONObject response);
+    public abstract void onFailureResp(ResponseBody body, String data);
 
-    public abstract void onFailureResp(Call<?> call, JSONObject response);
-
-    public abstract void onFail(Call<?> call, Throwable response);
+    public abstract void onFail(Throwable t);
 
 }

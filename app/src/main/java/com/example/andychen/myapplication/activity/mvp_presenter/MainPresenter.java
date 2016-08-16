@@ -2,6 +2,7 @@ package com.example.andychen.myapplication.activity.mvp_presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Environment;
 import android.view.View;
 
 import com.example.andychen.myapplication.R;
@@ -17,6 +18,7 @@ import com.example.andychen.myapplication.activity.retrofit.OkHttpUtils;
 import com.example.andychen.myapplication.activity.retrofit.RequestParams;
 import com.example.andychen.myapplication.activity.retrofit.RespCallback;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
+import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.google.gson.Gson;
@@ -25,7 +27,13 @@ import com.google.gson.GsonBuilder;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +54,13 @@ public class MainPresenter extends BasePresenter {
     public MainPresenter(Context context) {
         this.context = context;
     }
+
+    public static final String PATH = Environment.getExternalStorageDirectory() + "/kmytj/";
+
+    /**
+     * 文件名
+     */
+    private final String saveFileName = PATH + "heiheihei.apk";
 
     @Override
     public void performOnClick(View v) {
@@ -110,7 +125,10 @@ public class MainPresenter extends BasePresenter {
                 params.put("DistrictId", "0");
 
 
-                Gson gson = new GsonBuilder().serializeNulls()
+                update();
+                //hkLogin();
+                //gitDemo();
+               /* Gson gson = new GsonBuilder().serializeNulls()
                         .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
                         .create();
 
@@ -142,7 +160,7 @@ public class MainPresenter extends BasePresenter {
 
                     }
                 });
-
+*/
               /*  retrofit.create(ApiService.class).getHotHos(params).enqueue(new RespCallback() {
                     @Override
                     public void onSuccessResp(Call<?> call, JSONObject response) {
@@ -163,7 +181,6 @@ public class MainPresenter extends BasePresenter {
                 break;
         }
     }
-
 
 
     private void gson() {
@@ -222,51 +239,167 @@ public class MainPresenter extends BasePresenter {
     }
 
     private void update() {
-        Retrofit retrofit = new Retrofit.Builder()
+        final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://120.25.225.5:8090/")
                 .client(OkHttpUtils.getHttpClient())
                 .build();
-        retrofit.create(ApiService.class).getUpdateMessage("kmhc-apk-service/apk/verCheck").enqueue(new Callback<ResponseBody>() {
+
+
+        File file = new File(PATH);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        final File file1 = new File(saveFileName);
+
+
+        retrofit.create(ApiService.class).update().enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String body = response.body().string();
-                    String s = response.body().toString();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<ResponseBody> call,final Response<ResponseBody> response) {
+                new Thread(new Runnable() {
+
+                    FileOutputStream fileOutputStream;
+                    InputStream inputStream;
+
+                    @Override
+                    public void run() {
+                        try {
+                            long total = response.body().contentLength();
+                            long sum = 0;
+
+                            inputStream = response.body().byteStream();
+                            fileOutputStream = new FileOutputStream(file1);
+
+                            byte[] buf = new byte[1024];
+                            int len;
+
+                            long firstTime = System.currentTimeMillis();
+
+                            while ((len = inputStream.read(buf)) != -1) {
+                                sum = sum + len;
+                                int percent = (int) (((float) sum / total) * 100);
+                                LogUtils.e(String.valueOf(percent));
+                                fileOutputStream.write(buf, 0, len);
+                            }
+
+                            long secondTime = System.currentTimeMillis();
+                            long duration = secondTime - firstTime;
+                            LogUtils.e("waste:---------" + String.valueOf(duration));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                if (inputStream != null) {
+                                    inputStream.close();
+                                }
+                                if (fileOutputStream != null) {
+                                    fileOutputStream.close();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                String message = t.getMessage();
+
             }
         });
+
+
+       /* retrofit.create(ApiService.class).update().enqueue(new RespCallback() {
+
+            @Override
+            public void onSuccessResp(final ResponseBody body, String data) {
+
+                new Thread(new Runnable() {
+
+                    FileOutputStream fileOutputStream;
+                    InputStream inputStream;
+
+                    @Override
+                    public void run() {
+                        try {
+                            long total = body.contentLength();
+                            long sum = 0;
+
+                            inputStream = body.byteStream();
+                            fileOutputStream = new FileOutputStream(file1);
+
+                            byte[] buf = new byte[1024];
+                            int len;
+
+                            long firstTime = System.currentTimeMillis();
+
+                            while ((len = inputStream.read(buf)) != -1) {
+                                sum = sum + len;
+                                int percent = (int) (((float) sum / total) * 100);
+                                LogUtils.e(String.valueOf(percent));
+                                fileOutputStream.write(buf, 0, len);
+                            }
+
+                            long secondTime = System.currentTimeMillis();
+                            long duration = secondTime - firstTime;
+                            LogUtils.e("waste:---------" + String.valueOf(duration));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                if (inputStream != null) {
+                                    inputStream.close();
+                                }
+                                if (fileOutputStream != null) {
+                                    fileOutputStream.close();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+            }
+
+            @Override
+            public void onFailureResp(ResponseBody body, String data) {
+
+            }
+
+            @Override
+            public void onFail(Throwable t) {
+                t.getMessage();
+            }
+        });*/
+
     }
 
-  /*  private void gitDemo() {
+   /* private void gitDemo() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").build();
         ApiService repo = retrofit.create(ApiService.class);
         Call<ResponseBody> call = repo.getResponse("square", "retrofit");
         call.enqueue(new RespCallback() {
             @Override
-            public void onSuccessResp(Call<?> call, JSONObject response) {
-                String s = response.toString();
+            public void onSuccessResp(ResponseBody body, String data) {
+                ToastUtils.show(data);
             }
 
             @Override
-            public void onFailureResp(Call<?> call, JSONObject response) {
+            public void onFailureResp(ResponseBody body, String data) {
 
             }
 
             @Override
-            public void onFail(Call<?> call, Throwable response) {
+            public void onFail(Throwable t) {
 
             }
         });
-    }*/
-
-    /*private void hkLogin() {
+    }
+*/
+   /* private void hkLogin() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("LoginName", "18681537809");
         params.put("PassWord", "361753");
@@ -278,16 +411,17 @@ public class MainPresenter extends BasePresenter {
 
         retrofit.create(ApiService.class).hkLogin(params).enqueue(new RespCallback() {
             @Override
-            public void onSuccessResp(Call<?> call, JSONObject response) {
+            public void onSuccessResp(ResponseBody body, String data) {
+                ToastUtils.show(data);
             }
 
             @Override
-            public void onFailureResp(Call<?> call, JSONObject response) {
+            public void onFailureResp(ResponseBody body, String data) {
 
             }
 
             @Override
-            public void onFail(Call<?> call, Throwable response) {
+            public void onFail(Throwable t) {
 
             }
         });

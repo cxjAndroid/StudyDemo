@@ -15,6 +15,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
@@ -43,4 +44,8 @@ public interface ApiService {
     @POST("PreTreatment/QueryDoctors")
     @FormUrlEncoded
     Call<Result<List<Doctor>>> queryDoctors(@FieldMap Map<String, Object> map);
+
+    @GET("kmhc-apk-service/apk/download/CUSTOM_POCKET_2.3.0_201602194_Release.apk")
+    @Streaming
+    Call<ResponseBody> update();
 }
