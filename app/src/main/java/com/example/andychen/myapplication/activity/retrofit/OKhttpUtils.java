@@ -28,7 +28,7 @@ public class OkHttpUtils {
                 if (okHttpClient == null) {
                     okHttpClient = new OkHttpClient.Builder()
                             .readTimeout(30, TimeUnit.SECONDS)
-                            .connectTimeout(20, TimeUnit.SECONDS)
+                            .connectTimeout(10, TimeUnit.SECONDS)
                             .writeTimeout(30, TimeUnit.SECONDS)
                             .addInterceptor(new Interceptor() {
                                 @Override

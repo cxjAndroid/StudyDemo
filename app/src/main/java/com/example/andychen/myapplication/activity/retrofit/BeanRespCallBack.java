@@ -28,7 +28,8 @@ public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
             HttpUrl url = response.raw().request().url();
             LogUtils.e(url.toString());
 
-            data = response.body().getData();
+            Result<T> body = response.body();
+            data = body.getData();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,9 +38,9 @@ public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
                 ((ResponseBody) data).close();
             }
             if (true) {
-                onSuccessResp(call, data);
+                onSuccessResp(data);
             } else {
-                onFailureResp(call, data);
+                onFailureResp(data);
             }
         }
     }
@@ -47,14 +48,14 @@ public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
     @Override
     public void onFailure(Call<Result<T>> call, Throwable t) {
         String message = t.getMessage();
-        onFail(call, t);
+        onFail(t);
     }
 
 
-    public abstract void onSuccessResp(Call<Result<T>> call, T response);
+    public abstract void onSuccessResp(T response);
 
-    public abstract void onFailureResp(Call<Result<T>> call, T response);
+    public abstract void onFailureResp(T response);
 
-    public abstract void onFail(Call<Result<T>> call, Throwable response);
+    public abstract void onFail(Throwable response);
 
 }

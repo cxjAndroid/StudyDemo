@@ -2,7 +2,9 @@ package com.example.andychen.myapplication.activity.mvp_presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 
 import com.example.andychen.myapplication.R;
@@ -10,6 +12,7 @@ import com.example.andychen.myapplication.activity.activity.SecondActivity;
 import com.example.andychen.myapplication.activity.activity.ThirdActivity;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.bean.Doctor;
+import com.example.andychen.myapplication.activity.bean.Movie;
 import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
@@ -17,14 +20,18 @@ import com.example.andychen.myapplication.activity.retrofit.BeanRespCallBack;
 import com.example.andychen.myapplication.activity.retrofit.OkHttpUtils;
 import com.example.andychen.myapplication.activity.retrofit.RequestParams;
 import com.example.andychen.myapplication.activity.retrofit.RespCallback;
+import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
+import com.example.andychen.myapplication.activity.retrofit.RetrofitUtils;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
+import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -42,7 +49,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by andychen on 2016/7/1.
@@ -50,6 +65,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainPresenter extends BasePresenter {
 
     private Context context;
+    private Subscription subscribe;
 
     public MainPresenter(Context context) {
         this.context = context;
@@ -110,57 +126,47 @@ public class MainPresenter extends BasePresenter {
                 params.put("OrderBy", 0);
                 params.put("HospitalType", -1);*/
 
-
-                params.put("HospitalId", "601");
+              /*  params.put("HospitalId", "12312321");
                 params.put("IsShowAvailableCount", true);
                 params.put("StartIndex", 0);
                 params.put("EndIndex", 9);
                 params.put("OrderBy", 0);
                 params.put("DoctorType", "2");
                 params.put("ProfessionDepartmentId", "");
-
-                //params.put("ProfessionDepartmentId", professionDepartmentId);
                 params.put("CityId", "2157");
                 params.put("SchedulingDate", "");
-                params.put("DistrictId", "0");
+                params.put("DistrictId", "0");*/
 
-
-                update();
+                //update();
                 //hkLogin();
                 //gitDemo();
-               /* Gson gson = new GsonBuilder().serializeNulls()
+                getDoctor(params, v);
+
+                /*Gson gson = new GsonBuilder().serializeNulls()
                         .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
                         .create();
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://patientapi.hk515.com/")
+                        .baseUrl(ApiService.BASE_DOUBAN_API)
                         .addConverterFactory(GsonConverterFactory.create(gson))
-                        .client(OkHttpUtils.getHttpClient())
                         .build();
 
-                Call<Result<List<Doctor>>> resultCall = retrofit.create(ApiService.class).queryDoctors(params);
-
-                ((BaseActivity)context).setCall(resultCall);
-
-                resultCall.enqueue(new BeanRespCallBack<List<Doctor>>() {
+                retrofit.create(ApiService.class).getMovie(0, 10).enqueue(new Callback<Movie>() {
                     @Override
-                    public void onSuccessResp(Call<Result<List<Doctor>>> call, List<Doctor> response) {
-                        response.size();
-                        String doctorName = response.get(0).getDoctorName();
-                        ToastUtils.show(doctorName);
+                    public void onResponse(Call<Movie> call, Response<Movie> response) {
+
+                        Movie movie = response.body();
+                        List<Movie.SubjectsBean> subjects = movie.getSubjects();
                     }
 
                     @Override
-                    public void onFailureResp(Call<Result<List<Doctor>>> call, List<Doctor> response) {
+                    public void onFailure(Call<Movie> call, Throwable t) {
 
                     }
+                });*/
 
-                    @Override
-                    public void onFail(Call<Result<List<Doctor>>> call, Throwable response) {
 
-                    }
-                });
-*/
+
               /*  retrofit.create(ApiService.class).getHotHos(params).enqueue(new RespCallback() {
                     @Override
                     public void onSuccessResp(Call<?> call, JSONObject response) {
@@ -180,6 +186,60 @@ public class MainPresenter extends BasePresenter {
 
                 break;
         }
+    }
+
+    private void getDoctor(HashMap<String, Object> params, final View v) {
+
+        /*RetrofitMethods.getApiService().rxQueryDoctors(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Result<List<Doctor>>>() {
+                    @Override
+                    public void call(Result<List<Doctor>> listResult) {
+                        List<Doctor> data = listResult.getData();
+                        ToastUtils.show(data.get(0).getDoctorName());
+                    }
+                });*/
+
+        /*RetrofitMethods.CommonRequest(
+                RetrofitUtils.getApiService().rxQueryDoctors(params),
+                new Subscriber<List<Doctor>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        e.getMessage();
+                    }
+
+                    @Override
+                    public void onNext(List<Doctor> doctors) {
+                        ToastUtils.show(doctors.get(1).getDoctorName());
+                    }
+                }
+        );*/
+
+
+        RetrofitMethods.getApiService().queryDoc(params)
+                .enqueue(new RespCallback() {
+                    @Override
+                    public void onSuccessResp(String responseString, String data) {
+
+                    }
+
+                    @Override
+                    public void onFailureResp(String responseString, String data) {
+
+                    }
+
+                    @Override
+                    public void onFail(Throwable t) {
+
+                    }
+                });
     }
 
 
@@ -239,10 +299,6 @@ public class MainPresenter extends BasePresenter {
     }
 
     private void update() {
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://120.25.225.5:8090/")
-                .client(OkHttpUtils.getHttpClient())
-                .build();
 
 
         File file = new File(PATH);
@@ -250,12 +306,123 @@ public class MainPresenter extends BasePresenter {
             file.mkdirs();
         }
 
-        final File file1 = new File(saveFileName);
+        final File saveFile = new File(saveFileName);
 
 
-        retrofit.create(ApiService.class).update().enqueue(new Callback<ResponseBody>() {
+
+      /*  RetrofitMethods.flatRequest(RetrofitUtils.getApiService()
+                .getUpdateMessage("kmhc-apk-service/apk/verCheck"),
+                new RetrofitMethods.flatCallback<ResponseBody>() {
+
+                    private String downloadUrl;
+
+                    @Override
+                    public Observable onFlat(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            downloadUrl = new JSONObject(res).optString("msg");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return RetrofitUtils.getApiService().update(downloadUrl);
+                    }
+                }, new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+
+                    }
+                });
+*/
+
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://120.25.225.5:8090/")
+                .client(OkHttpUtils.getHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        subscribe = retrofit.create(ApiService.class).getUpdateMessage("kmhc-apk-service/apk/verCheck")
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap(new Func1<ResponseBody, Observable<ResponseBody>>() {
+
+                    private String downloadUrl;
+
+                    @Override
+                    public Observable<ResponseBody> call(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            downloadUrl = new JSONObject(res).optString("msg");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return retrofit.create(ApiService.class).update(downloadUrl);
+                    }
+                })
+                .subscribe(new Action1<ResponseBody>() {
+
+                    private InputStream inputStream;
+                    private FileOutputStream fileOutputStream;
+
+                    @Override
+                    public void call(ResponseBody responseBody) {
+
+                        try {
+                            long total = responseBody.contentLength();
+                            long sum = 0;
+
+                            inputStream = responseBody.byteStream();
+                            fileOutputStream = new FileOutputStream(saveFile);
+
+                            byte[] buf = new byte[1024];
+                            int len;
+
+                            long firstTime = System.currentTimeMillis();
+
+                            while ((len = inputStream.read(buf)) != -1) {
+                                sum = sum + len;
+                                int percent = (int) (((float) sum / total) * 100);
+                                LogUtils.e(String.valueOf(percent));
+                                fileOutputStream.write(buf, 0, len);
+                            }
+
+                            long secondTime = System.currentTimeMillis();
+                            long duration = secondTime - firstTime;
+                            LogUtils.e("waste:---------" + String.valueOf(duration));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                if (inputStream != null) {
+                                    inputStream.close();
+                                }
+                                if (fileOutputStream != null) {
+                                    fileOutputStream.close();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+        // RxUtils.get().addList(subscribe);
+
+
+       /* retrofit.create(ApiService.class).update().enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call,final Response<ResponseBody> response) {
+            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
                 new Thread(new Runnable() {
 
                     FileOutputStream fileOutputStream;
@@ -268,7 +435,7 @@ public class MainPresenter extends BasePresenter {
                             long sum = 0;
 
                             inputStream = response.body().byteStream();
-                            fileOutputStream = new FileOutputStream(file1);
+                            fileOutputStream = new FileOutputStream(saveFile);
 
                             byte[] buf = new byte[1024];
                             int len;
@@ -306,76 +473,11 @@ public class MainPresenter extends BasePresenter {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-
-       /* retrofit.create(ApiService.class).update().enqueue(new RespCallback() {
-
-            @Override
-            public void onSuccessResp(final ResponseBody body, String data) {
-
-                new Thread(new Runnable() {
-
-                    FileOutputStream fileOutputStream;
-                    InputStream inputStream;
-
-                    @Override
-                    public void run() {
-                        try {
-                            long total = body.contentLength();
-                            long sum = 0;
-
-                            inputStream = body.byteStream();
-                            fileOutputStream = new FileOutputStream(file1);
-
-                            byte[] buf = new byte[1024];
-                            int len;
-
-                            long firstTime = System.currentTimeMillis();
-
-                            while ((len = inputStream.read(buf)) != -1) {
-                                sum = sum + len;
-                                int percent = (int) (((float) sum / total) * 100);
-                                LogUtils.e(String.valueOf(percent));
-                                fileOutputStream.write(buf, 0, len);
-                            }
-
-                            long secondTime = System.currentTimeMillis();
-                            long duration = secondTime - firstTime;
-                            LogUtils.e("waste:---------" + String.valueOf(duration));
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                if (inputStream != null) {
-                                    inputStream.close();
-                                }
-                                if (fileOutputStream != null) {
-                                    fileOutputStream.close();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }).start();
-            }
-
-            @Override
-            public void onFailureResp(ResponseBody body, String data) {
-
-            }
-
-            @Override
-            public void onFail(Throwable t) {
                 t.getMessage();
             }
         });*/
-
     }
+
 
    /* private void gitDemo() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").build();

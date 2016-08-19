@@ -1,6 +1,7 @@
 package com.example.andychen.myapplication.activity.retrofit;
 
 import com.example.andychen.myapplication.activity.bean.Doctor;
+import com.example.andychen.myapplication.activity.bean.Movie;
 import com.example.andychen.myapplication.activity.bean.Result;
 
 import java.util.List;
@@ -15,19 +16,26 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
+import rx.Observable;
 
 /**
  * Created by andychen on 2016/7/12.
  */
 public interface ApiService {
 
+    String BASE_DOUBAN_API = "https://api.douban.com/";
+
     @GET("repos/{owner}/{repo}/contributors")
     Call<ResponseBody> getResponse(@Path("owner") String owner, @Path("repo") String repo);
 
     @GET
-    Call<ResponseBody> getUpdateMessage(@Url String url);
+    Observable<ResponseBody> getUpdateMessage(@Url String url);
+
+    @GET
+    Observable<ResponseBody> getPic(@Url String url);
 
     @POST("app/user/login.do")
     @FormUrlEncoded
@@ -45,7 +53,23 @@ public interface ApiService {
     @FormUrlEncoded
     Call<Result<List<Doctor>>> queryDoctors(@FieldMap Map<String, Object> map);
 
-    @GET("kmhc-apk-service/apk/download/CUSTOM_POCKET_2.3.0_201602194_Release.apk")
+    @POST("PreTreatment/QueryDoctors")
+    @FormUrlEncoded
+    Call<ResponseBody> queryDoc(@FieldMap Map<String, Object> map);
+
+    @POST("PreTreatment/QueryDoctors")
+    @FormUrlEncoded
+    Observable<ResponseBody> originQueryDoctors(@FieldMap Map<String, Object> map);
+
+    @POST("PreTreatment/QueryDoctors")
+    @FormUrlEncoded
+    Observable<Result<List<Doctor>>> rxQueryDoctors(@FieldMap Map<String, Object> map);
+
+    @GET
     @Streaming
-    Call<ResponseBody> update();
+    Observable<ResponseBody> update(@Url String url);
+
+    //start=0&count=10"
+    @GET("v2/movie/top250")
+    Call<Movie> getMovie(@Query("start") int start, @Query("end") int end);
 }

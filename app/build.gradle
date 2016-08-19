@@ -68,6 +68,7 @@ dependencies {
     compile project(':libzxing')
     compile project(':library')
     compile project(':utils-v4')
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 }
 
 def mytask2 = project.tasks.create("mytask2")

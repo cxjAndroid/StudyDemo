@@ -24,19 +24,20 @@ public abstract class RespCallback implements Callback<ResponseBody> {
 
     private ResponseBody responseBody;
     private String returnData;
+    private String responseString;
 
     @Override
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
         JSONObject jsonObject = null;
         int resultCode = -1;
-
         try {
             HttpUrl url = response.raw().request().url();
             LogUtils.e(url.toString());
 
             responseBody = response.body();
-            String responseString = responseBody.string();
+            responseString = responseBody.string();
+
             LogUtils.e(responseString);
 
             JSONObject object = new JSONObject(responseString);
@@ -66,11 +67,13 @@ public abstract class RespCallback implements Callback<ResponseBody> {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            responseBody.close();
             if (true) {
-                onSuccessResp(responseBody, returnData);
+                onSuccessResp(responseString, returnData);
             } else {
-                onFailureResp(responseBody, returnData);
+                onFailureResp(responseString, returnData);
+            }
+            if (responseBody != null) {
+                responseBody.close();
             }
         }
     }
@@ -81,9 +84,9 @@ public abstract class RespCallback implements Callback<ResponseBody> {
         onFail(t);
     }
 
-    public abstract void onSuccessResp(ResponseBody body, String data);
+    public abstract void onSuccessResp(String responseString, String data);
 
-    public abstract void onFailureResp(ResponseBody body, String data);
+    public abstract void onFailureResp(String responseString, String data);
 
     public abstract void onFail(Throwable t);
 
