@@ -7,6 +7,9 @@ import com.google.gson.GsonBuilder;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOError;
+import java.io.IOException;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -14,6 +17,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -62,12 +66,13 @@ public class RetrofitMethods {
     }
 
 
-    public static <T> Subscription CommonRequest(Observable<Result<T>> observable, Subscriber<T> subscriber) {
+    public static <T> Subscription CommonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
         return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<Result<T>, T>() {
                     @Override
                     public T call(Result<T> tResult) {
+                        if (!tResult.isSuccess()) throw new ApiException(tResult.getReturnMessage());
                         return tResult.getData();
                     }
                 })
@@ -75,7 +80,7 @@ public class RetrofitMethods {
     }
 
 
-    public static <T> Subscription flatRequest(Observable<T> observable,final flatCallback<T> callback,
+    public static <T> Subscription flatRequest(Observable<T> observable, final flatCallback<T> callback,
                                                Subscriber<T> subscriber) {
         return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,8 +94,8 @@ public class RetrofitMethods {
     }
 
 
-    public interface flatCallback<T>{
-       Observable onFlat(T t);
+    public interface flatCallback<T> {
+        Observable onFlat(T t);
     }
 
 }

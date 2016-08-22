@@ -1,6 +1,7 @@
 package com.example.andychen.myapplication.activity.retrofit;
 
 import com.example.andychen.myapplication.activity.bean.Doctor;
+import com.example.andychen.myapplication.activity.bean.Hospital;
 import com.example.andychen.myapplication.activity.bean.Movie;
 import com.example.andychen.myapplication.activity.bean.Result;
 
@@ -72,4 +73,14 @@ public interface ApiService {
     //start=0&count=10"
     @GET("v2/movie/top250")
     Call<Movie> getMovie(@Query("start") int start, @Query("end") int end);
+
+    @POST("PreTreatment/GetHospitalDetail/601")
+    Call<ResponseBody> getHosInfo();
+
+    @POST("PreTreatment/GetHospitalDetail/123123123")
+    Observable<Result<Hospital>> rxGetHosInfo();
+
+
+
+
 }

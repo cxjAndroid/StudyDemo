@@ -12,11 +12,13 @@ import com.example.andychen.myapplication.activity.activity.SecondActivity;
 import com.example.andychen.myapplication.activity.activity.ThirdActivity;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.bean.Doctor;
+import com.example.andychen.myapplication.activity.bean.Hospital;
 import com.example.andychen.myapplication.activity.bean.Movie;
 import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.BeanRespCallBack;
+import com.example.andychen.myapplication.activity.retrofit.CustomSubscriber;
 import com.example.andychen.myapplication.activity.retrofit.OkHttpUtils;
 import com.example.andychen.myapplication.activity.retrofit.RequestParams;
 import com.example.andychen.myapplication.activity.retrofit.RespCallback;
@@ -142,6 +144,13 @@ public class MainPresenter extends BasePresenter {
                 //gitDemo();
                 getDoctor(params, v);
 
+                RetrofitMethods.CommonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>() {
+                    @Override
+                    public void onNext(Hospital hospital) {
+
+                    }
+                });
+
                 /*Gson gson = new GsonBuilder().serializeNulls()
                         .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
                         .create();
@@ -222,24 +231,6 @@ public class MainPresenter extends BasePresenter {
                 }
         );*/
 
-
-        RetrofitMethods.getApiService().queryDoc(params)
-                .enqueue(new RespCallback() {
-                    @Override
-                    public void onSuccessResp(String responseString, String data) {
-
-                    }
-
-                    @Override
-                    public void onFailureResp(String responseString, String data) {
-
-                    }
-
-                    @Override
-                    public void onFail(Throwable t) {
-
-                    }
-                });
     }
 
 

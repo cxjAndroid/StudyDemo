@@ -4,6 +4,7 @@ package com.example.andychen.myapplication.activity.retrofit;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
+import com.example.andychen.myapplication.activity.utils.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -25,6 +26,7 @@ public abstract class RespCallback implements Callback<ResponseBody> {
     private ResponseBody responseBody;
     private String returnData;
     private String responseString;
+    private boolean isSuccess;
 
     @Override
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -41,6 +43,7 @@ public abstract class RespCallback implements Callback<ResponseBody> {
             LogUtils.e(responseString);
 
             JSONObject object = new JSONObject(responseString);
+            isSuccess = object.optBoolean("IsSuccess");
             returnData = object.optString("ReturnData");
 
            /* Gson gson = new Gson();
@@ -67,7 +70,7 @@ public abstract class RespCallback implements Callback<ResponseBody> {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (true) {
+            if (isSuccess) {
                 onSuccessResp(responseString, returnData);
             } else {
                 onFailureResp(responseString, returnData);
