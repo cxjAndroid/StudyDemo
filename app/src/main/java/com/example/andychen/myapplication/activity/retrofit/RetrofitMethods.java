@@ -10,6 +10,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOError;
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -66,7 +68,7 @@ public class RetrofitMethods {
     }
 
 
-    public static <T> Subscription CommonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
+    public static <T> Subscription commonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
         return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<Result<T>, T>() {
@@ -77,6 +79,25 @@ public class RetrofitMethods {
                     }
                 })
                 .subscribe(subscriber);
+    }
+
+
+    public static Subscription originRequest(final Observable<ResponseBody> observable, final Subscriber<ResponseBody> subscriber) {
+        return  observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+    }
+
+
+    public static <T> Call<Result<T>> commonRequest(Call<Result<T>> call,BeanRespCallBack<T> callBack){
+        call.enqueue(callBack);
+        return call;
+    }
+
+    public static Call<ResponseBody> originRequest(Call<ResponseBody> call,RespCallback callBack){
+        call.enqueue(callBack);
+        return call;
     }
 
 

@@ -75,7 +75,7 @@ public interface ApiService {
     Call<Movie> getMovie(@Query("start") int start, @Query("end") int end);
 
     @POST("PreTreatment/GetHospitalDetail/601")
-    Call<ResponseBody> getHosInfo();
+    Observable<ResponseBody> getHosInfo();
 
     @POST("PreTreatment/GetHospitalDetail/123123123")
     Observable<Result<Hospital>> rxGetHosInfo();

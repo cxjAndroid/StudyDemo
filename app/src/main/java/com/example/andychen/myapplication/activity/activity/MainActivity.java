@@ -6,8 +6,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
@@ -18,6 +20,7 @@ import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
+import com.example.andychen.myapplication.activity.view.EmptyLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.umeng.analytics.MobclickAgent;
@@ -45,6 +48,11 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
+       /* EmptyLayout emptyLayout = new EmptyLayout(this);
+        emptyLayout.setErrorType(1);
+        addContentView(emptyLayout,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));*/
+        EmptyLayout emptyLayout = (EmptyLayout) findViewById(R.id.status_layout);
+        emptyLayout.setErrorType(EmptyLayout.NODATA);
     }
 
     @Override

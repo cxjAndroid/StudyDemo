@@ -2,19 +2,14 @@ package com.example.andychen.myapplication.activity.mvp_presenter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.activity.SecondActivity;
 import com.example.andychen.myapplication.activity.activity.ThirdActivity;
-import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.Hospital;
-import com.example.andychen.myapplication.activity.bean.Movie;
-import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.BeanRespCallBack;
@@ -26,20 +21,12 @@ import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitUtils;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
-import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
-import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,16 +34,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -128,7 +110,7 @@ public class MainPresenter extends BasePresenter {
                 params.put("OrderBy", 0);
                 params.put("HospitalType", -1);*/
 
-              /*  params.put("HospitalId", "12312321");
+                params.put("HospitalId", "601");
                 params.put("IsShowAvailableCount", true);
                 params.put("StartIndex", 0);
                 params.put("EndIndex", 9);
@@ -137,19 +119,23 @@ public class MainPresenter extends BasePresenter {
                 params.put("ProfessionDepartmentId", "");
                 params.put("CityId", "2157");
                 params.put("SchedulingDate", "");
-                params.put("DistrictId", "0");*/
+                params.put("DistrictId", "0");
 
                 //update();
                 //hkLogin();
                 //gitDemo();
+
+
+
                 getDoctor(params, v);
 
-                RetrofitMethods.CommonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>() {
+                /*RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>() {
                     @Override
                     public void onNext(Hospital hospital) {
 
                     }
-                });
+                });*/
+
 
                 /*Gson gson = new GsonBuilder().serializeNulls()
                         .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
@@ -199,18 +185,15 @@ public class MainPresenter extends BasePresenter {
 
     private void getDoctor(HashMap<String, Object> params, final View v) {
 
-        /*RetrofitMethods.getApiService().rxQueryDoctors(params)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Result<List<Doctor>>>() {
-                    @Override
-                    public void call(Result<List<Doctor>> listResult) {
-                        List<Doctor> data = listResult.getData();
-                        ToastUtils.show(data.get(0).getDoctorName());
-                    }
-                });*/
+        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().queryDoctors(params), new BeanRespCallBack<List<Doctor>>() {
+            @Override
+            public void onSuccessResp(List<Doctor> response) {
+                ToastUtils.show(response.get(0).getDoctorName());
+            }
+        });
 
-        /*RetrofitMethods.CommonRequest(
+
+        /*RetrofitMethods.commonRequest(
                 RetrofitUtils.getApiService().rxQueryDoctors(params),
                 new Subscriber<List<Doctor>>() {
                     @Override

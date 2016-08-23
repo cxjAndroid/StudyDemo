@@ -18,6 +18,7 @@ import retrofit2.Response;
 public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
 
     private T data;
+    private Result<T> body;
 
     @Override
     public void onResponse(Call<Result<T>> call, Response<Result<T>> response) {
@@ -28,7 +29,7 @@ public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
             HttpUrl url = response.raw().request().url();
             LogUtils.e(url.toString());
 
-            Result<T> body = response.body();
+            body = response.body();
             data = body.getData();
 
         } catch (Exception e) {
@@ -37,7 +38,7 @@ public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
             if (data instanceof ResponseBody) {
                 ((ResponseBody) data).close();
             }
-            if (true) {
+            if (body.isSuccess()) {
                 onSuccessResp(data);
             } else {
                 onFailureResp(data);
@@ -51,11 +52,14 @@ public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
         onFail(t);
     }
 
-
     public abstract void onSuccessResp(T response);
 
-    public abstract void onFailureResp(T response);
+    public void onFailureResp(T response) {
 
-    public abstract void onFail(Throwable response);
+    }
+
+    public void onFail(Throwable response) {
+
+    }
 
 }
