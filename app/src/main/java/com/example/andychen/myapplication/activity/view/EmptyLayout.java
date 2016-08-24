@@ -21,14 +21,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
 import com.example.andychen.myapplication.activity.utils.StringUtils;
 import com.example.andychen.myapplication.activity.utils.SystemTool;
 
 
-public class EmptyLayout extends LinearLayout implements
+public class EmptyLayout extends RelativeLayout implements
         View.OnClickListener {
 
     public static final int NETWORK_ERROR = 1; // 网络错误

@@ -1,5 +1,6 @@
 package com.example.andychen.myapplication.activity.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,8 +16,12 @@ import android.widget.TextView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.base.BaseApplication;
+import com.example.andychen.myapplication.activity.bean.Hospital;
 import com.example.andychen.myapplication.activity.bean.People;
+import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
+import com.example.andychen.myapplication.activity.mvp_view.MainView;
+import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
@@ -24,6 +29,8 @@ import com.example.andychen.myapplication.activity.view.EmptyLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.umeng.analytics.MobclickAgent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +41,7 @@ import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainView{
 
     @BindView(R.id.btn)
     Button btn;
@@ -44,55 +51,126 @@ public class MainActivity extends BaseActivity {
     TextView tv;
     private MainPresenter mainPresenter;
     private Subscription subscribe;
+    private EmptyLayout emptyLayout;
+
+    public EmptyLayout getEmptyLayout() {
+        return emptyLayout;
+    }
+
+    public void setEmptyLayout(EmptyLayout emptyLayout) {
+        this.emptyLayout = emptyLayout;
+    }
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
-       /* EmptyLayout emptyLayout = new EmptyLayout(this);
-        emptyLayout.setErrorType(1);
-        addContentView(emptyLayout,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));*/
-        EmptyLayout emptyLayout = (EmptyLayout) findViewById(R.id.status_layout);
-        emptyLayout.setErrorType(EmptyLayout.NODATA);
+        emptyLayout = new EmptyLayout(this);
+        //addContentView(emptyLayout,
+        // new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     @Override
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
         ButterKnife.bind(this);
-        mainPresenter = new MainPresenter(this);
+        mainPresenter = new MainPresenter(this,this);
 
         float density = BaseApplication.getApplication().getResources().getDisplayMetrics().density;
         float densityDpi = BaseApplication.getApplication().getResources().getDisplayMetrics().densityDpi;
 
         //被观察者
-       /* Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext("1");
-                subscriber.onNext("2");
-                subscriber.onNext("3");
-                subscriber.onCompleted();
-            }
-        });
+        rxDemo();
+        GsonDemo();
+    }
 
-        Subscriber<String> subscriber = new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-                LogUtils.e("completed");
-            }
 
-            @Override
-            public void onError(Throwable e) {
 
-            }
+    @OnClick({R.id.btn, R.id.btn1, R.id.iv})
+    void click(View v) {
+        switch (v.getId()) {
+            case R.id.btn:
+                IntentUtils.startActivityLeftIn(this, SecondActivity.class);
+                EventBus.getDefault().postSticky(new EventMessage<>("send message"));
+                break;
+            case R.id.btn1:
+                IntentUtils.startActivityLeftIn(this, ThirdActivity.class);
+                EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
+                break;
+            case R.id.iv:
+                break;
+        }
+    }
 
-            @Override
-            public void onNext(String s) {
-                LogUtils.e(s);
-            }
-        };
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            tv.setText(extras.getString("result"));
+        }
+    }
 
-        subscribe = observable.subscribe(subscriber);*/
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscribe != null) {
+            subscribe.unsubscribe();
+        }
+    }
+
+
+    private void GsonDemo() {
+        People people = new People();
+        people.setName("cxj");
+        people.setAge(26);
+        /*  Gson gson = new Gson();
+        String s = gson.toJson(people);
+
+        People people1 = gson.fromJson(s, People.class);
+        LogUtils.e(s);*/
+
+        Gson gson = new GsonBuilder().serializeNulls()
+                .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
+                .create();
+        String s = gson.toJson(people);
+        LogUtils.e(s);
+
+
+        People convertPeople = gson.fromJson(s, People.class);
+
+        LogUtils.e(s);
+        //new GsonBuilder().create().serializeNulls()
+    }
+
+    private void rxDemo() {
+    /* Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
+         @Override
+         public void call(Subscriber<? super String> subscriber) {
+             subscriber.onNext("1");
+             subscriber.onNext("2");
+             subscriber.onNext("3");
+             subscriber.onCompleted();
+         }
+     });
+
+     Subscriber<String> subscriber = new Subscriber<String>() {
+         @Override
+         public void onCompleted() {
+             LogUtils.e("completed");
+         }
+
+         @Override
+         public void onError(Throwable e) {
+
+         }
+
+         @Override
+         public void onNext(String s) {
+             LogUtils.e(s);
+         }
+     };
+
+     subscribe = observable.subscribe(subscriber);*/
 
 
         /*Observable.just("a","b","c","d").subscribe(new Subscriber<String>() {
@@ -169,52 +247,7 @@ public class MainActivity extends BaseActivity {
                     }
                 })
         );
-
-
-        People people = new People();
-        people.setName("cxj");
-        people.setAge(26);
-      /*  Gson gson = new Gson();
-        String s = gson.toJson(people);
-
-        People people1 = gson.fromJson(s, People.class);
-        LogUtils.e(s);*/
-
-        Gson gson = new GsonBuilder().serializeNulls()
-                .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
-                .create();
-        String s = gson.toJson(people);
-        LogUtils.e(s);
-
-
-        People convertPeople = gson.fromJson(s, People.class);
-
-        LogUtils.e(s);
-        //new GsonBuilder().create().serializeNulls()
-
     }
 
-    @OnClick({R.id.btn, R.id.btn1, R.id.iv})
-    void click(View v) {
-        mainPresenter.performOnClick(v);
-        //startActivityForResult();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            tv.setText(extras.getString("result"));
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (subscribe != null) {
-            subscribe.unsubscribe();
-        }
-    }
 
 }

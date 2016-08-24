@@ -11,6 +11,8 @@ import com.example.andychen.myapplication.activity.activity.ThirdActivity;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.Hospital;
 import com.example.andychen.myapplication.activity.event.EventMessage;
+import com.example.andychen.myapplication.activity.mvp_view.BaseView;
+import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.BeanRespCallBack;
 import com.example.andychen.myapplication.activity.retrofit.CustomSubscriber;
@@ -50,9 +52,11 @@ public class MainPresenter extends BasePresenter {
 
     private Context context;
     private Subscription subscribe;
+    private MainView view;
 
-    public MainPresenter(Context context) {
+    public MainPresenter(Context context, BaseView view) {
         this.context = context;
+        this.view = (MainView) view;
     }
 
     public static final String PATH = Environment.getExternalStorageDirectory() + "/kmytj/";
@@ -62,45 +66,48 @@ public class MainPresenter extends BasePresenter {
      */
     private final String saveFileName = PATH + "heiheihei.apk";
 
-    @Override
-    public void performOnClick(View v) {
-        super.performOnClick(v);
-        switch (v.getId()) {
-            case R.id.btn:
-                IntentUtils.startActivityLeftIn((Activity) context, SecondActivity.class);
-                EventBus.getDefault().postSticky(new EventMessage<>("send message"));
-                break;
-            case R.id.btn1:
-                IntentUtils.startActivityLeftIn((Activity) context, ThirdActivity.class);
-                EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
-                break;
-            case R.id.iv:
-               /* Activity activity = (Activity) this.context;
-                activity.startActivityForResult(new Intent(activity,CaptureActivity.class),0);*/
 
 
-              /*  OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
+    public void getHosInfo(){
+        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>(context) {
+            @Override
+            public void onNext(Hospital hospital) {
 
-                Integer i = 5;
-                FormBody formBody = new FormBody.Builder().add("", i.toString()).build();
-
-                Request.Builder request = new Request.Builder().post(formBody);
-                Request request1 = request.build();*/
-
-
-              /*  hkLogin();
+            }
+        });
+    }
 
 
-                gitDemo();
-
-                update();
-
-                kmLogin();
-
-                gson();*/
 
 
-                HashMap<String, Object> params = new HashMap<>();
+    private void getMovie() {
+    /*Gson gson = new GsonBuilder().serializeNulls()
+            .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
+            .create();
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(ApiService.BASE_DOUBAN_API)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build();
+
+    retrofit.create(ApiService.class).getMovie(0, 10).enqueue(new Callback<Movie>() {
+        @Override
+        public void onResponse(Call<Movie> call, Response<Movie> response) {
+
+            Movie movie = response.body();
+            List<Movie.SubjectsBean> subjects = movie.getSubjects();
+        }
+
+        @Override
+        public void onFailure(Call<Movie> call, Throwable t) {
+
+        }
+    });*/
+    }
+
+    private void getDoctor() {
+
+        HashMap<String, Object> params = new HashMap<>();
                /* params.put("cityId", "2157");
                 params.put("districtId", 0);
                 params.put("hospitalService", 0);
@@ -110,87 +117,28 @@ public class MainPresenter extends BasePresenter {
                 params.put("OrderBy", 0);
                 params.put("HospitalType", -1);*/
 
-                params.put("HospitalId", "601");
-                params.put("IsShowAvailableCount", true);
-                params.put("StartIndex", 0);
-                params.put("EndIndex", 9);
-                params.put("OrderBy", 0);
-                params.put("DoctorType", "2");
-                params.put("ProfessionDepartmentId", "");
-                params.put("CityId", "2157");
-                params.put("SchedulingDate", "");
-                params.put("DistrictId", "0");
+        params.put("HospitalId", "601");
+        params.put("IsShowAvailableCount", true);
+        params.put("StartIndex", 0);
+        params.put("EndIndex", 9);
+        params.put("OrderBy", 0);
+        params.put("DoctorType", "2");
+        params.put("ProfessionDepartmentId", "");
+        params.put("CityId", "2157");
+        params.put("SchedulingDate", "");
+        params.put("DistrictId", "0");
 
-                //update();
-                //hkLogin();
-                //gitDemo();
-
-
-
-                getDoctor(params, v);
-
-                /*RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>() {
+        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().queryDoctors(params)
+                , new BeanRespCallBack<List<Doctor>>() {
                     @Override
-                    public void onNext(Hospital hospital) {
-
+                    public void onSuccessResp(List<Doctor> response) {
+                        ToastUtils.show(response.get(0).getDoctorName());
                     }
-                });*/
+                });
 
 
-                /*Gson gson = new GsonBuilder().serializeNulls()
-                        .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(ApiService.BASE_DOUBAN_API)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
-
-                retrofit.create(ApiService.class).getMovie(0, 10).enqueue(new Callback<Movie>() {
-                    @Override
-                    public void onResponse(Call<Movie> call, Response<Movie> response) {
-
-                        Movie movie = response.body();
-                        List<Movie.SubjectsBean> subjects = movie.getSubjects();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Movie> call, Throwable t) {
-
-                    }
-                });*/
-
-
-
-              /*  retrofit.create(ApiService.class).getHotHos(params).enqueue(new RespCallback() {
-                    @Override
-                    public void onSuccessResp(Call<?> call, JSONObject response) {
-
-                    }
-
-                    @Override
-                    public void onFailureResp(Call<?> call, JSONObject response) {
-
-                    }
-
-                    @Override
-                    public void onFail(Call<?> call, Throwable response) {
-
-                    }
-                });*/
-
-                break;
-        }
-    }
-
-    private void getDoctor(HashMap<String, Object> params, final View v) {
-
-        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().queryDoctors(params), new BeanRespCallBack<List<Doctor>>() {
-            @Override
-            public void onSuccessResp(List<Doctor> response) {
-                ToastUtils.show(response.get(0).getDoctorName());
-            }
-        });
+     /*   RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>(context) {
+        });*/
 
 
         /*RetrofitMethods.commonRequest(
@@ -215,7 +163,6 @@ public class MainPresenter extends BasePresenter {
         );*/
 
     }
-
 
     private void gson() {
        /* String jsonString = "{name:怪盗kidou,age:24}";

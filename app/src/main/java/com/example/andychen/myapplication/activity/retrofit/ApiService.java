@@ -77,7 +77,7 @@ public interface ApiService {
     @POST("PreTreatment/GetHospitalDetail/601")
     Observable<ResponseBody> getHosInfo();
 
-    @POST("PreTreatment/GetHospitalDetail/123123123")
+    @POST("PreTreatment/GetHospitalDetail/601")
     Observable<Result<Hospital>> rxGetHosInfo();
 
 
