@@ -69,16 +69,23 @@ public class RetrofitMethods {
 
 
     public static <T> Subscription commonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
-        return observable.subscribeOn(Schedulers.io())
+        return  observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<Result<T>, T>() {
                     @Override
                     public T call(Result<T> tResult) {
-                        if (!tResult.isSuccess()) throw new ApiException(tResult.getReturnMessage());
+                        if (!tResult.isSuccess()) {
+                            if(subscriber instanceof CustomSubscriber){
+                                ((CustomSubscriber) subscriber).setObservable(observable);
+                            }
+                            ApiException apiException = new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
+                            throw apiException;
+                        }
                         return tResult.getData();
                     }
                 })
                 .subscribe(subscriber);
+
     }
 
 

@@ -1,31 +1,22 @@
 package com.example.andychen.myapplication.activity.mvp_presenter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
-import android.view.View;
 
-import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.activity.SecondActivity;
-import com.example.andychen.myapplication.activity.activity.ThirdActivity;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.Hospital;
-import com.example.andychen.myapplication.activity.event.EventMessage;
-import com.example.andychen.myapplication.activity.mvp_view.BaseView;
-import com.example.andychen.myapplication.activity.mvp_view.MainView;
+import com.example.andychen.myapplication.activity.mvp_view_interface.BaseView;
+import com.example.andychen.myapplication.activity.mvp_view_interface.MainView;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.BeanRespCallBack;
 import com.example.andychen.myapplication.activity.retrofit.CustomSubscriber;
 import com.example.andychen.myapplication.activity.retrofit.OkHttpUtils;
 import com.example.andychen.myapplication.activity.retrofit.RequestParams;
-import com.example.andychen.myapplication.activity.retrofit.RespCallback;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitUtils;
-import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -67,19 +58,6 @@ public class MainPresenter extends BasePresenter {
     private final String saveFileName = PATH + "heiheihei.apk";
 
 
-
-    public void getHosInfo(){
-        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>(context) {
-            @Override
-            public void onNext(Hospital hospital) {
-
-            }
-        });
-    }
-
-
-
-
     private void getMovie() {
     /*Gson gson = new GsonBuilder().serializeNulls()
             .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
@@ -105,7 +83,7 @@ public class MainPresenter extends BasePresenter {
     });*/
     }
 
-    private void getDoctor() {
+    public void getDoctorList() {
 
         HashMap<String, Object> params = new HashMap<>();
                /* params.put("cityId", "2157");
@@ -120,7 +98,7 @@ public class MainPresenter extends BasePresenter {
         params.put("HospitalId", "601");
         params.put("IsShowAvailableCount", true);
         params.put("StartIndex", 0);
-        params.put("EndIndex", 9);
+        params.put("EndIndex", 50);
         params.put("OrderBy", 0);
         params.put("DoctorType", "2");
         params.put("ProfessionDepartmentId", "");
@@ -128,13 +106,20 @@ public class MainPresenter extends BasePresenter {
         params.put("SchedulingDate", "");
         params.put("DistrictId", "0");
 
-        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().queryDoctors(params)
-                , new BeanRespCallBack<List<Doctor>>() {
+   /*     RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
+                , new CustomSubscriber<List<Doctor>>(context) {
                     @Override
-                    public void onSuccessResp(List<Doctor> response) {
-                        ToastUtils.show(response.get(0).getDoctorName());
+                    public void onNext(List<Doctor> doctorList) {
+                        view.RefreshDocList(doctorList);
                     }
-                });
+                });*/
+
+        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>(context) {
+            @Override
+            public void onNext(Hospital hospital) {
+                ToastUtils.show("next");
+            }
+        });
 
 
      /*   RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>(context) {

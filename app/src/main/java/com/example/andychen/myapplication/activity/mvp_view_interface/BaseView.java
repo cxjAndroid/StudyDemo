@@ -1,0 +1,12 @@
+package com.example.andychen.myapplication.activity.mvp_view_interface;
+
+/**
+ * Created by andychen on 2016/7/1.
+ */
+public interface BaseView {
+
+    void showLoadPage();
+    void showErrorPage(int type);
+    void showSuccessPage();
+
+}

@@ -19,24 +19,24 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
 import com.example.andychen.myapplication.activity.utils.StringUtils;
 import com.example.andychen.myapplication.activity.utils.SystemTool;
 
 
-public class EmptyLayout extends RelativeLayout implements
+public class LoadStatusPage extends RelativeLayout implements
         View.OnClickListener {
 
     public static final int NETWORK_ERROR = 1; // 网络错误
     public static final int NETWORK_LOADING = 2; // 加载中
-    public static final int NODATA = 3; // 没有数据
+    public static final int NO_DATA = 3; // 没有数据
     public static final int HIDE_LAYOUT = 4; // 隐藏
+    public static final int SERVICE_ERROR = 5; // 服务器错误
+    public static final int BIZ_ERROR = 6; // 业务错误 isSuccess = false
     private int mErrorState = NETWORK_LOADING;
 
     private OnClickListener listener;
@@ -47,12 +47,12 @@ public class EmptyLayout extends RelativeLayout implements
     public ImageView img;
     private ProgressBar animProgress;
 
-    public EmptyLayout(Context context) {
+    public LoadStatusPage(Context context) {
         super(context);
         init();
     }
 
-    public EmptyLayout(Context context, AttributeSet attrs) {
+    public LoadStatusPage(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -66,7 +66,7 @@ public class EmptyLayout extends RelativeLayout implements
 
         setBackgroundColor(-1);
         setOnClickListener(this);
-        setErrorType(NETWORK_LOADING);
+        setStatusType(NETWORK_LOADING);
 
         img.setOnClickListener(new OnClickListener() {
             @Override
@@ -131,17 +131,17 @@ public class EmptyLayout extends RelativeLayout implements
         }
     }
 
-    public void setErrorType(int i) {
+    public void setStatusType(int i) {
         setVisibility(View.VISIBLE);
         switch (i) {
             case NETWORK_ERROR:
                 mErrorState = NETWORK_ERROR;
                 tv.setText("net is dead");
-                if (SystemTool.isWiFi(getContext())) {
+                //if (SystemTool.isWiFi(getContext())) {
                     img.setBackgroundResource(R.drawable.page_icon_network);
-                } else {
+                /*} else {
                     img.setBackgroundResource(R.drawable.pagefailed_bg);
-                }
+                }*/
                 img.setVisibility(View.VISIBLE);
                 animProgress.setVisibility(View.GONE);
                 clickEnable = true;
@@ -153,8 +153,8 @@ public class EmptyLayout extends RelativeLayout implements
                 tv.setText("loading...");
                 clickEnable = false;
                 break;
-            case NODATA:
-                mErrorState = NODATA;
+            case NO_DATA:
+                mErrorState = NO_DATA;
                 img.setBackgroundResource(R.drawable.page_icon_empty);
                 img.setVisibility(View.VISIBLE);
                 animProgress.setVisibility(View.GONE);
@@ -163,6 +163,20 @@ public class EmptyLayout extends RelativeLayout implements
                 break;
             case HIDE_LAYOUT:
                 dismiss();
+                break;
+            case SERVICE_ERROR:
+                img.setBackgroundResource(R.drawable.pagefailed_bg);
+                img.setVisibility(View.VISIBLE);
+                animProgress.setVisibility(View.GONE);
+                tv.setText("service_error...");
+                clickEnable = true;
+                break;
+            case BIZ_ERROR:
+                img.setBackgroundResource(R.drawable.pagefailed_bg);
+                img.setVisibility(View.VISIBLE);
+                animProgress.setVisibility(View.GONE);
+                tv.setText("error...");
+                clickEnable = true;
                 break;
             default:
                 break;

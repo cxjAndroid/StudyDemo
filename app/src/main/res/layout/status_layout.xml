@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.andychen.myapplication.activity.view.EmptyLayout
+    <com.example.andychen.myapplication.activity.view.LoadStatusPage
         android:id="@+id/status_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

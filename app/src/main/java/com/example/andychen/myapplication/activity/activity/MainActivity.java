@@ -1,36 +1,39 @@
 package com.example.andychen.myapplication.activity.activity;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.base.BaseApplication;
-import com.example.andychen.myapplication.activity.bean.Hospital;
+import com.example.andychen.myapplication.activity.base.BaseListAdapter;
+import com.example.andychen.myapplication.activity.base.BaseViewHolder;
+import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.People;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
-import com.example.andychen.myapplication.activity.mvp_view.MainView;
+import com.example.andychen.myapplication.activity.mvp_view_interface.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
-import com.example.andychen.myapplication.activity.view.EmptyLayout;
+import com.example.andychen.myapplication.activity.view.LoadStatusPage;
+import com.example.andychen.myapplication.activity.view.MyListView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,30 +44,31 @@ import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class MainActivity extends BaseActivity implements MainView{
-
+public class MainActivity extends BaseActivity implements MainView {
     @BindView(R.id.btn)
     Button btn;
     @BindView(R.id.iv)
     ImageView iv;
     @BindView(R.id.tv)
     TextView tv;
+    @BindView(R.id.mListView)
+    MyListView mListView;
     private MainPresenter mainPresenter;
     private Subscription subscribe;
-    private EmptyLayout emptyLayout;
+    private LoadStatusPage loadStatusPage;
 
-    public EmptyLayout getEmptyLayout() {
-        return emptyLayout;
+    public LoadStatusPage getLoadStatusPage() {
+        return loadStatusPage;
     }
 
-    public void setEmptyLayout(EmptyLayout emptyLayout) {
-        this.emptyLayout = emptyLayout;
+    public void setLoadStatusPage(LoadStatusPage loadStatusPage) {
+        this.loadStatusPage = loadStatusPage;
     }
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
-        emptyLayout = new EmptyLayout(this);
+        loadStatusPage = new LoadStatusPage(this);
         //addContentView(emptyLayout,
         // new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
@@ -78,11 +82,33 @@ public class MainActivity extends BaseActivity implements MainView{
         float density = BaseApplication.getApplication().getResources().getDisplayMetrics().density;
         float densityDpi = BaseApplication.getApplication().getResources().getDisplayMetrics().densityDpi;
 
-        //被观察者
-        rxDemo();
-        GsonDemo();
+       /* rxDemo();
+        GsonDemo();*/
+        showLoadPage();
+        mainPresenter.getDoctorList();
     }
 
+    @Override
+    public void RefreshDocList(List<Doctor> doctorList) {
+        MyAdapter myAdapter = new MyAdapter(this, doctorList, R.layout.item_doctor);
+        mListView.setAdapter(myAdapter);
+    }
+
+    class MyAdapter extends BaseListAdapter<Doctor> {
+        public MyAdapter(Context context, List<Doctor> data, int layoutId) {
+            super(context, data, layoutId);
+        }
+
+        @Override
+        public void refreshView(BaseViewHolder holder, Doctor doctor, int p) {
+            TextView text_dep = holder.getView(R.id.text_dep);
+            TextView text_doc = holder.getView(R.id.text_doc);
+            ImageView image_doc = holder.getView(R.id.image_doc);
+
+            text_dep.setText(doctor.getDepartmentName());
+            text_doc.setText(doctor.getDoctorName());
+        }
+    }
 
 
     @OnClick({R.id.btn, R.id.btn1, R.id.iv})
@@ -98,6 +124,9 @@ public class MainActivity extends BaseActivity implements MainView{
                 break;
             case R.id.iv:
                 break;
+            case R.id.mListView:
+
+                break;
         }
     }
 
@@ -109,15 +138,6 @@ public class MainActivity extends BaseActivity implements MainView{
             tv.setText(extras.getString("result"));
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (subscribe != null) {
-            subscribe.unsubscribe();
-        }
-    }
-
 
     private void GsonDemo() {
         People people = new People();
