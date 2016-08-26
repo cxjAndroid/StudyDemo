@@ -2,13 +2,9 @@ package com.example.andychen.myapplication.activity.retrofit;
 
 import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
+import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.greenrobot.eventbus.Subscribe;
-
-import java.io.IOError;
-import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -16,10 +12,10 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -69,15 +65,12 @@ public class RetrofitMethods {
 
 
     public static <T> Subscription commonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
-        return  observable.subscribeOn(Schedulers.io())
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<Result<T>, T>() {
                     @Override
                     public T call(Result<T> tResult) {
                         if (!tResult.isSuccess()) {
-                            if(subscriber instanceof CustomSubscriber){
-                                ((CustomSubscriber) subscriber).setObservable(observable);
-                            }
                             ApiException apiException = new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
                             throw apiException;
                         }
@@ -85,24 +78,60 @@ public class RetrofitMethods {
                     }
                 })
                 .subscribe(subscriber);
+        RxUtils.get().addList(subscription);
+        return subscription;
+
+    }
+
+    public static <T> Subscription commonRequest(final Observable<Result<T>> observable, final Observer<T> observer) {
+
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<Result<T>, T>() {
+                    @Override
+                    public T call(Result<T> tResult) {
+                        if (observer instanceof CustomObserver) {
+                            ((CustomObserver) observer).setObservable(observable);
+                        }
+                        if (!tResult.isSuccess()) {
+                            ApiException apiException = new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
+                            throw apiException;
+                        }
+                        return tResult.getData();
+                    }
+                })
+                .subscribe(observer);
+        RxUtils.get().addList(subscription);
+        return subscription;
 
     }
 
 
     public static Subscription originRequest(final Observable<ResponseBody> observable, final Subscriber<ResponseBody> subscriber) {
-        return  observable.subscribeOn(Schedulers.io())
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+        RxUtils.get().addList(subscription);
+        return subscription;
+
+    }
+
+    public static Subscription originRequest(final Observable<ResponseBody> observable, final Observer<ResponseBody> observer) {
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        RxUtils.get().addList(subscription);
+        return subscription;
 
     }
 
 
-    public static <T> Call<Result<T>> commonRequest(Call<Result<T>> call,BeanRespCallBack<T> callBack){
+    public static <T> Call<Result<T>> commonRequest(Call<Result<T>> call, BeanRespCallBack<T> callBack) {
         call.enqueue(callBack);
         return call;
     }
 
-    public static Call<ResponseBody> originRequest(Call<ResponseBody> call,RespCallback callBack){
+    public static Call<ResponseBody> originRequest(Call<ResponseBody> call, RespCallback callBack) {
         call.enqueue(callBack);
         return call;
     }

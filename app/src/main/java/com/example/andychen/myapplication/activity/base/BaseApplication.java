@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 /**
  * Created by andychen on 2016/6/20.
  */
@@ -29,6 +31,8 @@ public class BaseApplication extends Application {
         mMainLooper = getMainLooper();
         mInstance = this;
         super.onCreate();
+
+        Fresco.initialize(this);
     }
 
     public static BaseApplication getApplication() {

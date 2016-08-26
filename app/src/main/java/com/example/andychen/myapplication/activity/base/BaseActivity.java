@@ -99,12 +99,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showErrorPage(int type) {
-        statusPage.setStatusType(type);
+        if (statusPage != null) statusPage.setStatusType(type);
     }
 
     @Override
     public void showSuccessPage() {
-        statusPage.setStatusType(LoadStatusPage.HIDE_LAYOUT);
-        //statusPage.setVisibility(View.GONE);
+        if (statusPage != null) statusPage.setStatusType(LoadStatusPage.HIDE_LAYOUT);
     }
 }

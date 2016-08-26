@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapte
 import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import com.example.andychen.myapplication.activity.view.MyListView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.umeng.analytics.MobclickAgent;
@@ -55,20 +57,10 @@ public class MainActivity extends BaseActivity implements MainView {
     MyListView mListView;
     private MainPresenter mainPresenter;
     private Subscription subscribe;
-    private LoadStatusPage loadStatusPage;
-
-    public LoadStatusPage getLoadStatusPage() {
-        return loadStatusPage;
-    }
-
-    public void setLoadStatusPage(LoadStatusPage loadStatusPage) {
-        this.loadStatusPage = loadStatusPage;
-    }
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
-        loadStatusPage = new LoadStatusPage(this);
         //addContentView(emptyLayout,
         // new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
@@ -103,10 +95,11 @@ public class MainActivity extends BaseActivity implements MainView {
         public void refreshView(BaseViewHolder holder, Doctor doctor, int p) {
             TextView text_dep = holder.getView(R.id.text_dep);
             TextView text_doc = holder.getView(R.id.text_doc);
-            ImageView image_doc = holder.getView(R.id.image_doc);
+            SimpleDraweeView image_doc = holder.getView(R.id.image_doc);
 
             text_dep.setText(doctor.getDepartmentName());
             text_doc.setText(doctor.getDoctorName());
+            image_doc.setImageURI(Uri.parse(doctor.getThumbnail()));
         }
     }
 
@@ -115,8 +108,9 @@ public class MainActivity extends BaseActivity implements MainView {
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
-                IntentUtils.startActivityLeftIn(this, SecondActivity.class);
-                EventBus.getDefault().postSticky(new EventMessage<>("send message"));
+                mainPresenter.click();
+              /*  IntentUtils.startActivityLeftIn(this, SecondActivity.class);
+                EventBus.getDefault().postSticky(new EventMessage<>("send message"));*/
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, ThirdActivity.class);

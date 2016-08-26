@@ -8,13 +8,14 @@ import com.example.andychen.myapplication.activity.bean.Hospital;
 import com.example.andychen.myapplication.activity.mvp_view_interface.BaseView;
 import com.example.andychen.myapplication.activity.mvp_view_interface.MainView;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
-import com.example.andychen.myapplication.activity.retrofit.BeanRespCallBack;
+import com.example.andychen.myapplication.activity.retrofit.CustomObserver;
 import com.example.andychen.myapplication.activity.retrofit.CustomSubscriber;
 import com.example.andychen.myapplication.activity.retrofit.OkHttpUtils;
 import com.example.andychen.myapplication.activity.retrofit.RequestParams;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
+import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
 
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.Observer;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -44,6 +46,7 @@ public class MainPresenter extends BasePresenter {
     private Context context;
     private Subscription subscribe;
     private MainView view;
+    private Subscription subscription;
 
     public MainPresenter(Context context, BaseView view) {
         this.context = context;
@@ -83,6 +86,10 @@ public class MainPresenter extends BasePresenter {
     });*/
     }
 
+    public void click(){
+        RxUtils.get().unSubscribe();
+    }
+
     public void getDoctorList() {
 
         HashMap<String, Object> params = new HashMap<>();
@@ -106,20 +113,25 @@ public class MainPresenter extends BasePresenter {
         params.put("SchedulingDate", "");
         params.put("DistrictId", "0");
 
-   /*     RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
-                , new CustomSubscriber<List<Doctor>>(context) {
+        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
+                , new CustomObserver<List<Doctor>>(context) {
                     @Override
-                    public void onNext(List<Doctor> doctorList) {
+                    public void doOnNext(List<Doctor> doctorList) {
                         view.RefreshDocList(doctorList);
                     }
-                });*/
+                });
 
-        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>(context) {
+
+       /* RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomObserver<Hospital>(context) {
             @Override
-            public void onNext(Hospital hospital) {
-                ToastUtils.show("next");
+            public void doOnNext(Hospital hospital) {
+                ToastUtils.show(hospital.getHospitalName());
+                LogUtils.e(hospital.getHospitalName());
             }
-        });
+        });*/
+
+        //RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), subscriber);
+
 
 
      /*   RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomSubscriber<Hospital>(context) {
@@ -205,7 +217,6 @@ public class MainPresenter extends BasePresenter {
     }
 
     private void update() {
-
 
         File file = new File(PATH);
         if (!file.exists()) {

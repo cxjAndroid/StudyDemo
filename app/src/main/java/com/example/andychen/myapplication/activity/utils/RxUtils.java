@@ -38,7 +38,7 @@ public class RxUtils {
     public void unSubscribe() {
         if (subscriptionList.size() > 0) {
             for (Subscription subscription : subscriptionList) {
-                if (subscription != null && !subscription.isUnsubscribed()) {
+                if (subscription != null) {
                     subscription.unsubscribe();
                 }
             }

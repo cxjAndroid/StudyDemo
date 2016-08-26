@@ -1,18 +1,11 @@
 package com.example.andychen.myapplication.activity.retrofit;
 
 import android.content.Context;
-import android.view.View;
 
 import com.example.andychen.myapplication.activity.base.BaseActivity;
-import com.example.andychen.myapplication.activity.bean.Doctor;
-import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 
-import java.util.HashMap;
-import java.util.List;
-
-import rx.Observable;
 import rx.Subscriber;
 
 /**
@@ -26,16 +19,6 @@ public abstract class CustomSubscriber<T> extends Subscriber<T> {
     }
 
     public CustomSubscriber() {
-    }
-
-    private Observable<Result<T>> observable;
-
-    public Observable<Result<T>> getObservable() {
-        return observable;
-    }
-
-    public void setObservable(Observable<Result<T>> observable) {
-        this.observable = observable;
     }
 
     @Override
@@ -52,12 +35,6 @@ public abstract class CustomSubscriber<T> extends Subscriber<T> {
                     LoadStatusPage.BIZ_ERROR : LoadStatusPage.SERVICE_ERROR);
 
         }
-        ((BaseActivity) context).getStatusPage().setOnLayoutClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RetrofitMethods.commonRequest(getObservable(),CustomSubscriber.this);
-            }
-        });
         ToastUtils.show(e.getMessage());
     }
 

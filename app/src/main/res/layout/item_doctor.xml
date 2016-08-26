@@ -3,16 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image_doc"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/loading" />
+        android:scaleType="fitXY"
+        app:roundAsCircle="true"
+        android:padding="5dp"
+        app:failureImage="@drawable/default_avatar"
+        app:placeholderImage="@drawable/default_avatar"
+        />
 
     <TextView
+        android:layout_marginTop="5dp"
         android:id="@+id/text_doc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,6 +28,7 @@
         tools:text="name" />
 
     <TextView
+        android:layout_marginBottom="5dp"
         android:id="@+id/text_dep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
