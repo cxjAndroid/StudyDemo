@@ -3,28 +3,31 @@ package com.example.andychen.myapplication.activity.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.andychen.myapplication.activity.mvp_presenter.BasePresenter;
 import com.example.andychen.myapplication.activity.mvp_view_interface.BaseView;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
-import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 
 /**
  * Created by andychen on 2016/6/1.
  */
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 
     private boolean isBindEventBus;
     private Call<?> call;
     private LoadStatusPage statusPage;
+    public T mPresenter;
+    public boolean isNeedBindButterKnife = true;
+
 
     public LoadStatusPage getStatusPage() {
         return statusPage;
@@ -47,7 +50,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+        if(isNeedBindButterKnife) ButterKnife.bind(this);
+        initPresenter();
         initDate();
+
+    }
+
+    protected void initPresenter() {
+
     }
 
     public abstract void initView();
@@ -77,6 +87,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.detach();
+        }
         if (isBindEventBus) {
             EventBus.getDefault().unregister(this);
             Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
@@ -87,7 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onStop() {
         super.onStop();
-        //RxUtils.get().unSubscribe();
+        RxUtils.get().unSubscribe();
     }
 
     @Override

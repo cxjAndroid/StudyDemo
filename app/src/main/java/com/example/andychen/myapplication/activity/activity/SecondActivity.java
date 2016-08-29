@@ -1,12 +1,15 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.event.EventMessage;
+import com.example.andychen.myapplication.activity.utils.DpUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -22,19 +25,22 @@ public class SecondActivity extends BaseActivity {
 
     @BindView(R.id.btn_second)
     Button btn_second;
+    @BindView(R.id.rl_adv)
+    RelativeLayout rl_adv;
 
     private ViewConfiguration viewConfiguration;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_second);
-
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rl_adv.getLayoutParams();
+        layoutParams.height = DpUtils.dip2px(400);
+        rl_adv.setLayoutParams(layoutParams);
     }
 
     @Override
     public void initDate() {
         registerEventBus();
-        ButterKnife.bind(this);
         viewConfiguration = ViewConfiguration.get(this);
         setResult(RESULT_OK);
     }
@@ -49,10 +55,10 @@ public class SecondActivity extends BaseActivity {
         int maximumVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
         //判断是否有物理按键
         boolean isHavePermanentMenuKey = viewConfiguration.hasPermanentMenuKey();
-        LogUtils.e("touchSlop:"+String.valueOf(touchSlop));
-        LogUtils.e("minimumVelocity:"+String.valueOf(minimumVelocity));
-        LogUtils.e("maximumVelocity:"+String.valueOf(maximumVelocity));
-        LogUtils.e("isHavePermanentMenuKey:"+isHavePermanentMenuKey);
+        LogUtils.e("touchSlop:" + String.valueOf(touchSlop));
+        LogUtils.e("minimumVelocity:" + String.valueOf(minimumVelocity));
+        LogUtils.e("maximumVelocity:" + String.valueOf(maximumVelocity));
+        LogUtils.e("isHavePermanentMenuKey:" + isHavePermanentMenuKey);
     }
 
     @Subscribe(sticky = true)

@@ -71,8 +71,7 @@ public class RetrofitMethods {
                     @Override
                     public T call(Result<T> tResult) {
                         if (!tResult.isSuccess()) {
-                            ApiException apiException = new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
-                            throw apiException;
+                            throw new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
                         }
                         return tResult.getData();
                     }
@@ -94,8 +93,7 @@ public class RetrofitMethods {
                             ((CustomObserver) observer).setObservable(observable);
                         }
                         if (!tResult.isSuccess()) {
-                            ApiException apiException = new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
-                            throw apiException;
+                            throw new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
                         }
                         return tResult.getData();
                     }

@@ -41,16 +41,16 @@ import rx.schedulers.Schedulers;
 /**
  * Created by andychen on 2016/7/1.
  */
-public class MainPresenter extends BasePresenter {
+public class MainPresenter extends BasePresenter<BaseView> {
 
     private Context context;
     private Subscription subscribe;
-    private MainView view;
+    //private MainView view;
     private Subscription subscription;
 
     public MainPresenter(Context context, BaseView view) {
         this.context = context;
-        this.view = (MainView) view;
+        attach(view);
     }
 
     public static final String PATH = Environment.getExternalStorageDirectory() + "/kmytj/";
@@ -86,7 +86,7 @@ public class MainPresenter extends BasePresenter {
     });*/
     }
 
-    public void click(){
+    public void click() {
         RxUtils.get().unSubscribe();
     }
 
@@ -113,22 +113,24 @@ public class MainPresenter extends BasePresenter {
         params.put("SchedulingDate", "");
         params.put("DistrictId", "0");
 
-        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
+
+
+        /*RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
                 , new CustomObserver<List<Doctor>>(context) {
                     @Override
                     public void doOnNext(List<Doctor> doctorList) {
-                        view.RefreshDocList(doctorList);
+                        ((MainView)view).RefreshDocList(doctorList);
                     }
-                });
+                });*/
 
 
-       /* RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), new CustomObserver<Hospital>(context) {
+        RetrofitMethods.commonRequest(getApiService().rxGetHosInfo(), new CustomObserver<Hospital>(context) {
             @Override
             public void doOnNext(Hospital hospital) {
                 ToastUtils.show(hospital.getHospitalName());
                 LogUtils.e(hospital.getHospitalName());
             }
-        });*/
+        });
 
         //RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), subscriber);
 

@@ -26,7 +26,6 @@ import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
-import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import com.example.andychen.myapplication.activity.view.MyListView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
@@ -46,7 +45,7 @@ import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainView {
     @BindView(R.id.btn)
     Button btn;
     @BindView(R.id.iv)
@@ -55,7 +54,6 @@ public class MainActivity extends BaseActivity implements MainView {
     TextView tv;
     @BindView(R.id.mListView)
     MyListView mListView;
-    private MainPresenter mainPresenter;
     private Subscription subscribe;
 
     @Override
@@ -68,8 +66,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
-        ButterKnife.bind(this);
-        mainPresenter = new MainPresenter(this,this);
+
 
         float density = BaseApplication.getApplication().getResources().getDisplayMetrics().density;
         float densityDpi = BaseApplication.getApplication().getResources().getDisplayMetrics().densityDpi;
@@ -77,7 +74,12 @@ public class MainActivity extends BaseActivity implements MainView {
        /* rxDemo();
         GsonDemo();*/
         showLoadPage();
-        mainPresenter.getDoctorList();
+        mPresenter.getDoctorList();
+    }
+
+    @Override
+    protected void initPresenter() {
+        mPresenter = new MainPresenter(this,this);
     }
 
     @Override
@@ -108,9 +110,9 @@ public class MainActivity extends BaseActivity implements MainView {
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
-                mainPresenter.click();
-              /*  IntentUtils.startActivityLeftIn(this, SecondActivity.class);
-                EventBus.getDefault().postSticky(new EventMessage<>("send message"));*/
+                //mPresenter.click();
+                IntentUtils.startActivityLeftIn(this, SecondActivity.class);
+                EventBus.getDefault().postSticky(new EventMessage<>("send message"));
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, ThirdActivity.class);
