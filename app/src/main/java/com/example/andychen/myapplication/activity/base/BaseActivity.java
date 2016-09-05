@@ -87,6 +87,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RxUtils.get().unSubscribe();
         if (mPresenter != null) {
             mPresenter.detach();
         }
@@ -94,17 +95,17 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             EventBus.getDefault().unregister(this);
             Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 
     @Override
     protected void onStop() {
         super.onStop();
-        RxUtils.get().unSubscribe();
     }
 
     @Override
-    public void showLoadPage() {
+    public void showLoadingPage() {
         statusPage = new LoadStatusPage(this);
         addContentView(statusPage,
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

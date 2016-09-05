@@ -33,7 +33,7 @@
         android:text="hahaha"
         android:layout_toRightOf="@+id/smartTab"
         />
-    <com.example.andychen.myapplication.activity.view.MyViewPager
+    <com.example.andychen.myapplication.activity.mView.MyViewPager
         android:layout_below="@+id/smartTab"
         android:id="@+id/mViewpager"
         android:layout_width="match_parent"

@@ -1,50 +1,75 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.adapter.BannerAdapter;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
+import com.example.andychen.myapplication.activity.bean.ShareInfo;
 import com.example.andychen.myapplication.activity.event.EventMessage;
-import com.example.andychen.myapplication.activity.utils.DpUtils;
+import com.example.andychen.myapplication.activity.mvp_presenter.BannerPresenter;
+import com.example.andychen.myapplication.activity.mvp_view_interface.BannerView;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
+import com.example.andychen.myapplication.activity.utils.MetricsUtils;
+import com.example.andychen.myapplication.activity.view.MyViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by andychen on 2016/6/1.
  */
-public class SecondActivity extends BaseActivity {
+public class BannerActivity extends BaseActivity<BannerPresenter> implements BannerView {
 
     @BindView(R.id.btn_second)
     Button btn_second;
-    @BindView(R.id.rl_adv)
-    RelativeLayout rl_adv;
+    @BindView(R.id.adv_viewpager)
+    MyViewPager adv_viewpager;
 
     private ViewConfiguration viewConfiguration;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_second);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rl_adv.getLayoutParams();
-        layoutParams.height = DpUtils.dip2px(400);
-        rl_adv.setLayoutParams(layoutParams);
     }
 
     @Override
     public void initDate() {
+        adjustAdvLayout();
         registerEventBus();
         viewConfiguration = ViewConfiguration.get(this);
         setResult(RESULT_OK);
+
+        showLoadingPage();
+        mPresenter.getShareInfo();
     }
 
+    @Override
+    protected void initPresenter() {
+        mPresenter = new BannerPresenter(this, this);
+    }
+
+    @Override
+    public void adjustAdvLayout() {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) adv_viewpager.getLayoutParams();
+        int[] pixels = MetricsUtils.getPixels();
+        layoutParams.height = (int) (pixels[1] * 0.55);
+        adv_viewpager.setLayoutParams(layoutParams);
+    }
+
+
+    @Override
+    public void initBanner(List<ShareInfo> shareInfoList) {
+        BannerAdapter bannerAdapter = new BannerAdapter(this, shareInfoList);
+        adv_viewpager.setAdapter(bannerAdapter);
+    }
 
     @OnClick(R.id.btn_second)
     void click() {

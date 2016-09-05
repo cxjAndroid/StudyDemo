@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
  */
 public class MetricsUtils {
 
-    public static void getPixels() {
+    public static int[] getPixels() {
         DisplayMetrics displayMetrics = BaseApplication.getApplication().
                 getApplicationContext().getResources().getDisplayMetrics();
 
@@ -24,6 +24,7 @@ public class MetricsUtils {
         if (hasNavBar()) {
             displayHeight = displayHeight + getNavigationBarHeight();
         }
+        return new int[]{displayHeight, displayWidth};
     }
 
     public static void getDensity() {
