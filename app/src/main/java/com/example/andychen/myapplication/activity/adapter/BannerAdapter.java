@@ -30,7 +30,7 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return shareInfoList.size();
+        return Integer.MAX_VALUE;
     }
 
     @Override

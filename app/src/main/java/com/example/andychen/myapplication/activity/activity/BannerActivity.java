@@ -1,5 +1,7 @@
 package com.example.andychen.myapplication.activity.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -18,6 +20,7 @@ import com.example.andychen.myapplication.activity.view.MyViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,6 +37,9 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     MyViewPager adv_viewpager;
 
     private ViewConfiguration viewConfiguration;
+    private MyHandler myHandler;
+    private Handler handler;
+    private MyRunnable myRunnable;
 
     @Override
     public void initView() {
@@ -69,6 +75,41 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     public void initBanner(List<ShareInfo> shareInfoList) {
         BannerAdapter bannerAdapter = new BannerAdapter(this, shareInfoList);
         adv_viewpager.setAdapter(bannerAdapter);
+       /* myHandler = new MyHandler(this);
+        myHandler.sendEmptyMessageDelayed(0, 2000);*/
+
+        myRunnable = new MyRunnable();
+        handler = new Handler();
+        handler.postDelayed(myRunnable,2000);
+    }
+
+
+    class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            adv_viewpager.setCurrentItem(adv_viewpager.getCurrentItem() + 1);
+            handler.postDelayed(this, 2000);
+        }
+    }
+
+
+    static class MyHandler extends Handler {
+
+        private WeakReference<BannerActivity> weakReference;
+        private final BannerActivity bannerActivity;
+
+        public MyHandler(BannerActivity activity) {
+            // super();
+            weakReference = new WeakReference<>(activity);
+            bannerActivity = weakReference.get();
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            //super.handleMessage(msg);
+            bannerActivity.adv_viewpager.setCurrentItem(bannerActivity.adv_viewpager.getCurrentItem() + 1);
+            this.sendEmptyMessageDelayed(0, 2000);
+        }
     }
 
     @OnClick(R.id.btn_second)
@@ -90,5 +131,13 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     public void onEvent(EventMessage msg) {
         Toast.makeText(this, (CharSequence) msg.getMessage(), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //myHandler.removeMessages(0);
+        handler.removeCallbacks(myRunnable);
+    }
+
 
 }
