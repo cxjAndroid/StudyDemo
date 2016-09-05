@@ -10,7 +10,6 @@ import com.example.andychen.myapplication.activity.base.BaseApplication;
  */
 public class DpUtils {
 
-
     /**
      * dip转换px
      */

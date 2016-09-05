@@ -9,8 +9,11 @@ import android.widget.Toast;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.event.EventMessage;
+import com.example.andychen.myapplication.activity.mvp_view_interface.SecondView;
 import com.example.andychen.myapplication.activity.utils.DpUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
+import com.example.andychen.myapplication.activity.utils.MetricsUtils;
+import com.example.andychen.myapplication.activity.utils.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -21,7 +24,7 @@ import butterknife.OnClick;
 /**
  * Created by andychen on 2016/6/1.
  */
-public class SecondActivity extends BaseActivity {
+public class SecondActivity extends BaseActivity implements SecondView {
 
     @BindView(R.id.btn_second)
     Button btn_second;
@@ -33,18 +36,23 @@ public class SecondActivity extends BaseActivity {
     @Override
     public void initView() {
         setContentView(R.layout.activity_second);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rl_adv.getLayoutParams();
-        layoutParams.height = DpUtils.dip2px(400);
-        rl_adv.setLayoutParams(layoutParams);
     }
 
     @Override
     public void initDate() {
+        adjustAdvLayout();
         registerEventBus();
         viewConfiguration = ViewConfiguration.get(this);
         setResult(RESULT_OK);
     }
 
+    @Override
+    public void adjustAdvLayout() {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rl_adv.getLayoutParams();
+        int[] pixels = MetricsUtils.getPixels();
+        layoutParams.height = (int) (pixels[1] * 0.55);
+        rl_adv.setLayoutParams(layoutParams);
+    }
 
     @OnClick(R.id.btn_second)
     void click() {

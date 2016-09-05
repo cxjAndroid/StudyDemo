@@ -4,6 +4,7 @@ import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.Hospital;
 import com.example.andychen.myapplication.activity.bean.Movie;
 import com.example.andychen.myapplication.activity.bean.Result;
+import com.example.andychen.myapplication.activity.bean.ShareInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,6 @@ public interface ApiService {
     @POST("PreTreatment/GetHospitalDetail/601")
     Observable<Result<Hospital>> rxGetHosInfo();
 
-
-
-
+    @POST("Home/QureyHomeInfo")
+    Observable<Result<List<ShareInfo>>> getShareInfo();
 }

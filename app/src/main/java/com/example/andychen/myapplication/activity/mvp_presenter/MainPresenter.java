@@ -93,15 +93,6 @@ public class MainPresenter extends BasePresenter<BaseView> {
     public void getDoctorList() {
 
         HashMap<String, Object> params = new HashMap<>();
-               /* params.put("cityId", "2157");
-                params.put("districtId", 0);
-                params.put("hospitalService", 0);
-                params.put("isHot", 1);
-                params.put("StartIndex", 0);
-                params.put("EndIndex", 10);
-                params.put("OrderBy", 0);
-                params.put("HospitalType", -1);*/
-
         params.put("HospitalId", "601");
         params.put("IsShowAvailableCount", true);
         params.put("StartIndex", 0);
@@ -113,24 +104,22 @@ public class MainPresenter extends BasePresenter<BaseView> {
         params.put("SchedulingDate", "");
         params.put("DistrictId", "0");
 
-
-
-        /*RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
+        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
                 , new CustomObserver<List<Doctor>>(context) {
                     @Override
                     public void doOnNext(List<Doctor> doctorList) {
                         ((MainView)view).RefreshDocList(doctorList);
                     }
-                });*/
+                });
 
 
-        RetrofitMethods.commonRequest(getApiService().rxGetHosInfo(), new CustomObserver<Hospital>(context) {
+        /*RetrofitMethods.commonRequest(getApiService().rxGetHosInfo(), new CustomObserver<Hospital>(context) {
             @Override
             public void doOnNext(Hospital hospital) {
                 ToastUtils.show(hospital.getHospitalName());
                 LogUtils.e(hospital.getHospitalName());
             }
-        });
+        });*/
 
         //RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxGetHosInfo(), subscriber);
 
