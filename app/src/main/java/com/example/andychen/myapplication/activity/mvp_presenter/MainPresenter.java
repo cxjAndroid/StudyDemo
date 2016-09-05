@@ -115,7 +115,7 @@ public class MainPresenter extends BasePresenter<BaseView> {
 
         /*RetrofitMethods.commonRequest(getApiService().rxGetHosInfo(), new CustomObserver<Hospital>(context) {
             @Override
-            public void doOnNext(Hospital hospital) {
+            public void doOnNext(Hospital hospital)  {
                 ToastUtils.show(hospital.getHospitalName());
                 LogUtils.e(hospital.getHospitalName());
             }
