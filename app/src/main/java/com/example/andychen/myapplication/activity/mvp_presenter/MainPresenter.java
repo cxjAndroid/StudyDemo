@@ -4,19 +4,16 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.example.andychen.myapplication.activity.bean.Doctor;
-import com.example.andychen.myapplication.activity.bean.Hospital;
 import com.example.andychen.myapplication.activity.mvp_view_interface.BaseView;
 import com.example.andychen.myapplication.activity.mvp_view_interface.MainView;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.CustomObserver;
-import com.example.andychen.myapplication.activity.retrofit.CustomSubscriber;
 import com.example.andychen.myapplication.activity.retrofit.OkHttpUtils;
 import com.example.andychen.myapplication.activity.retrofit.RequestParams;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
-import com.example.andychen.myapplication.activity.utils.ToastUtils;
 
 import org.json.JSONObject;
 
@@ -32,7 +29,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -43,14 +39,13 @@ import rx.schedulers.Schedulers;
  */
 public class MainPresenter extends BasePresenter<BaseView> {
 
-    private Context context;
     private Subscription subscribe;
-    //private MainView view;
+    //private MainView mView;
     private Subscription subscription;
 
-    public MainPresenter(Context context, BaseView view) {
-        this.context = context;
-        attach(view);
+
+    public MainPresenter(BaseView mView, Context mContext) {
+        super(mView, mContext);
     }
 
     public static final String PATH = Environment.getExternalStorageDirectory() + "/kmytj/";
@@ -105,10 +100,10 @@ public class MainPresenter extends BasePresenter<BaseView> {
         params.put("DistrictId", "0");
 
         RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
-                , new CustomObserver<List<Doctor>>(context) {
+                , new CustomObserver<List<Doctor>>(mContext) {
                     @Override
                     public void doOnNext(List<Doctor> doctorList) {
-                        ((MainView)view).RefreshDocList(doctorList);
+                        ((MainView) mView).RefreshDocList(doctorList);
                     }
                 });
 

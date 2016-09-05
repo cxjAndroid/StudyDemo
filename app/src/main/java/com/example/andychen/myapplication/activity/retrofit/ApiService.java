@@ -28,7 +28,8 @@ import rx.Observable;
  */
 public interface ApiService {
 
-    String BASE_DOUBAN_API = "https://api.douban.com/";
+    //String BASE_DOUBAN_API = "https://api.douban.com/";
+    //String HK_BASE_URL = "https://patientapi.hk515.com/";
 
     @GET("repos/{owner}/{repo}/contributors")
     Call<ResponseBody> getResponse(@Path("owner") String owner, @Path("repo") String repo);
@@ -82,5 +83,10 @@ public interface ApiService {
     Observable<Result<Hospital>> rxGetHosInfo();
 
     @POST("Home/QureyHomeInfo")
-    Observable<Result<List<ShareInfo>>> getShareInfo();
+    @FormUrlEncoded
+    Observable<Result<List<ShareInfo>>> getShareInfo(@FieldMap Map<String, Object> map);
+
+    @POST("Home/QureyHomeInfo")
+    @FormUrlEncoded
+    Observable<ResponseBody> getShare(@FieldMap Map<String, Object> map);
 }

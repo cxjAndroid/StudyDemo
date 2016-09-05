@@ -5,7 +5,7 @@ package com.example.andychen.myapplication.activity.mvp_view_interface;
  */
 public interface BaseView {
 
-    void showLoadPage();
+    void showLoadingPage();
     void showErrorPage(int type);
     void showSuccessPage();
 

@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 public class MyViewPager extends ViewPager {
 
 	/* 是否可以滑动 */
-	private boolean isScrollable = false;
+	private boolean isScrollable = true;
 
 	public MyViewPager(Context context) {
 		super(context);

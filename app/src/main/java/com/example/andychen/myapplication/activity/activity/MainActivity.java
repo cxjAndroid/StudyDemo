@@ -37,7 +37,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
@@ -73,7 +72,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
        /* rxDemo();
         GsonDemo();*/
-        showLoadPage();
+        showLoadingPage();
         mPresenter.getDoctorList();
     }
 
@@ -111,7 +110,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         switch (v.getId()) {
             case R.id.btn:
                 //mPresenter.click();
-                IntentUtils.startActivityLeftIn(this, SecondActivity.class);
+                IntentUtils.startActivityLeftIn(this, BannerActivity.class);
                 EventBus.getDefault().postSticky(new EventMessage<>("send message"));
                 break;
             case R.id.btn1:
