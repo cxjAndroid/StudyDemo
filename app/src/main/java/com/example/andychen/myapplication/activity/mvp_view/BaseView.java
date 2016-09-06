@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.mvp_view_interface;
+package com.example.andychen.myapplication.activity.mvp_view;
 
 /**
  * Created by andychen on 2016/7/1.

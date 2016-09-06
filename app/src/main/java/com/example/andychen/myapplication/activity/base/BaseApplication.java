@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by andychen on 2016/6/20.
@@ -32,7 +33,9 @@ public class BaseApplication extends Application {
         mInstance = this;
         super.onCreate();
 
+        LeakCanary.install(this);
         Fresco.initialize(this);
+
     }
 
     public static BaseApplication getApplication() {

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.example.andychen.myapplication.activity.bean.Doctor;
-import com.example.andychen.myapplication.activity.mvp_view_interface.BaseView;
-import com.example.andychen.myapplication.activity.mvp_view_interface.MainView;
+import com.example.andychen.myapplication.activity.mvp_view.BaseView;
+import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.CustomObserver;
 import com.example.andychen.myapplication.activity.retrofit.OkHttpUtils;

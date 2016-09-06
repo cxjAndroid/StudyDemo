@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.mvp_view_interface;
+package com.example.andychen.myapplication.activity.mvp_view;
 
 import com.example.andychen.myapplication.activity.bean.Doctor;
 

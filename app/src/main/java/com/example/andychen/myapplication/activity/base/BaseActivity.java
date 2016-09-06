@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.andychen.myapplication.activity.mvp_presenter.BasePresenter;
-import com.example.andychen.myapplication.activity.mvp_view_interface.BaseView;
+import com.example.andychen.myapplication.activity.mvp_view.BaseView;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import com.umeng.analytics.MobclickAgent;
@@ -81,7 +80,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public void registerEventBus() {
         EventBus.getDefault().register(this);
         isBindEventBus = true;
-        Toast.makeText(this, "register eventBus", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "register eventBus", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -93,7 +92,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
         if (isBindEventBus) {
             EventBus.getDefault().unregister(this);
-            Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
         }
 
     }

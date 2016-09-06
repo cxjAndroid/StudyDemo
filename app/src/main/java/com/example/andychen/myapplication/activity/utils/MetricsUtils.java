@@ -35,6 +35,20 @@ public class MetricsUtils {
     }
 
 
+    public void getViewConfiguration() {
+        ViewConfiguration viewConfiguration = ViewConfiguration.get(BaseApplication.getApplication());
+        int touchSlop = viewConfiguration.getScaledTouchSlop();
+        //获取Fling速度的最小值和最大值
+        int minimumVelocity = viewConfiguration.getScaledMinimumFlingVelocity();
+        int maximumVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
+        //判断是否有物理按键
+        boolean isHavePermanentMenuKey = viewConfiguration.hasPermanentMenuKey();
+        LogUtils.e("touchSlop:" + String.valueOf(touchSlop));
+        LogUtils.e("minimumVelocity:" + String.valueOf(minimumVelocity));
+        LogUtils.e("maximumVelocity:" + String.valueOf(maximumVelocity));
+        LogUtils.e("isHavePermanentMenuKey:" + isHavePermanentMenuKey);
+    }
+
     /**
      * 检查是否存在虚拟按键栏
      *

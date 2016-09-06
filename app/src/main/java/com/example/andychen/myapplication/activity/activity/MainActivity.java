@@ -21,7 +21,7 @@ import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.People;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
-import com.example.andychen.myapplication.activity.mvp_view_interface.MainView;
+import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
