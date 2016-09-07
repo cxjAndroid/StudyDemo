@@ -6,7 +6,11 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.bean.ShareInfo;
+import com.example.andychen.myapplication.activity.utils.FrescoUtils;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -21,10 +25,11 @@ public class BannerAdapter extends PagerAdapter {
 
     public BannerAdapter(List<ShareInfo> shareInfoList) {
         this.shareInfoList = shareInfoList;
+
     }
 
-    public BannerAdapter(Context context,List<ShareInfo> shareInfoList) {
-        this.shareInfoList = shareInfoList;
+    public BannerAdapter(Context context, List<ShareInfo> shareInfoList) {
+        this(shareInfoList);
         this.context = context;
     }
 
@@ -51,10 +56,16 @@ public class BannerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         //return super.instantiateItem(container, position);
         SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
+        simpleDraweeView.setHierarchy(FrescoUtils.getHierarchy(context,
+                R.drawable.banner_default2,
+                R.drawable.banner_default2, ScalingUtils.ScaleType.FIT_XY));
+
         if (shareInfoList.size() > 0) {
             final int index = position % shareInfoList.size();
             ShareInfo shareInfo = shareInfoList.get(index);
             simpleDraweeView.setImageURI(Uri.parse(shareInfo.getItemPicURL()));
+        } else {
+            simpleDraweeView.setBackgroundResource(R.drawable.banner_default2);
         }
         container.addView(simpleDraweeView);
         return simpleDraweeView;

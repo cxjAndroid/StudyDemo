@@ -8,11 +8,8 @@
         android:id="@+id/adv_viewpager"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/colorAccent">
+        android:background="@drawable/pic_white_background">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </com.example.andychen.myapplication.activity.view.MyViewPager>
 
 

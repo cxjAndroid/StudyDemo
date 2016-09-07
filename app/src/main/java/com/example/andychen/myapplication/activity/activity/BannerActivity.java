@@ -1,7 +1,6 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.os.Handler;
-import android.os.Message;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -17,11 +16,9 @@ import com.example.andychen.myapplication.activity.view.MyViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by andychen on 2016/6/1.
@@ -32,7 +29,6 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     Button btn_second;
     @BindView(R.id.adv_viewpager)
     MyViewPager adv_viewpager;
-    private MyHandler myHandler;
     private Handler handler;
     private MyRunnable myRunnable;
 
@@ -60,7 +56,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     public void adjustAdvLayout() {
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) adv_viewpager.getLayoutParams();
         int[] pixels = MetricsUtils.getPixels();
-        layoutParams.height = (int) (pixels[1] * 0.55);
+        layoutParams.height = (int) (pixels[1] * 0.5);
         adv_viewpager.setLayoutParams(layoutParams);
     }
 
@@ -69,16 +65,10 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     public void initBanner(List<ShareInfo> shareInfoList) {
         BannerAdapter bannerAdapter = new BannerAdapter(this, shareInfoList);
         adv_viewpager.setAdapter(bannerAdapter);
-      /*  myHandler = new MyHandler(this);
-        myHandler.sendEmptyMessageDelayed(0, 2000);*/
 
         myRunnable = new MyRunnable();
         handler = new Handler();
         handler.postDelayed(myRunnable,2000);
-    }
-
-    @OnClick(R.id.btn_second)
-    void click() {
     }
 
     @Subscribe(sticky = true)
@@ -89,7 +79,6 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //myHandler.removeMessages(0);
         if(myRunnable!=null) {
             handler.removeCallbacks(myRunnable);
         }
@@ -102,25 +91,4 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
             handler.postDelayed(this, 2000);
         }
     }
-
-
-    static class MyHandler extends Handler {
-
-        private WeakReference<BannerActivity> weakReference;
-        private final BannerActivity bannerActivity;
-
-        public MyHandler(BannerActivity activity) {
-            // super();
-            weakReference = new WeakReference<>(activity);
-            bannerActivity = weakReference.get();
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            //super.handleMessage(msg);
-            bannerActivity.adv_viewpager.setCurrentItem(bannerActivity.adv_viewpager.getCurrentItem() + 1);
-            this.sendEmptyMessageDelayed(0, 2000);
-        }
-    }
-
 }
