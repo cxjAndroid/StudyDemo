@@ -1,6 +1,9 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SlidingPaneLayout;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -25,8 +28,6 @@ import butterknife.BindView;
  */
 public class BannerActivity extends BaseActivity<BannerPresenter> implements BannerView {
 
-    @BindView(R.id.btn_second)
-    Button btn_second;
     @BindView(R.id.adv_viewpager)
     MyViewPager adv_viewpager;
     private Handler handler;
@@ -47,6 +48,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         mPresenter.getShareInfo();
     }
 
+
     @Override
     protected void initPresenter() {
         mPresenter = new BannerPresenter(this, this);
@@ -54,7 +56,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @Override
     public void adjustAdvLayout() {
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) adv_viewpager.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = adv_viewpager.getLayoutParams();
         int[] pixels = MetricsUtils.getPixels();
         layoutParams.height = (int) (pixels[1] * 0.5);
         adv_viewpager.setLayoutParams(layoutParams);

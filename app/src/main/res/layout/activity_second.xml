@@ -4,22 +4,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.andychen.myapplication.activity.view.MyViewPager
-        android:id="@+id/adv_viewpager"
+    <android.support.v4.widget.DrawerLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/pic_white_background">
+        android:layout_height="match_parent">
 
-    </com.example.andychen.myapplication.activity.view.MyViewPager>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <com.example.andychen.myapplication.activity.view.MyViewPager
+                android:id="@+id/adv_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/pic_white_background" />
 
-    <Button
-        android:layout_below="@+id/adv_viewpager"
-        android:id="@+id/btn_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true"
-        android:text="this is second activity" />
+            <Button
+                android:id="@+id/btn_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/adv_viewpager"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:text="this is second activity" />
+        </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/holo_orange_light">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="this is drawLayout" />
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
