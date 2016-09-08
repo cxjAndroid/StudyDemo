@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

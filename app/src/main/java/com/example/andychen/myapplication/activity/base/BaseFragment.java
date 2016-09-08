@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.fragment;
+package com.example.andychen.myapplication.activity.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +19,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = initView(inflater,container);
+        View view = initView(inflater, container);
         return view;
     }
 
@@ -28,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param inflater 布局填充器
      */
-    public abstract View initView(LayoutInflater inflater,ViewGroup container);
+    public abstract View initView(LayoutInflater inflater, ViewGroup container);
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public abstract class BaseFragment extends Fragment {
     public void initData() {
 
     }
+
+
 
 
 }

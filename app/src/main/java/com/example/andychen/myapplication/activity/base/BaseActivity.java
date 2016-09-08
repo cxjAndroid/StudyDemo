@@ -97,6 +97,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     }
 
+    public void changeFragment(int containerId, BaseFragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(containerId, fragment,
+                fragment.getClass().getSimpleName()).commit();
+    }
+
 
     @Override
     protected void onStop() {

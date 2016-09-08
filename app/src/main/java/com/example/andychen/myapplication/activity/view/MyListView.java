@@ -36,6 +36,7 @@ public class MyListView extends ListView {
         setDividerHeight(1);
         setOverScrollMode(OVER_SCROLL_NEVER);
         setCacheColorHint(Color.TRANSPARENT);
+        setVerticalScrollBarEnabled(false);
         //setSelector(getResources().getDrawable(R.drawable.selector_list_item));
     }
 

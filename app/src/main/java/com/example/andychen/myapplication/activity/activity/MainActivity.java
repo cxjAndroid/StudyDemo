@@ -11,6 +11,7 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
@@ -21,6 +22,7 @@ import com.example.andychen.myapplication.activity.base.BaseViewHolder;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.People;
 import com.example.andychen.myapplication.activity.event.EventMessage;
+import com.example.andychen.myapplication.activity.fragment.MenuFragment;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
@@ -53,7 +55,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @BindView(R.id.tv)
     TextView tv;
     @BindView(R.id.mListView)
-    MyListView mListView;
+    ListView mListView;
     @BindView(R.id.slidingLayout)
     SlidingPaneLayout slidingPaneLayout;
 
@@ -63,8 +65,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
-        //addContentView(emptyLayout,
-        // new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        MenuFragment menuFragment = new MenuFragment();
+        changeFragment(R.id.fragment_container,menuFragment);
     }
 
     @Override

@@ -36,11 +36,11 @@ public class BaseViewHolder {
     }
 
 
-    public View getmConvertView() {
+    public View getConvertView() {
         return mConvertView;
     }
 
-    public void setmConvertView(View mConvertView) {
+    public void setConvertView(View mConvertView) {
         this.mConvertView = mConvertView;
     }
 

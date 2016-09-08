@@ -50,7 +50,7 @@ public  abstract class BaseListAdapter<T> extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         BaseViewHolder baseViewHolder = BaseViewHolder.get(context, convertView, parent, layoutId, position);
         refreshView(baseViewHolder, getItem(position),position);
-        return baseViewHolder.getmConvertView();
+        return baseViewHolder.getConvertView();
     }
 
     public abstract void refreshView(BaseViewHolder holder,T t,int p);
