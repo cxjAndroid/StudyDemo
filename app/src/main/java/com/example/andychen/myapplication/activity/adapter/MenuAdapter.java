@@ -20,7 +20,7 @@ public class MenuAdapter extends BaseListAdapter<String> {
 
     @Override
     public void refreshView(BaseViewHolder holder, String s, int p) {
-        TextView textView = holder.getView(R.id.text_doc);
+        TextView textView = holder.getView(android.R.id.text1);
         textView.setText(s);
     }
 }

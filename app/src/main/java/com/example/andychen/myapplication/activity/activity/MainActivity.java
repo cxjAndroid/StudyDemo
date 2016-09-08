@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.adapter.MenuAdapter;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.base.BaseApplication;
 import com.example.andychen.myapplication.activity.base.BaseListAdapter;
@@ -22,7 +23,6 @@ import com.example.andychen.myapplication.activity.base.BaseViewHolder;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.bean.People;
 import com.example.andychen.myapplication.activity.event.EventMessage;
-import com.example.andychen.myapplication.activity.fragment.MenuFragment;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
@@ -37,6 +37,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -58,34 +59,36 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     ListView mListView;
     @BindView(R.id.slidingLayout)
     SlidingPaneLayout slidingPaneLayout;
-
-
+    @BindView(R.id.menu_list)
+    MyListView menu_list;
     private Subscription subscribe;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
-        MenuFragment menuFragment = new MenuFragment();
-        changeFragment(R.id.fragment_container,menuFragment);
     }
 
     @Override
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
 
-
         float density = BaseApplication.getApplication().getResources().getDisplayMetrics().density;
         float densityDpi = BaseApplication.getApplication().getResources().getDisplayMetrics().densityDpi;
 
-       /* rxDemo();
-        GsonDemo();*/
         showLoadingPage();
-        mPresenter.getDoctorList();
+        mPresenter.getDoctorsInfo();
+        mPresenter.getSlidingMenuData();
     }
 
     @Override
     protected void initPresenter() {
-        mPresenter = new MainPresenter(this,this);
+        mPresenter = new MainPresenter(this, this);
+    }
+
+
+    @Override
+    public void RefreshSlidingMenu(List<String> list) {
+        menu_list.setAdapter(new MenuAdapter(this, list, android.R.layout.simple_list_item_1));
     }
 
     @Override

@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface MainView extends BaseView {
     void RefreshDocList(List<Doctor> doctorList);
+
+    void RefreshSlidingMenu(List<String> list);
 }

@@ -1,11 +1,7 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.os.Handler;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.adapter.BannerAdapter;

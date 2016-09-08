@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,14 +38,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by andychen on 2016/7/1.
  */
-public class MainPresenter extends BasePresenter<BaseView> {
+public class MainPresenter extends BasePresenter<MainView> {
 
     private Subscription subscribe;
     //private MainView mView;
     private Subscription subscription;
 
 
-    public MainPresenter(BaseView mView, Context mContext) {
+    public MainPresenter(MainView mView, Context mContext) {
         super(mView, mContext);
     }
 
@@ -85,8 +86,16 @@ public class MainPresenter extends BasePresenter<BaseView> {
         RxUtils.get().unSubscribe();
     }
 
-    public void getDoctorList() {
 
+    public void getSlidingMenuData(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            arrayList.add(String.valueOf(i));
+        }
+        mView.RefreshSlidingMenu(arrayList);
+    }
+
+    public void getDoctorsInfo() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("HospitalId", "601");
         params.put("IsShowAvailableCount", true);
@@ -103,9 +112,10 @@ public class MainPresenter extends BasePresenter<BaseView> {
                 , new CustomObserver<List<Doctor>>(mContext) {
                     @Override
                     public void doOnNext(List<Doctor> doctorList) {
-                        ((MainView) mView).RefreshDocList(doctorList);
+                         mView.RefreshDocList(doctorList);
                     }
                 });
+
 
 
         /*RetrofitMethods.commonRequest(getApiService().rxGetHosInfo(), new CustomObserver<Hospital>(context) {
