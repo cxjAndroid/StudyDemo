@@ -3,7 +3,7 @@ package com.example.andychen.myapplication.activity.utils;
 import android.content.Context;
 import android.util.TypedValue;
 
-import com.example.andychen.myapplication.activity.base.BaseApplication;
+import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
 
 /**
  * Created by chenxujun on 2016/3/25.

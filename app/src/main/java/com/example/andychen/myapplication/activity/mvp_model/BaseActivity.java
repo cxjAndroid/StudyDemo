@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.base;
+package com.example.andychen.myapplication.activity.mvp_model;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

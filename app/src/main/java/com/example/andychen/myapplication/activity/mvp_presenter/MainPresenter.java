@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.example.andychen.myapplication.activity.bean.Doctor;
-import com.example.andychen.myapplication.activity.mvp_view.BaseView;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.CustomObserver;
@@ -92,15 +91,15 @@ public class MainPresenter extends BasePresenter<MainView> {
         for (int i = 0; i < 15; i++) {
             arrayList.add(String.valueOf(i));
         }
-        mView.RefreshSlidingMenu(arrayList);
+        mView.createSlidingMenuView(arrayList);
     }
 
-    public void getDoctorsInfo() {
+    public void getDoctorsInfo(String endIndex) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("HospitalId", "601");
         params.put("IsShowAvailableCount", true);
         params.put("StartIndex", 0);
-        params.put("EndIndex", 50);
+        params.put("EndIndex", endIndex);
         params.put("OrderBy", 0);
         params.put("DoctorType", "2");
         params.put("ProfessionDepartmentId", "");
@@ -112,7 +111,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 , new CustomObserver<List<Doctor>>(mContext) {
                     @Override
                     public void doOnNext(List<Doctor> doctorList) {
-                         mView.RefreshDocList(doctorList);
+                         mView.refreshDocList(doctorList);
                     }
                 });
 

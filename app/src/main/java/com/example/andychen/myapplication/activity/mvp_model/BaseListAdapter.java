@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.base;
+package com.example.andychen.myapplication.activity.mvp_model;
 
 import android.content.Context;
 import android.view.View;

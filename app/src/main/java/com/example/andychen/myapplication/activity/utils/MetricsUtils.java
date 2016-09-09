@@ -5,7 +5,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.ViewConfiguration;
 
-import com.example.andychen.myapplication.activity.base.BaseApplication;
+import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
 
 import java.lang.reflect.Method;
 

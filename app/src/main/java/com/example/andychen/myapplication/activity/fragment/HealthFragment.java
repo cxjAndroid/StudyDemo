@@ -6,10 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.base.BaseFragment;
+import com.example.andychen.myapplication.activity.mvp_model.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by andychen on 2016/7/19.
@@ -21,7 +20,6 @@ public class HealthFragment extends BaseFragment {
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_health,null);
-        ButterKnife.bind(this,view);
         return view;
     }
 

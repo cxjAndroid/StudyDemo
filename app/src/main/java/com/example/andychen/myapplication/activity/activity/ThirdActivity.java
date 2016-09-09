@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.base.BaseActivity;
+import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.fragment.HealthFragment;
 import com.example.andychen.myapplication.activity.view.MyViewPager;

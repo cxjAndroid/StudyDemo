@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.base;
+package com.example.andychen.myapplication.activity.mvp_model;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,10 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by andychen on 2016/7/19.
  */
 public abstract class BaseFragment extends Fragment {
+    public boolean isNeedBindButterKnife = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +24,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = initView(inflater, container);
+        if (isNeedBindButterKnife) {
+            ButterKnife.bind(this, view);
+        }
         return view;
     }
 
@@ -42,8 +49,6 @@ public abstract class BaseFragment extends Fragment {
     public void initData() {
 
     }
-
-
 
 
 }

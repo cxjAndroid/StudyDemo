@@ -3,14 +3,13 @@ package com.example.andychen.myapplication.activity.retrofit;
 import android.content.Context;
 import android.view.View;
 
-import com.example.andychen.myapplication.activity.base.BaseActivity;
+import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
 import rx.Subscription;
 
 /**

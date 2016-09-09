@@ -1,8 +1,6 @@
-package com.example.andychen.myapplication.activity.base;
+package com.example.andychen.myapplication.activity.mvp_model;
 
-import android.app.Activity;
 import android.app.Application;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 

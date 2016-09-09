@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.example.andychen.myapplication.activity.base.BaseApplication;
+import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
 
 
 /**
