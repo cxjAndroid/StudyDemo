@@ -49,10 +49,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        if(isNeedBindButterKnife) ButterKnife.bind(this);
+        if (isNeedBindButterKnife) ButterKnife.bind(this);
+        adjustView();
         initPresenter();
         initDate();
 
+    }
+
+    protected void adjustView() {
     }
 
     protected void initPresenter() {

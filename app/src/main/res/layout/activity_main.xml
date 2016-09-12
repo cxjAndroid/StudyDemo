@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            />
+            app:titleTextColor="@android:color/white"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <ImageView
             android:id="@+id/iv"
@@ -42,20 +42,19 @@
         <!--   <include layout="@layout/status_layout" />-->
 
         <TextView
-            android:layout_below="@+id/toolbar"
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
             android:layout_marginTop="10dp"
             android:text="Hello World!" />
 
 
-
         <Button
-            android:layout_below="@+id/tv"
             android:id="@+id/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv"
             android:layout_gravity="bottom"
             android:layout_marginTop="10dp"
             android:text="button" />
@@ -76,12 +75,11 @@
             tools:listitem="@layout/item_doctor" />
 
         <Switch
+            android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/switch1"
-            android:layout_below="@+id/btn"
             android:layout_alignParentRight="true"
-             />
+            android:layout_below="@+id/btn" />
 
     </RelativeLayout>
 </android.support.v4.widget.SlidingPaneLayout>
