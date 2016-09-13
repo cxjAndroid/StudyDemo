@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.ViewConfiguration;
 
+import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
 
 import java.lang.reflect.Field;
@@ -33,19 +34,21 @@ public class MetricsUtils {
 
 
     public static int getStatusPageHeight() {
-        if (loadingPageHeight != 0) {
+       /* if (loadingPageHeight != 0) {
             return loadingPageHeight;
-        }
+        }*/
         int[] pixels = getPixels();
         int statusBarHeight = getStatusBarHeight();
         int barHeight = getNavigationBarHeight();
         int actionBarHeight = 0;
-        TypedValue tv = new TypedValue();
-        if (BaseApplication.getApplication().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+       /*  TypedValue tv = new TypedValue();
+       if (BaseApplication.getApplication().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
             actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,
                     BaseApplication.getApplication().getResources().getDisplayMetrics());
-        }
-        loadingPageHeight = pixels[1] - statusBarHeight - barHeight - actionBarHeight;
+        }*/
+
+
+        loadingPageHeight = pixels[1] - statusBarHeight - barHeight - DpUtils.dip2px(R.dimen.toolbar_height);
         return loadingPageHeight;
     }
 
