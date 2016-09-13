@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.ViewConfiguration;
 
 import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
@@ -15,6 +16,7 @@ import java.lang.reflect.Method;
  * Created by andychen on 2016/6/24.
  */
 public class MetricsUtils {
+    public static int loadingPageHeight;
 
     public static int[] getPixels() {
         DisplayMetrics displayMetrics = BaseApplication.getApplication().
@@ -27,6 +29,24 @@ public class MetricsUtils {
             displayHeight = displayHeight + getNavigationBarHeight();
         }
         return new int[]{displayWidth, displayHeight};
+    }
+
+
+    public static int getStatusPageHeight() {
+        if (loadingPageHeight != 0) {
+            return loadingPageHeight;
+        }
+        int[] pixels = getPixels();
+        int statusBarHeight = getStatusBarHeight();
+        int barHeight = getNavigationBarHeight();
+        int actionBarHeight = 0;
+        TypedValue tv = new TypedValue();
+        if (BaseApplication.getApplication().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,
+                    BaseApplication.getApplication().getResources().getDisplayMetrics());
+        }
+        loadingPageHeight = pixels[1] - statusBarHeight - barHeight - actionBarHeight;
+        return loadingPageHeight;
     }
 
     public static void getDensity() {
@@ -52,7 +72,7 @@ public class MetricsUtils {
     }
 
 
-    public static int getStatusBarHeight(){
+    public static int getStatusBarHeight() {
         Class<?> c = null;
         Object obj = null;
         Field field = null;
@@ -62,7 +82,7 @@ public class MetricsUtils {
             obj = c.newInstance();
             field = c.getField("status_bar_height");
             x = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight =  BaseApplication.getApplication().getResources().getDimensionPixelSize(x);
+            statusBarHeight = BaseApplication.getApplication().getResources().getDimensionPixelSize(x);
         } catch (Exception e1) {
             e1.printStackTrace();
         }

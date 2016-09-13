@@ -2,25 +2,16 @@ package com.example.andychen.myapplication.activity.mvp_model;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.LayoutDirection;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.example.andychen.myapplication.activity.mvp_presenter.BasePresenter;
 import com.example.andychen.myapplication.activity.mvp_view.BaseView;
-import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.MetricsUtils;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
-import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import com.umeng.analytics.MobclickAgent;
 
@@ -130,14 +121,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showLoadingPage() {
-        int[] pixels = MetricsUtils.getPixels();
 
         if (statusPage != null) {
             statusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
         } else {
             statusPage = new LoadStatusPage(this);
             FrameLayout.LayoutParams params =
-                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, pixels[1] - loadingPageHeight);
+                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, MetricsUtils.getStatusPageHeight());
             params.gravity = Gravity.BOTTOM;
             statusPage.setGravity(Gravity.BOTTOM);
             addContentView(statusPage, params);
@@ -157,14 +147,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public int initToolBar(final Toolbar toolbar, int menuLayout) {
 
-        final int statusBarHeight = MetricsUtils.getStatusBarHeight();
+        /*final int statusBarHeight = MetricsUtils.getStatusBarHeight();
         final int navigationBarHeight = MetricsUtils.getNavigationBarHeight();
         int actionBarHeight = 0;
         TypedValue tv = new TypedValue();
         if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
             actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
         }
-        loadingPageHeight = actionBarHeight + statusBarHeight + navigationBarHeight;
+        loadingPageHeight = actionBarHeight + statusBarHeight + navigationBarHeight;*/
 
         setSupportActionBar(toolbar);
         this.menuLayout = menuLayout;
