@@ -1,5 +1,6 @@
 package com.example.andychen.myapplication.activity.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -7,6 +8,7 @@ import android.view.ViewConfiguration;
 
 import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -24,7 +26,7 @@ public class MetricsUtils {
         if (hasNavBar()) {
             displayHeight = displayHeight + getNavigationBarHeight();
         }
-        return new int[]{displayHeight, displayWidth};
+        return new int[]{displayWidth, displayHeight};
     }
 
     public static void getDensity() {
@@ -47,6 +49,24 @@ public class MetricsUtils {
         LogUtils.e("minimumVelocity:" + String.valueOf(minimumVelocity));
         LogUtils.e("maximumVelocity:" + String.valueOf(maximumVelocity));
         LogUtils.e("isHavePermanentMenuKey:" + isHavePermanentMenuKey);
+    }
+
+
+    public static int getStatusBarHeight(){
+        Class<?> c = null;
+        Object obj = null;
+        Field field = null;
+        int x = 0, statusBarHeight = 0;
+        try {
+            c = Class.forName("com.android.internal.R$dimen");
+            obj = c.newInstance();
+            field = c.getField("status_bar_height");
+            x = Integer.parseInt(field.get(obj).toString());
+            statusBarHeight =  BaseApplication.getApplication().getResources().getDimensionPixelSize(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return statusBarHeight;
     }
 
     /**

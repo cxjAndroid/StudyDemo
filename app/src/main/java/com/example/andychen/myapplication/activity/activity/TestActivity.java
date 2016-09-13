@@ -24,7 +24,12 @@ import rx.functions.Func1;
 public class TestActivity extends BaseActivity {
 
     @Override
-    public void initView() {
+    public int getContentViewLayoutID() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
 
     }
 

@@ -3,12 +3,16 @@ package com.example.andychen.myapplication.activity.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
@@ -20,8 +24,10 @@ import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
+import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.MyListView;
 import com.umeng.analytics.MobclickAgent;
+import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,8 +39,8 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
     @BindView(R.id.btn)
     Button btn;
-    @BindView(R.id.iv)
-    ImageView iv;
+    /*@BindView(R.id.iv)
+    ImageView iv;*/
     @BindView(R.id.tv)
     TextView tv;
     @BindView(R.id.mListView)
@@ -47,14 +53,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     Toolbar toolbar;
 
     @Override
-    public void initView() {
-        setContentView(R.layout.activity_main);
+    public int getContentViewLayoutID() {
+        return R.layout.activity_main;
     }
 
     @Override
-    protected void adjustView() {
-        super.adjustView();
-        setSupportActionBar(toolbar);
+    protected void initView() {
+        initToolBar(toolbar,R.menu.menu);
     }
 
     @Override
@@ -72,10 +77,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_capture:
+                IntentUtils.startActivityLeftIn(this, CaptureActivity.class, 0);
+                break;
+            case R.id.action_about_us:
+                ToastUtils.show("action_about_us");
+                break;
+            case R.id.action_feedback:
+                ToastUtils.show("action_feedback");
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -98,8 +112,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         mListView.setAdapter(adapter);
     }
 
-
-    @OnClick({R.id.btn, R.id.btn1, R.id.iv})
+    @OnClick({R.id.btn, R.id.btn1})
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:

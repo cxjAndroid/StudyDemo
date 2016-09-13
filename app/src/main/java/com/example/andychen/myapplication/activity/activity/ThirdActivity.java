@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -27,11 +29,13 @@ import butterknife.ButterKnife;
 //Created by chenxujun on 2016/6/12.
 
 
-public class ThirdActivity extends BaseActivity{
+public class ThirdActivity extends BaseActivity {
     @BindView(R.id.mViewpager)
     MyViewPager mViewPager;
     @BindView(R.id.smartTab)
     SmartTabLayout smartTab;
+    @BindView(R.id.tool_bar)
+    Toolbar toolbar;
 
     private String[] arr;
     private ArrayList<HealthFragment> fragmentList;
@@ -39,24 +43,32 @@ public class ThirdActivity extends BaseActivity{
     private boolean flag = true;
 
     @Override
-    public void initView() {
-        setContentView(R.layout.activity_third);
+    public int getContentViewLayoutID() {
+        return R.layout.activity_third;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Override
     public void initDate() {
+
+        setSupportActionBar(toolbar);
+
         ButterKnife.bind(this);
         registerEventBus();
 
         fragmentList = new ArrayList<>();
-        arr = new String[]{"血氧","血糖","体温","血压","身高体重"};
+        arr = new String[]{"血氧", "血糖", "体温", "血压", "身高体重"};
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
 
-        for(String item:arr){
+        for (String item : arr) {
             HealthFragment healthFragment = new HealthFragment();
             fragmentList.add(healthFragment);
-            pages.add(FragmentPagerItem.of(item,HealthFragment.class));
+            pages.add(FragmentPagerItem.of(item, HealthFragment.class));
         }
 
         mViewPager.setScrollable(true);
@@ -66,9 +78,9 @@ public class ThirdActivity extends BaseActivity{
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(flag) {
+                if (flag) {
                     fragmentList.get(0).setText(arr[0]);
-                    flag  = false;
+                    flag = false;
                 }
             }
 
@@ -84,15 +96,22 @@ public class ThirdActivity extends BaseActivity{
         });
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
     }
 
     @Subscribe(sticky = true)
-    public void onEvent(EventMessage<String> message){
+    public void onEvent(EventMessage<String> message) {
         String s = message.getMessage();
-        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
 

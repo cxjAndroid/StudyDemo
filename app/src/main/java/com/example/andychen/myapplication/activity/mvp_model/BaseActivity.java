@@ -2,12 +2,25 @@ package com.example.andychen.myapplication.activity.mvp_model;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.LayoutDirection;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.andychen.myapplication.activity.mvp_presenter.BasePresenter;
 import com.example.andychen.myapplication.activity.mvp_view.BaseView;
+import com.example.andychen.myapplication.activity.utils.LogUtils;
+import com.example.andychen.myapplication.activity.utils.MetricsUtils;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
+import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import com.umeng.analytics.MobclickAgent;
 
@@ -26,6 +39,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private LoadStatusPage statusPage;
     public T mPresenter;
     public boolean isNeedBindButterKnife = true;
+    private int menuLayout;
+    private int loadingPageHeight;
 
 
     public LoadStatusPage getStatusPage() {
@@ -48,22 +63,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
+        int contentViewLayoutID = getContentViewLayoutID();
+        if (contentViewLayoutID != 0)
+            setContentView(contentViewLayoutID);
+
         if (isNeedBindButterKnife) ButterKnife.bind(this);
-        adjustView();
+        initView();
         initPresenter();
         initDate();
-
     }
 
-    protected void adjustView() {
-    }
+    protected abstract void initView();
 
     protected void initPresenter() {
 
     }
 
-    public abstract void initView();
+    public abstract int getContentViewLayoutID();
 
     public abstract void initDate();
 
@@ -114,9 +130,18 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showLoadingPage() {
-        statusPage = new LoadStatusPage(this);
-        addContentView(statusPage,
-                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        int[] pixels = MetricsUtils.getPixels();
+
+        if (statusPage != null) {
+            statusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
+        } else {
+            statusPage = new LoadStatusPage(this);
+            FrameLayout.LayoutParams params =
+                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, pixels[1] - loadingPageHeight);
+            params.gravity = Gravity.BOTTOM;
+            statusPage.setGravity(Gravity.BOTTOM);
+            addContentView(statusPage, params);
+        }
     }
 
     @Override
@@ -128,4 +153,30 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public void showSuccessPage() {
         if (statusPage != null) statusPage.setStatusType(LoadStatusPage.HIDE_LAYOUT);
     }
+
+    @Override
+    public int initToolBar(final Toolbar toolbar, int menuLayout) {
+
+        final int statusBarHeight = MetricsUtils.getStatusBarHeight();
+        final int navigationBarHeight = MetricsUtils.getNavigationBarHeight();
+        int actionBarHeight = 0;
+        TypedValue tv = new TypedValue();
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        loadingPageHeight = actionBarHeight + statusBarHeight + navigationBarHeight;
+
+        setSupportActionBar(toolbar);
+        this.menuLayout = menuLayout;
+        return menuLayout;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (getSupportActionBar() != null && menuLayout != 0) {
+            getMenuInflater().inflate(menuLayout, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

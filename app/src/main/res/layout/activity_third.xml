@@ -2,18 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <com.ogaclejapan.smarttablayout.SmartTabLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        />
+
+    <com.ogaclejapan.smarttablayout.SmartTabLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/smartTab"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_below="@+id/tool_bar"
         android:clipToPadding="false"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         app:stl_defaultTabTextColor="@android:color/holo_blue_dark"
         app:stl_defaultTabTextHorizontalPadding="18dp"
+        app:stl_defaultTabTextSize="30dp"
         app:stl_dividerColor="@android:color/transparent"
         app:stl_dividerThickness="0dp"
         app:stl_indicatorColor="@android:color/darker_gray"
@@ -22,22 +34,12 @@
         app:stl_indicatorInterpolation="linear"
         app:stl_indicatorThickness="36dp"
         app:stl_underlineColor="@android:color/transparent"
-        app:stl_underlineThickness="0dp"
-        app:stl_defaultTabTextSize="30dp"
-        />
-    <Button
-        android:layout_marginTop="8dp"
-        android:background="@drawable/circular_button_red"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:text="hahaha"
-        android:layout_toRightOf="@+id/smartTab"
-        />
+        app:stl_underlineThickness="0dp" />
+
     <com.example.andychen.myapplication.activity.view.MyViewPager
-        android:layout_below="@+id/smartTab"
         android:id="@+id/mViewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_below="@+id/smartTab" />
 
 </RelativeLayout>

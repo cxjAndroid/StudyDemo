@@ -1,13 +1,14 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.os.Handler;
+import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.adapter.BannerAdapter;
-import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.bean.ShareInfo;
 import com.example.andychen.myapplication.activity.event.EventMessage;
+import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.mvp_presenter.BannerPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.BannerView;
 import com.example.andychen.myapplication.activity.utils.MetricsUtils;
@@ -26,17 +27,26 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @BindView(R.id.adv_viewpager)
     MyViewPager adv_viewpager;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private Handler handler;
     private MyRunnable myRunnable;
 
+
     @Override
-    public void initView() {
-        setContentView(R.layout.activity_second);
+    public int getContentViewLayoutID() {
+        return R.layout.activity_second;
+    }
+
+    @Override
+    protected void initView() {
+        initToolBar(toolbar, 0);
+        adjustAdvLayout();
     }
 
     @Override
     public void initDate() {
-        adjustAdvLayout();
+
         registerEventBus();
         setResult(RESULT_OK);
 
@@ -54,7 +64,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     public void adjustAdvLayout() {
         ViewGroup.LayoutParams layoutParams = adv_viewpager.getLayoutParams();
         int[] pixels = MetricsUtils.getPixels();
-        layoutParams.height = (int) (pixels[1] * 0.5);
+        layoutParams.height = (int) (pixels[0] * 0.5);
         adv_viewpager.setLayoutParams(layoutParams);
     }
 
@@ -66,7 +76,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
         myRunnable = new MyRunnable();
         handler = new Handler();
-        handler.postDelayed(myRunnable,2000);
+        handler.postDelayed(myRunnable, 2000);
     }
 
     @Subscribe(sticky = true)
@@ -77,7 +87,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(myRunnable!=null) {
+        if (myRunnable != null) {
             handler.removeCallbacks(myRunnable);
         }
     }

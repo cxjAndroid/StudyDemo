@@ -55,7 +55,10 @@ public abstract class CustomObserver<T> implements Observer<T> {
             ((BaseActivity) context).getStatusPage().setOnLayoutClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   RetrofitMethods.commonRequest(getObservable(), CustomObserver.this);
+                    if (getObservable() != null) {
+                        ((BaseActivity) context).showLoadingPage();
+                        RetrofitMethods.commonRequest(getObservable(), CustomObserver.this);
+                    }
                 }
             });
         }
