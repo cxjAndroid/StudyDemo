@@ -1,13 +1,17 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +25,7 @@ import com.example.andychen.myapplication.activity.adapter.MenuAdapter;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
+import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
@@ -49,8 +54,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     SlidingPaneLayout slidingPaneLayout;
     @BindView(R.id.menu_list)
     MyListView menu_list;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
+    private int actionBarHeight;
 
     @Override
     public int getContentViewLayoutID() {
@@ -59,7 +64,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     protected void initView() {
-        initToolBar(toolbar,R.menu.menu);
+        initToolBar(R.menu.menu);
     }
 
     @Override

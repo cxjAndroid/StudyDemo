@@ -1,7 +1,10 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andychen.myapplication.R;
@@ -29,6 +32,8 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     MyViewPager adv_viewpager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.mDrawerLayout)
+    DrawerLayout mDrawerLayout;
     private Handler handler;
     private MyRunnable myRunnable;
 
@@ -40,13 +45,13 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @Override
     protected void initView() {
-        initToolBar(toolbar, 0);
+        initToolBar(toolbar, R.menu.menu);
         adjustAdvLayout();
+        syncDrawLayout();
     }
 
     @Override
     public void initDate() {
-
         registerEventBus();
         setResult(RESULT_OK);
 
@@ -68,6 +73,25 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         adv_viewpager.setLayoutParams(layoutParams);
     }
 
+    @Override
+    public void syncDrawLayout() {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                setTitle(getString(R.string.drawer_open));
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                setTitle(getString(R.string.app_name));
+            }
+        };
+        actionBarDrawerToggle.syncState();
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+    }
 
     @Override
     public void initBanner(List<ShareInfo> shareInfoList) {

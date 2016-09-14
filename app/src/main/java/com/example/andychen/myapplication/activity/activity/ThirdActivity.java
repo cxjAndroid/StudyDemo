@@ -34,8 +34,6 @@ public class ThirdActivity extends BaseActivity {
     MyViewPager mViewPager;
     @BindView(R.id.smartTab)
     SmartTabLayout smartTab;
-    @BindView(R.id.tool_bar)
-    Toolbar toolbar;
 
     private String[] arr;
     private ArrayList<HealthFragment> fragmentList;
@@ -49,13 +47,11 @@ public class ThirdActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        initToolBar();
     }
 
     @Override
     public void initDate() {
-
-        setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
         registerEventBus();
@@ -96,12 +92,6 @@ public class ThirdActivity extends BaseActivity {
         });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
 
     @Override
     protected void onResume() {

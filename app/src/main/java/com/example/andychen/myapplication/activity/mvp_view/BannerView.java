@@ -12,4 +12,5 @@ public interface BannerView extends BaseView  {
 
     void initBanner(List<ShareInfo> shareInfoList);
 
+    void syncDrawLayout();
 }

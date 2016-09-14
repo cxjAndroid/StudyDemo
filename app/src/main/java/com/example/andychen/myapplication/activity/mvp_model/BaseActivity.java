@@ -2,10 +2,12 @@ package com.example.andychen.myapplication.activity.mvp_model;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
@@ -129,7 +131,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         } else {
             statusPage = new LoadStatusPage(this);
             FrameLayout.LayoutParams params =
-                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, MetricsUtils.getStatusPageHeight());
+                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, MetricsUtils.getStatusPageHeight(this));
             params.gravity = Gravity.BOTTOM;
             statusPage.setGravity(Gravity.BOTTOM);
             addContentView(statusPage, params);
@@ -146,29 +148,52 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (statusPage != null) statusPage.setStatusType(LoadStatusPage.HIDE_LAYOUT);
     }
 
-    @Override
+    //NoActionBar style
     public int initToolBar(final Toolbar toolbar, int menuLayout) {
-
-        /*final int statusBarHeight = MetricsUtils.getStatusBarHeight();
-        final int navigationBarHeight = MetricsUtils.getNavigationBarHeight();
-        int actionBarHeight = 0;
-        TypedValue tv = new TypedValue();
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-        }
-        loadingPageHeight = actionBarHeight + statusBarHeight + navigationBarHeight;*/
-
-        setSupportActionBar(toolbar);
+        if (toolbar != null) setSupportActionBar(toolbar);
         this.menuLayout = menuLayout;
         return menuLayout;
     }
 
+    //NoActionBar style
+    public int initToolBar(final Toolbar toolbar) {
+        return initToolBar(toolbar, 0);
+    }
+
+    //DarkActionBar style
+    public int initToolBar(int menuLayout) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            this.menuLayout = menuLayout;
+        }
+        return menuLayout;
+    }
+
+    //DarkActionBar style
+    public int initToolBar() {
+        return initToolBar(0);
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (getSupportActionBar() != null && menuLayout != 0) {
-            getMenuInflater().inflate(menuLayout, menu);
+        if (getSupportActionBar() != null) {
+            if (menuLayout != 0) {
+                getMenuInflater().inflate(menuLayout, menu);
+            } else {
+                getSupportActionBar().setHomeButtonEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

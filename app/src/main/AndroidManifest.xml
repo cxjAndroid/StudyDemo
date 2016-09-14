@@ -3,7 +3,6 @@
     package="com.example.andychen.myapplication">
 
 
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,11 +20,11 @@
 
 
     <application
+        android:name=".activity.mvp_model.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".activity.mvp_model.BaseApplication"
         android:theme="@style/AppTheme">
 
         <activity android:name=".activity.activity.MainActivity">
@@ -35,13 +34,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.activity.BannerActivity" />
+        <activity
+            android:name=".activity.activity.BannerActivity"
+            android:theme="@style/NoActionBarTheme" />
         <activity android:name=".activity.activity.ThirdActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="576395ade0f55aeafe001bb3">
-        </meta-data>
+            android:value="576395ade0f55aeafe001bb3"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="CXJ_DEMO" />

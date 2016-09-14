@@ -15,6 +15,4 @@ public interface BaseView {
 
     void showSuccessPage();
 
-    int initToolBar(Toolbar toolbar, int menuLayout);
-
 }

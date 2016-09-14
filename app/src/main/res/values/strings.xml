@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">My Style</string>
     <string name="menu_capture">扫一扫</string>
     <string name="menu_about_us">关于我</string>
     <string name="menu_feedback">意见反馈</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
+    <string name="drawer_open">DrawerOpen</string>
+    <string name="drawer_close">DrawerClose</string>
 </resources>
