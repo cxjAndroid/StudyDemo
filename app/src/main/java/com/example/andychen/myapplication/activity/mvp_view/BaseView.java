@@ -1,18 +1,22 @@
 package com.example.andychen.myapplication.activity.mvp_view;
 
 
-import android.support.annotation.LayoutRes;
-import android.support.v7.widget.Toolbar;
-
 /**
  * Created by andychen on 2016/7/1.
  */
 public interface BaseView {
 
+    /**
+     * 显示正在加载页面
+     */
     void showLoadingPage();
-
+    /**
+     * 显示错误页面
+     */
     void showErrorPage(int type);
-
+    /**
+     * 显示成功页面
+     */
     void showSuccessPage();
 
 }

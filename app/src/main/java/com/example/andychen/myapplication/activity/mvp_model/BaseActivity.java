@@ -35,8 +35,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public T mPresenter;
     public boolean isNeedBindButterKnife = true;
     private int menuLayout;
-    private int loadingPageHeight;
-
 
     public LoadStatusPage getStatusPage() {
         return statusPage;

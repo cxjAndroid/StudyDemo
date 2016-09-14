@@ -75,20 +75,21 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @Override
     public void syncDrawLayout() {
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
-                R.string.drawer_open, R.string.drawer_close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                setTitle(getString(R.string.drawer_open));
-            }
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
+                        R.string.drawer_open, R.string.drawer_close) {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                        setTitle(getString(R.string.drawer_open));
+                    }
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                setTitle(getString(R.string.app_name));
-            }
-        };
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        super.onDrawerClosed(drawerView);
+                        setTitle(getString(R.string.app_name));
+                    }
+                };
         actionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
