@@ -40,11 +40,6 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     DrawerLayout mDrawerLayout;
     private Handler handler;
     private MyRunnable myRunnable;
-    private float startX;
-    private float startY;
-    private float endX;
-    private float endY;
-
 
     @Override
     public int getContentViewLayoutID() {
