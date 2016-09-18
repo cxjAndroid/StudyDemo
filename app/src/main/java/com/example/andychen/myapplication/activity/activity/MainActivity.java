@@ -1,5 +1,7 @@
 package com.example.andychen.myapplication.activity.activity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -54,8 +57,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     SlidingPaneLayout slidingPaneLayout;
     @BindView(R.id.menu_list)
     MyListView menu_list;
-
-    private int actionBarHeight;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     public int getContentViewLayoutID() {
@@ -64,7 +67,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     protected void initView() {
-        initToolBar(R.menu.menu);
+        initToolBar(toolbar,R.menu.menu);
     }
 
     @Override
@@ -99,7 +102,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     public void createSlidingMenuView(List<String> list) {
-        MenuAdapter adapter = new MenuAdapter(this, list, android.R.layout.simple_list_item_1);
+        MenuAdapter adapter = new MenuAdapter(this, list, android.R.layout.simple_list_item_1,slidingPaneLayout);
         adapter.setMenuItemCallBack(this);
         menu_list.setAdapter(adapter);
     }

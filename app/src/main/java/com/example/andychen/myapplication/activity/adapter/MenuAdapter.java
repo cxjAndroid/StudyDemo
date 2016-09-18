@@ -1,6 +1,7 @@
 package com.example.andychen.myapplication.activity.adapter;
 
 import android.content.Context;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class MenuAdapter extends BaseListAdapter<String> {
 
     private MenuItemCallBack menuItemCallBack;
+    private SlidingPaneLayout slidingPaneLayout;
 
     public MenuItemCallBack getMenuItemCallBack() {
         return menuItemCallBack;
@@ -33,6 +35,11 @@ public class MenuAdapter extends BaseListAdapter<String> {
         super(context, data, layoutId);
     }
 
+    public MenuAdapter(Context context, List<String> data, int layoutId, SlidingPaneLayout slidingPaneLayout) {
+        super(context, data, layoutId);
+        this.slidingPaneLayout = slidingPaneLayout;
+    }
+
     @Override
     public void refreshView(BaseViewHolder holder, final String s, int p) {
         TextView textView = holder.getView(android.R.id.text1);
@@ -40,7 +47,8 @@ public class MenuAdapter extends BaseListAdapter<String> {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (menuItemCallBack != null) menuItemCallBack.menuItemOnClick(s);
+                //侧滑菜单是打开朱状态才可以点击
+                if (menuItemCallBack != null&&slidingPaneLayout.isOpen()) menuItemCallBack.menuItemOnClick(s);
             }
         });
     }

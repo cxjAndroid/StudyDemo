@@ -1,11 +1,15 @@
 package com.example.andychen.myapplication.activity.activity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.adapter.BannerAdapter;
@@ -36,6 +40,10 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     DrawerLayout mDrawerLayout;
     private Handler handler;
     private MyRunnable myRunnable;
+    private float startX;
+    private float startY;
+    private float endX;
+    private float endY;
 
 
     @Override
@@ -124,4 +132,5 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
             handler.postDelayed(this, 2000);
         }
     }
+
 }

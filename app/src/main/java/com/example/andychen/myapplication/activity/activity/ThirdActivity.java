@@ -6,14 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.fragment.HealthFragment;
+import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.view.MyViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -34,6 +33,8 @@ public class ThirdActivity extends BaseActivity {
     MyViewPager mViewPager;
     @BindView(R.id.smartTab)
     SmartTabLayout smartTab;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private String[] arr;
     private ArrayList<HealthFragment> fragmentList;
@@ -47,7 +48,7 @@ public class ThirdActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initToolBar();
+        initToolBar(toolbar);
     }
 
     @Override

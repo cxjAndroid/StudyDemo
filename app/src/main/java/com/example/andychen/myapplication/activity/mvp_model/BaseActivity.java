@@ -8,14 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import com.example.andychen.myapplication.activity.mvp_presenter.BasePresenter;
 import com.example.andychen.myapplication.activity.mvp_view.BaseView;
 import com.example.andychen.myapplication.activity.utils.MetricsUtils;
 import com.example.andychen.myapplication.activity.utils.RxUtils;
-import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import com.umeng.analytics.MobclickAgent;
 
@@ -123,7 +121,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showLoadingPage() {
-
         if (statusPage != null) {
             statusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
         } else {

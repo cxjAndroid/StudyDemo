@@ -29,6 +29,7 @@
             android:orientation="vertical"
             tools:mContext=".activity.activity.MainActivity">
 
+            <include layout="@layout/toolbar" />
             <!--<ImageView
                 android:id="@+id/iv"
                 android:layout_width="100dp"
