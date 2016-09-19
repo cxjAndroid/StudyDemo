@@ -38,46 +38,46 @@
                 android:layout_alignParentRight="true" />-->
             <!--   <include layout="@layout/status_layout" />-->
 
-            <TextView
-                android:id="@+id/tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar"
-                android:layout_marginTop="10dp"
-                android:text="Hello World!" />
-
-
-            <Button
-                android:id="@+id/btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="10dp"
-                android:text="button" />
-
-
-            <Button
-                android:id="@+id/btn1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn"
-                android:text="button1" />
-
             <com.example.andychen.myapplication.activity.view.MyListView
                 android:id="@+id/mListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/btn1"
+                android:layout_above="@+id/ll_btn"
+                android:layout_below="@+id/toolbar"
                 tools:listitem="@layout/item_doctor" />
 
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_btn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/btn" />
+                android:layout_alignParentBottom="true">
 
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/toolbar"
+                    android:layout_marginTop="10dp"
+                    android:text="Hello World!" />
+
+                <Button
+                    android:id="@+id/btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:text="button" />
+
+
+                <Button
+                    android:id="@+id/btn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn"
+                    android:text="button1" />
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.SlidingPaneLayout>
 

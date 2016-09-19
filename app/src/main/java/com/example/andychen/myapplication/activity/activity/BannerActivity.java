@@ -1,15 +1,11 @@
 package com.example.andychen.myapplication.activity.activity;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.adapter.BannerAdapter;

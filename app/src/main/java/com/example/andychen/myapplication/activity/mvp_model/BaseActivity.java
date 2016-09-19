@@ -6,10 +6,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.mvp_presenter.BasePresenter;
 import com.example.andychen.myapplication.activity.mvp_view.BaseView;
 import com.example.andychen.myapplication.activity.utils.MetricsUtils;
@@ -64,13 +66,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         initDate();
     }
 
+    public abstract int getContentViewLayoutID();
+
     protected abstract void initView();
 
     protected void initPresenter() {
 
     }
 
-    public abstract int getContentViewLayoutID();
 
     public abstract void initDate();
 
@@ -187,8 +190,49 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            activityRightOut();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+            activityRightOut();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 页面进入动画
+     */
+    public void activityLeftIn() {
+        overridePendingTransition(R.anim.anim_enter, R.anim.exit_anim_enter);
+    }
+
+    /**
+     * 页面退出动画
+     */
+    public void activityRightOut() {
+        overridePendingTransition(R.anim.in_anim_exit, R.anim.anim_exit);
+    }
+
+    /**
+     * 页面上升动画
+     */
+    public void activityUpIn() {
+        overridePendingTransition(R.anim.push_up_in, R.anim.enter);
+    }
+
+    /**
+     * 页面下降动画
+     */
+    public void activityUpOut() {
+        overridePendingTransition(R.anim.enter, R.anim.push_up_out);
+    }
+
 }

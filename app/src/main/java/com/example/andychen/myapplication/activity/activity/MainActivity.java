@@ -1,25 +1,14 @@
 package com.example.andychen.myapplication.activity.activity;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.Menu;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
@@ -28,7 +17,6 @@ import com.example.andychen.myapplication.activity.adapter.MenuAdapter;
 import com.example.andychen.myapplication.activity.bean.Doctor;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
-import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
@@ -67,7 +55,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     protected void initView() {
-        initToolBar(toolbar,R.menu.menu);
+        initToolBar(toolbar, R.menu.menu);
     }
 
     @Override
@@ -102,7 +90,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     public void createSlidingMenuView(List<String> list) {
-        MenuAdapter adapter = new MenuAdapter(this, list, android.R.layout.simple_list_item_1,slidingPaneLayout);
+        MenuAdapter adapter = new MenuAdapter(this, list, android.R.layout.simple_list_item_1, slidingPaneLayout);
         adapter.setMenuItemCallBack(this);
         menu_list.setAdapter(adapter);
     }
@@ -128,7 +116,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 EventBus.getDefault().postSticky(new EventMessage<>("send message"));
                 break;
             case R.id.btn1:
-                IntentUtils.startActivityLeftIn(this, ThirdActivity.class);
+                IntentUtils.startActivityLeftIn(this, DesignActivity.class);
                 EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
                 break;
         }
@@ -141,5 +129,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             Bundle extras = data.getExtras();
             tv.setText(extras.getString("result"));
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

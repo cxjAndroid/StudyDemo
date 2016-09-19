@@ -38,6 +38,7 @@
             android:name=".activity.activity.BannerActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity android:name=".activity.activity.ThirdActivity" />
+        <activity android:name=".activity.activity.DesignActivity"></activity>
 
         <meta-data
             android:name="UMENG_APPKEY"
