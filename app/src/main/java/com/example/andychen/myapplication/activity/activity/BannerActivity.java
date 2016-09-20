@@ -58,7 +58,6 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         mPresenter.getShareInfo();
     }
 
-
     @Override
     protected void initPresenter() {
         mPresenter = new BannerPresenter(this, this);
