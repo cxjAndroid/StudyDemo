@@ -22,11 +22,6 @@ public class DoctorListAdapter extends BaseListAdapter<Doctor> {
         super(context, data, layoutId);
     }
 
-
-    public DoctorListAdapter(List<Doctor> data, View itemView) {
-        super(data, itemView);
-    }
-
     @Override
     public void refreshView(BaseViewHolder holder, Doctor doctor, int p) {
         TextView text_dep = holder.getView(R.id.text_dep);
