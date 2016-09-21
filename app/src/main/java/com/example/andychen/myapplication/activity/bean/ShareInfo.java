@@ -1,7 +1,7 @@
 package com.example.andychen.myapplication.activity.bean;
 
 /**
- * Created by andychen on 2016/8/31.
+ * Created by chenxujun on 2016/8/31.
  */
 public class ShareInfo {
 

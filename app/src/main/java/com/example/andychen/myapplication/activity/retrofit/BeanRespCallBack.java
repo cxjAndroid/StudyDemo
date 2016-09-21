@@ -14,7 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by andychen on 2016/7/14.
+ * Created by chenxujun on 2016/7/14.
  */
 public abstract class BeanRespCallBack<T> implements Callback<Result<T>> {
 

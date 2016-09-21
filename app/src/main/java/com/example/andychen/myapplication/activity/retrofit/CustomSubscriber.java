@@ -9,7 +9,7 @@ import com.example.andychen.myapplication.activity.view.LoadStatusPage;
 import rx.Subscriber;
 
 /**
- * Created by andychen on 2016/8/22.
+ * Created by chenxujun on 2016/8/22.
  */
 public abstract class CustomSubscriber<T> extends Subscriber<T> {
     private Context context;

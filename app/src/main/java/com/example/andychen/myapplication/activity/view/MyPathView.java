@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by andychen on 2016/6/22.
+ * Created by chenxujun on 2016/6/22.
  */
 public class MyPathView extends View {
     Paint paint;

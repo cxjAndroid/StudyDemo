@@ -18,7 +18,7 @@ public class DesignPresenter extends BasePresenter<DesignView> {
 
     public void getBottomSheetDialogData() {
         ArrayList<String> arrayList = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 25; i++) {
             arrayList.add(String.valueOf(i));
         }
         mView.createBottomSheetDialog(arrayList);

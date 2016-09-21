@@ -14,21 +14,11 @@ public  abstract class BaseListAdapter<T> extends BaseAdapter{
     private List<T> mData;
     private Context context;
     private int layoutId;
-    private View itemView;
 
     public BaseListAdapter(Context context, List<T> data,int layoutId) {
         mData = data;
         this.context = context;
         this.layoutId = layoutId;
-    }
-   /* public BaseListAdapter(List<ToastUtils> data,int layoutId) {
-        mData = data;
-        this.layoutId = layoutId;
-    }*/
-
-    public BaseListAdapter(List<T> data,View itemView) {
-        mData = data;
-        this.itemView = itemView;
     }
 
     @Override

@@ -35,7 +35,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by andychen on 2016/7/1.
+ * Created by chenxujun on 2016/7/1.
  */
 public class MainPresenter extends BasePresenter<MainView> {
 

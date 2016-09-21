@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 
 /**
- * Created by andychen on 2016/7/19.
+ * Created by chenxujun on 2016/7/19.
  */
 public abstract class BaseFragment extends Fragment {
     public boolean isNeedBindButterKnife = true;

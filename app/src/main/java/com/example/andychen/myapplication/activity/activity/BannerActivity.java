@@ -24,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by andychen on 2016/6/1.
+ * Created by chenxujun on 2016/6/1.
  */
 public class BannerActivity extends BaseActivity<BannerPresenter> implements BannerView {
 

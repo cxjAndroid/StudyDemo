@@ -1,7 +1,7 @@
 package com.example.andychen.myapplication.activity.bean;
 
 /**
- * Created by andychen on 2016/7/13.
+ * Created by chenxujun on 2016/7/13.
  */
 public class User {
 

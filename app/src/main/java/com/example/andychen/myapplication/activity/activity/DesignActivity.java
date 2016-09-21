@@ -2,17 +2,18 @@ package com.example.andychen.myapplication.activity.activity;
 
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.adapter.MenuAdapter;
+import com.example.andychen.myapplication.activity.adapter.ListRecyclerAdapter;
 import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
 import com.example.andychen.myapplication.activity.mvp_presenter.DesignPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.DesignView;
-import com.example.andychen.myapplication.activity.view.MyListView;
 
 import java.util.List;
 
@@ -31,9 +32,9 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     @BindView(R.id.btn_bottom_sheet_control)
     Button btn_bottom_sheet_control;
 
-    MyListView mListView;
     private BottomSheetBehavior<LinearLayout> mBottomSheetBehavior;
     private BottomSheetDialog bottomSheetDialog;
+    private BottomSheetBehavior mBehavior;
 
     @Override
     public int getContentViewLayoutID() {
@@ -73,18 +74,23 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     @Override
     public void createBottomSheetDialog(List<String> data) {
         bottomSheetDialog = new BottomSheetDialog(this);
-        View view = View.inflate(this, R.layout.listview, null);
-        mListView = ButterKnife.findById(view, R.id.mListView);
+        View view = View.inflate(this, R.layout.dialog_bottom_sheet, null);
+        RecyclerView recyclerView = ButterKnife.findById(view, R.id.recyclerView);
         bottomSheetDialog.setContentView(view);
-        BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setPeekHeight(500);
 
-        MenuAdapter adapter = new MenuAdapter(this, data, android.R.layout.simple_list_item_1);
-        mListView.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setSmoothScrollbarEnabled(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        ListRecyclerAdapter adapter = new ListRecyclerAdapter(data);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void showBottomSheetDialog() {
+        if (mBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN)
+            mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetDialog.show();
     }
 

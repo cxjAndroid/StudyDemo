@@ -6,7 +6,7 @@ import java.util.List;
 import rx.Subscription;
 
 /**
- * Created by andychen on 2016/8/4.
+ * Created by chenxujun on 2016/8/4.
  */
 public class RxUtils {
 

@@ -3,7 +3,7 @@ package com.example.andychen.myapplication.activity.bean;
 import java.util.List;
 
 /**
- * Created by andychen on 2016/8/11.
+ * Created by chenxujun on 2016/8/11.
  */
 public class Doctor {
 

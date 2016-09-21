@@ -13,7 +13,7 @@ import rx.Observer;
 import rx.Subscription;
 
 /**
- * Created by andychen on 2016/8/26.
+ * Created by chenxujun on 2016/8/26.
  */
 public abstract class CustomObserver<T> implements Observer<T> {
 

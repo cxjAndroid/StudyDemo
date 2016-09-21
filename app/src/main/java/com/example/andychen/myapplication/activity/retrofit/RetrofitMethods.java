@@ -20,7 +20,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by andychen on 2016/8/19.
+ * Created by chenxujun on 2016/8/19.
  */
 public class RetrofitMethods {
 

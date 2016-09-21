@@ -6,7 +6,7 @@ import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * Created by andychen on 2016/8/12.
+ * Created by chenxujun on 2016/8/12.
  */
 public class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")

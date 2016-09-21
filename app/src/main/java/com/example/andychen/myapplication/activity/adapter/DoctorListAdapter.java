@@ -2,6 +2,7 @@ package com.example.andychen.myapplication.activity.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
@@ -19,6 +20,11 @@ import java.util.List;
 public class DoctorListAdapter extends BaseListAdapter<Doctor> {
     public DoctorListAdapter(Context context, List<Doctor> data, int layoutId) {
         super(context, data, layoutId);
+    }
+
+
+    public DoctorListAdapter(List<Doctor> data, View itemView) {
+        super(data, itemView);
     }
 
     @Override

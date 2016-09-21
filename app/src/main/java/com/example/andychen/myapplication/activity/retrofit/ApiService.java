@@ -24,7 +24,7 @@ import retrofit2.http.Url;
 import rx.Observable;
 
 /**
- * Created by andychen on 2016/7/12.
+ * Created by chenxujun on 2016/7/12.
  */
 public interface ApiService {
 

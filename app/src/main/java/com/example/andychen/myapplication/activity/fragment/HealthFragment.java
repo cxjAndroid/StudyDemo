@@ -11,7 +11,7 @@ import com.example.andychen.myapplication.activity.mvp_model.BaseFragment;
 import butterknife.BindView;
 
 /**
- * Created by andychen on 2016/7/19.
+ * Created by chenxujun on 2016/7/19.
  */
 public class HealthFragment extends BaseFragment {
     @BindView(R.id.mTextView)

@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * Created by andychen on 2016/6/24.
+ * Created by chenxujun on 2016/6/24.
  */
 public class MetricsUtils {
     public static int loadingPageHeight;
@@ -35,9 +35,9 @@ public class MetricsUtils {
 
 
     public static int getStatusPageHeight(Context context) {
-        /*if (loadingPageHeight != 0) {sh
+        if (loadingPageHeight != 0) {
             return loadingPageHeight;
-        }*/
+        }
         int[] pixels = getPixels();
         int statusBarHeight = getStatusBarHeight();
         int barHeight = getNavigationBarHeight();

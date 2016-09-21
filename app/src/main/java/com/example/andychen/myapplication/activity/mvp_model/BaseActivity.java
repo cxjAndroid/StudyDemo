@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 
 /**
- * Created by andychen on 2016/6/1.
+ * Created by chenxujun on 2016/6/1.
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 

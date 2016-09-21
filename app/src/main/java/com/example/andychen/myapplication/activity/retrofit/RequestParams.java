@@ -5,7 +5,7 @@ import com.example.andychen.myapplication.activity.security.Des3;
 import java.util.HashMap;
 
 /**
- * Created by andychen on 2016/7/13.
+ * Created by chenxujun on 2016/7/13.
  */
 public class RequestParams extends HashMap {
     @Override

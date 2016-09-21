@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 
 /**
- * Created by andychen on 2016/8/12.
+ * Created by chenxujun on 2016/8/12.
  */
 public class StringNullAdapter extends TypeAdapter<String> {
     @Override

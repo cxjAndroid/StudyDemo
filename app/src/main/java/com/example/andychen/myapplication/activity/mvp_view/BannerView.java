@@ -5,7 +5,7 @@ import com.example.andychen.myapplication.activity.bean.ShareInfo;
 import java.util.List;
 
 /**
- * Created by andychen on 2016/8/30.
+ * Created by chenxujun on 2016/8/30.
  */
 public interface BannerView extends BaseView  {
 

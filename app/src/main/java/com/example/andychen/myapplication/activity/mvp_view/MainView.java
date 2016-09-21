@@ -5,7 +5,7 @@ import com.example.andychen.myapplication.activity.bean.Doctor;
 import java.util.List;
 
 /**
- * Created by andychen on 2016/6/24.
+ * Created by chenxujun on 2016/6/24.
  */
 public interface MainView extends BaseView{
     void refreshDocList(List<Doctor> doctorList);

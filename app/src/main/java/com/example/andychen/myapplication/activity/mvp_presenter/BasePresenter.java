@@ -6,7 +6,7 @@ import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.RetrofitMethods;
 
 /**
- * Created by andychen on 2016/6/24.
+ * Created by chenxujun on 2016/6/24.
  */
 public class BasePresenter<T> {
     public T mView;

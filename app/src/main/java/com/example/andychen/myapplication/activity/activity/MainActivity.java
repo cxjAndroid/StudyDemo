@@ -89,8 +89,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     @Override
-    public void createSlidingMenuView(List<String> list) {
-        MenuAdapter adapter = new MenuAdapter(this, list, android.R.layout.simple_list_item_1, slidingPaneLayout);
+    public void createSlidingMenuView(List<String> data) {
+        MenuAdapter adapter = new MenuAdapter(this,data,android.R.layout.simple_list_item_1,slidingPaneLayout);
         adapter.setMenuItemCallBack(this);
         menu_list.setAdapter(adapter);
     }
