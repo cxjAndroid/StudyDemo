@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.example.andychen.myapplication.activity.view.MyViewPager
+            <com.example.andychen.view.MyViewPager
                 android:id="@+id/adv_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"

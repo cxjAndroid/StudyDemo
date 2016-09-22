@@ -29,7 +29,7 @@
         app:stl_underlineColor="@android:color/transparent"
         app:stl_underlineThickness="0dp" />
 
-    <com.example.andychen.myapplication.activity.view.MyViewPager
+    <com.example.andychen.view.MyViewPager
         android:id="@+id/mViewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
