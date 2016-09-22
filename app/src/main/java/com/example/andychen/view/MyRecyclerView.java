@@ -31,5 +31,6 @@ public class MyRecyclerView extends RecyclerView {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setSmoothScrollbarEnabled(true);
         setLayoutManager(layoutManager);
+        addItemDecoration(new DividerItemDecoration(context,DividerItemDecoration.VERTICAL_LIST));
     }
 }

@@ -46,8 +46,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     ImageView iv;*/
     @BindView(R.id.tv)
     TextView tv;
-    /* @BindView(R.id.mListView)
-     ListView mListView;*/
+    /*@BindView(R.id.mListView)
+    ListView mListView;*/
     @BindView(R.id.recyclerView)
     MyRecyclerView recyclerView;
     @BindView(R.id.slidingLayout)
@@ -115,6 +115,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     public void refreshDocList(List<Doctor> doctorList) {
         DoctorListAdapter adapter = new DoctorListAdapter(doctorList, R.layout.item_doctor);
         recyclerView.setAdapter(adapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //mListView.setAdapter(adapter);
     }
 
     @OnClick({R.id.btn, R.id.btn1})
