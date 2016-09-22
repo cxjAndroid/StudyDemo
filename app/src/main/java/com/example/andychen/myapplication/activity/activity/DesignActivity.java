@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.adapter.BottomSheetDialogAdapter;
 import com.example.andychen.myapplication.activity.adapter.ListRecyclerAdapter;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.mvp_presenter.DesignPresenter;
@@ -80,11 +81,9 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setPeekHeight(500);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setSmoothScrollbarEnabled(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        ListRecyclerAdapter adapter = new ListRecyclerAdapter(data);
+        BottomSheetDialogAdapter adapter = new BottomSheetDialogAdapter(data,R.layout.item);
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

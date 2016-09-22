@@ -1,13 +1,12 @@
 package com.example.andychen.myapplication.activity.adapter;
 
-import android.content.Context;
 import android.net.Uri;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
+import com.example.andychen.myapplication.activity.base.BaseRecyclerAdapter;
+import com.example.andychen.myapplication.activity.base.BaseRecyclerViewHolder;
 import com.example.andychen.myapplication.activity.mvp_model.Doctor;
-import com.example.andychen.myapplication.activity.base.BaseListAdapter;
-import com.example.andychen.myapplication.activity.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -15,17 +14,14 @@ import java.util.List;
 /**
  * Created by chenxujun on 16-9-9.
  */
-public class DoctorListAdapter extends BaseListAdapter<Doctor> {
-    public DoctorListAdapter(List<Doctor> data, int layoutId) {
-        super(data, layoutId);
-    }
+public class DoctorListAdapter extends BaseRecyclerAdapter<Doctor> {
 
-    public DoctorListAdapter(Context context, List<Doctor> data, int layoutId) {
-        super(context, data, layoutId);
+    public DoctorListAdapter(List<Doctor> mData, int layoutId) {
+        super(mData, layoutId);
     }
 
     @Override
-    public void refreshView(BaseViewHolder holder, Doctor doctor, int p) {
+    public void RefreshView(BaseRecyclerViewHolder holder, Doctor doctor, int position) {
         TextView text_dep = holder.getView(R.id.text_dep);
         TextView text_doc = holder.getView(R.id.text_doc);
         SimpleDraweeView image_doc = holder.getView(R.id.image_doc);

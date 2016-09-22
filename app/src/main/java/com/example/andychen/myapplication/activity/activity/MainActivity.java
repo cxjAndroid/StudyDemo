@@ -1,8 +1,11 @@
 package com.example.andychen.myapplication.activity.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.adapter.DoctorListAdapter;
 import com.example.andychen.myapplication.activity.adapter.MenuAdapter;
+import com.example.andychen.myapplication.activity.base.BaseRecyclerAdapter;
+import com.example.andychen.myapplication.activity.base.BaseRecyclerViewHolder;
 import com.example.andychen.myapplication.activity.mvp_model.Doctor;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.base.BaseActivity;
@@ -22,6 +27,8 @@ import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
 import com.example.andychen.myapplication.activity.utils.ToastUtils;
 import com.example.andychen.myapplication.activity.view.MyListView;
+import com.example.andychen.myapplication.activity.view.MyRecyclerView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.umeng.analytics.MobclickAgent;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
@@ -39,8 +46,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     ImageView iv;*/
     @BindView(R.id.tv)
     TextView tv;
-    @BindView(R.id.mListView)
-    ListView mListView;
+    /* @BindView(R.id.mListView)
+     ListView mListView;*/
+    @BindView(R.id.recyclerView)
+    MyRecyclerView recyclerView;
     @BindView(R.id.slidingLayout)
     SlidingPaneLayout slidingPaneLayout;
     @BindView(R.id.menu_list)
@@ -90,7 +99,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     public void createSlidingMenuView(List<String> data) {
-        MenuAdapter adapter = new MenuAdapter(data,android.R.layout.simple_list_item_1,slidingPaneLayout);
+        MenuAdapter adapter = new MenuAdapter(data, android.R.layout.simple_list_item_1, slidingPaneLayout);
         adapter.setMenuItemCallBack(this);
         menu_list.setAdapter(adapter);
     }
@@ -105,7 +114,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public void refreshDocList(List<Doctor> doctorList) {
         DoctorListAdapter adapter = new DoctorListAdapter(doctorList, R.layout.item_doctor);
-        mListView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
     @OnClick({R.id.btn, R.id.btn1})
