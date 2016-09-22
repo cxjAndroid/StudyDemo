@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.event.EventMessage;
 import com.example.andychen.myapplication.activity.fragment.HealthFragment;
-import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
+import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.view.MyViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;

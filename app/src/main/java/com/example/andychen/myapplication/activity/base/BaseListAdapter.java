@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.mvp_model;
+package com.example.andychen.myapplication.activity.base;
 
 import android.content.Context;
 import android.view.View;
@@ -10,14 +10,19 @@ import java.util.List;
 /**
  * Created by chenxujun on 2016/3/7.
  */
-public  abstract class BaseListAdapter<T> extends BaseAdapter{
+public abstract class BaseListAdapter<T> extends BaseAdapter {
     private List<T> mData;
     private Context context;
     private int layoutId;
 
-    public BaseListAdapter(Context context, List<T> data,int layoutId) {
+    public BaseListAdapter(Context context, List<T> data, int layoutId) {
         mData = data;
         this.context = context;
+        this.layoutId = layoutId;
+    }
+
+    public BaseListAdapter(List<T> data, int layoutId) {
+        mData = data;
         this.layoutId = layoutId;
     }
 
@@ -38,11 +43,16 @@ public  abstract class BaseListAdapter<T> extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        BaseViewHolder baseViewHolder = BaseViewHolder.get(context, convertView, parent, layoutId, position);
-        refreshView(baseViewHolder, getItem(position),position);
+        BaseViewHolder baseViewHolder = null;
+        if (context != null) {
+            baseViewHolder = BaseViewHolder.get(context, convertView, parent, layoutId, position);
+        }else{
+            baseViewHolder = BaseViewHolder.get(convertView, parent, layoutId, position);
+        }
+        refreshView(baseViewHolder, getItem(position), position);
         return baseViewHolder.getConvertView();
     }
 
-    public abstract void refreshView(BaseViewHolder holder,T t,int p);
+    public abstract void refreshView(BaseViewHolder holder, T t, int p);
 
 }

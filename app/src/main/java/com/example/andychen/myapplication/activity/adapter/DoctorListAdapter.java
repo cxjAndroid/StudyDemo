@@ -2,14 +2,12 @@ package com.example.andychen.myapplication.activity.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.bean.Doctor;
-import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
-import com.example.andychen.myapplication.activity.mvp_model.BaseListAdapter;
-import com.example.andychen.myapplication.activity.mvp_model.BaseViewHolder;
+import com.example.andychen.myapplication.activity.mvp_model.Doctor;
+import com.example.andychen.myapplication.activity.base.BaseListAdapter;
+import com.example.andychen.myapplication.activity.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -18,6 +16,10 @@ import java.util.List;
  * Created by chenxujun on 16-9-9.
  */
 public class DoctorListAdapter extends BaseListAdapter<Doctor> {
+    public DoctorListAdapter(List<Doctor> data, int layoutId) {
+        super(data, layoutId);
+    }
+
     public DoctorListAdapter(Context context, List<Doctor> data, int layoutId) {
         super(context, data, layoutId);
     }

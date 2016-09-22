@@ -1,6 +1,6 @@
 package com.example.andychen.myapplication.activity.mvp_view;
 
-import com.example.andychen.myapplication.activity.bean.ShareInfo;
+import com.example.andychen.myapplication.activity.mvp_model.ShareInfo;
 
 import java.util.List;
 

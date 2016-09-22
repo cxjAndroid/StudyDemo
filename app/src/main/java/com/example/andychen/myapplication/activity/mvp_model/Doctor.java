@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.bean;
+package com.example.andychen.myapplication.activity.mvp_model;
 
 import java.util.List;
 

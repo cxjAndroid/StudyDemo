@@ -1,16 +1,9 @@
 package com.example.andychen.myapplication.activity.retrofit;
 
 
-import com.example.andychen.myapplication.activity.bean.Doctor;
-import com.example.andychen.myapplication.activity.bean.Result;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
-import com.example.andychen.myapplication.activity.utils.StringUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
-
-import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.ResponseBody;

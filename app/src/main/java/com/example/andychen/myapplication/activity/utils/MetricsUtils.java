@@ -9,7 +9,7 @@ import android.util.TypedValue;
 import android.view.ViewConfiguration;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.mvp_model.BaseApplication;
+import com.example.andychen.myapplication.activity.base.BaseApplication;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

@@ -1,22 +1,11 @@
 package com.example.andychen.myapplication.activity.activity;
 
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
-import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.bean.People;
-import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
+import com.example.andychen.myapplication.activity.mvp_model.People;
+import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
 import com.example.andychen.myapplication.activity.utils.NullStringToEmptyAdapterFactory;
-import com.example.andychen.myapplication.activity.utils.RxUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by chenxujun on 16-9-9.

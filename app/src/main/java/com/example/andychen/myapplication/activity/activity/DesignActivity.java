@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.adapter.ListRecyclerAdapter;
-import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
+import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.mvp_presenter.DesignPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.DesignView;
 

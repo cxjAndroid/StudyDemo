@@ -1,6 +1,6 @@
 package com.example.andychen.myapplication.activity.mvp_view;
 
-import com.example.andychen.myapplication.activity.bean.Doctor;
+import com.example.andychen.myapplication.activity.mvp_model.Doctor;
 
 import java.util.List;
 

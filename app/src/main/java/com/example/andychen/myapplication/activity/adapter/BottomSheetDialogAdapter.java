@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.myapplication.activity.mvp_model.BaseListAdapter;
-import com.example.andychen.myapplication.activity.mvp_model.BaseViewHolder;
+import com.example.andychen.myapplication.activity.base.BaseListAdapter;
+import com.example.andychen.myapplication.activity.base.BaseViewHolder;
 
 import java.util.List;
 
@@ -32,11 +32,11 @@ public class BottomSheetDialogAdapter extends BaseListAdapter<String> {
     }
 
     public BottomSheetDialogAdapter(Context context, List<String> data, int layoutId) {
-        super(context, data, layoutId);
+        super(data, layoutId);
     }
 
     public BottomSheetDialogAdapter(Context context, List<String> data, int layoutId, SlidingPaneLayout slidingPaneLayout) {
-        super(context, data, layoutId);
+        super(data, layoutId);
         this.slidingPaneLayout = slidingPaneLayout;
     }
 

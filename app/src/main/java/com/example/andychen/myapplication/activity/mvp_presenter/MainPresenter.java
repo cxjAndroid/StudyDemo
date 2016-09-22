@@ -3,7 +3,7 @@ package com.example.andychen.myapplication.activity.mvp_presenter;
 import android.content.Context;
 import android.os.Environment;
 
-import com.example.andychen.myapplication.activity.bean.Doctor;
+import com.example.andychen.myapplication.activity.mvp_model.Doctor;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.retrofit.ApiService;
 import com.example.andychen.myapplication.activity.retrofit.CustomObserver;

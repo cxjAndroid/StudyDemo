@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.mvp_model;
+package com.example.andychen.myapplication.activity.base;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -16,7 +16,15 @@ public class BaseViewHolder {
     public int               position;
     private View              mConvertView;
 
-    public BaseViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
+    public BaseViewHolder(ViewGroup parent, int layoutId, int position) {
+        this.position = position;
+        this.mViews = new SparseArray<>();
+        mConvertView = LayoutInflater.from(parent.getContext()).inflate(layoutId,parent,false);
+        mConvertView.setTag(this);
+
+    }
+
+    public BaseViewHolder(Context context,ViewGroup parent, int layoutId, int position) {
         this.position = position;
         this.mViews = new SparseArray<>();
         mConvertView = LayoutInflater.from(context).inflate(layoutId,parent,false);
@@ -24,10 +32,21 @@ public class BaseViewHolder {
 
     }
 
-    public static BaseViewHolder get(Context context, View convertView, ViewGroup parent, int layoutId, int position) {
+    public static BaseViewHolder get(View convertView, ViewGroup parent, int layoutId, int position) {
 
         if (convertView == null) {
-            return new BaseViewHolder(context, parent, layoutId, position);
+            return new BaseViewHolder(parent, layoutId, position);
+        } else {
+            BaseViewHolder baseViewHolder = (BaseViewHolder) convertView.getTag();
+            baseViewHolder.position = position;
+            return baseViewHolder;
+        }
+    }
+
+    public static BaseViewHolder get(Context context ,View convertView, ViewGroup parent, int layoutId, int position) {
+
+        if (convertView == null) {
+            return new BaseViewHolder(context,parent, layoutId, position);
         } else {
             BaseViewHolder baseViewHolder = (BaseViewHolder) convertView.getTag();
             baseViewHolder.position = position;

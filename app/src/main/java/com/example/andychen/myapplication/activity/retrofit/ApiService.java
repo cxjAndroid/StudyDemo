@@ -1,21 +1,19 @@
 package com.example.andychen.myapplication.activity.retrofit;
 
-import com.example.andychen.myapplication.activity.bean.Doctor;
-import com.example.andychen.myapplication.activity.bean.Hospital;
-import com.example.andychen.myapplication.activity.bean.Movie;
-import com.example.andychen.myapplication.activity.bean.Result;
-import com.example.andychen.myapplication.activity.bean.ShareInfo;
+import com.example.andychen.myapplication.activity.mvp_model.Doctor;
+import com.example.andychen.myapplication.activity.mvp_model.Hospital;
+import com.example.andychen.myapplication.activity.mvp_model.Movie;
+import com.example.andychen.myapplication.activity.mvp_model.Result;
+import com.example.andychen.myapplication.activity.mvp_model.ShareInfo;
 
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

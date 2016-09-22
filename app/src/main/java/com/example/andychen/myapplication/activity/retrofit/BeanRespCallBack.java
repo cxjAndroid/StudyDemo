@@ -1,11 +1,8 @@
 package com.example.andychen.myapplication.activity.retrofit;
 
 
-import com.example.andychen.myapplication.activity.bean.Result;
-import com.example.andychen.myapplication.activity.bean.User;
+import com.example.andychen.myapplication.activity.mvp_model.Result;
 import com.example.andychen.myapplication.activity.utils.LogUtils;
-
-import org.json.JSONObject;
 
 import okhttp3.HttpUrl;
 import okhttp3.ResponseBody;

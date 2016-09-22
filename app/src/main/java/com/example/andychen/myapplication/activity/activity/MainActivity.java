@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.myapplication.activity.adapter.DoctorListAdapter;
 import com.example.andychen.myapplication.activity.adapter.MenuAdapter;
-import com.example.andychen.myapplication.activity.bean.Doctor;
+import com.example.andychen.myapplication.activity.mvp_model.Doctor;
 import com.example.andychen.myapplication.activity.event.EventMessage;
-import com.example.andychen.myapplication.activity.mvp_model.BaseActivity;
+import com.example.andychen.myapplication.activity.base.BaseActivity;
 import com.example.andychen.myapplication.activity.mvp_presenter.MainPresenter;
 import com.example.andychen.myapplication.activity.mvp_view.MainView;
 import com.example.andychen.myapplication.activity.utils.IntentUtils;
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     public void createSlidingMenuView(List<String> data) {
-        MenuAdapter adapter = new MenuAdapter(this,data,android.R.layout.simple_list_item_1,slidingPaneLayout);
+        MenuAdapter adapter = new MenuAdapter(data,android.R.layout.simple_list_item_1,slidingPaneLayout);
         adapter.setMenuItemCallBack(this);
         menu_list.setAdapter(adapter);
     }
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     public void refreshDocList(List<Doctor> doctorList) {
-        DoctorListAdapter adapter = new DoctorListAdapter(this, doctorList, R.layout.item_doctor);
+        DoctorListAdapter adapter = new DoctorListAdapter(doctorList, R.layout.item_doctor);
         mListView.setAdapter(adapter);
     }
 

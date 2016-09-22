@@ -2,7 +2,7 @@ package com.example.andychen.myapplication.activity.mvp_presenter;
 
 import android.content.Context;
 
-import com.example.andychen.myapplication.activity.bean.ShareInfo;
+import com.example.andychen.myapplication.activity.mvp_model.ShareInfo;
 import com.example.andychen.myapplication.activity.mvp_view.BannerView;
 import com.example.andychen.myapplication.activity.mvp_view.BaseView;
 import com.example.andychen.myapplication.activity.retrofit.CustomObserver;

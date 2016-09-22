@@ -5,9 +5,8 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.andychen.myapplication.activity.mvp_model.BaseListAdapter;
-import com.example.andychen.myapplication.activity.mvp_model.BaseViewHolder;
-import com.example.andychen.myapplication.activity.utils.ToastUtils;
+import com.example.andychen.myapplication.activity.base.BaseListAdapter;
+import com.example.andychen.myapplication.activity.base.BaseViewHolder;
 
 import java.util.List;
 
@@ -31,12 +30,12 @@ public class MenuAdapter extends BaseListAdapter<String> {
         void menuItemOnClick(String s);
     }
 
-    public MenuAdapter(Context context, List<String> data, int layoutId) {
-        super(context, data, layoutId);
+    public MenuAdapter(List<String> data, int layoutId) {
+        super(data, layoutId);
     }
 
-    public MenuAdapter(Context context, List<String> data, int layoutId, SlidingPaneLayout slidingPaneLayout) {
-        super(context, data, layoutId);
+    public MenuAdapter(List<String> data, int layoutId, SlidingPaneLayout slidingPaneLayout) {
+        super(data, layoutId);
         this.slidingPaneLayout = slidingPaneLayout;
     }
 

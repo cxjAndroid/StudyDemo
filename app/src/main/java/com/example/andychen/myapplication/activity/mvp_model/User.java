@@ -1,4 +1,4 @@
-package com.example.andychen.myapplication.activity.bean;
+package com.example.andychen.myapplication.activity.mvp_model;
 
 /**
  * Created by chenxujun on 2016/7/13.
