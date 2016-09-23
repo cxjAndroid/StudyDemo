@@ -31,6 +31,8 @@
     <color name="sticky_item">#45645C</color>
     <color name="sticky_item_text">#fff</color>
 
+    <!--可点击模块点击时色彩（由白变灰）-->
+    <color name="background_gray_click">#e0e0e0</color>
     <integer-array name="srl_color">
         <item>@color/blue</item>
         <item>@color/purple</item>

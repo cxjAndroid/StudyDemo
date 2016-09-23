@@ -83,7 +83,6 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
 
         BottomSheetDialogAdapter adapter = new BottomSheetDialogAdapter(data,R.layout.item);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
