@@ -1,34 +1,30 @@
 package com.example.andychen.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.andychen.myapplication.R;
 import com.example.andychen.adapter.DoctorListAdapter;
 import com.example.andychen.adapter.MenuAdapter;
-import com.example.andychen.base.BaseRecyclerAdapter;
-import com.example.andychen.base.BaseRecyclerViewHolder;
-import com.example.andychen.mvp_model.Doctor;
-import com.example.andychen.event.EventMessage;
 import com.example.andychen.base.BaseActivity;
+import com.example.andychen.event.EventMessage;
+import com.example.andychen.mvp_model.Doctor;
 import com.example.andychen.mvp_presenter.MainPresenter;
 import com.example.andychen.mvp_view.MainView;
+import com.example.andychen.myapplication.R;
+import com.example.andychen.utils.AnimatorUtil;
 import com.example.andychen.utils.IntentUtils;
 import com.example.andychen.utils.ToastUtils;
 import com.example.andychen.view.MyListView;
 import com.example.andychen.view.MyRecyclerView;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.umeng.analytics.MobclickAgent;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
@@ -54,6 +50,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     MyListView menu_list;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.floatBtn)
+    FloatingActionButton floatBtn;
 
     @Override
     public int getContentViewLayoutID() {
@@ -63,6 +61,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     protected void initView() {
         initToolBar(toolbar, R.menu.menu);
+        AnimatorUtil.scaleHide(floatBtn,0,null);
     }
 
     @Override

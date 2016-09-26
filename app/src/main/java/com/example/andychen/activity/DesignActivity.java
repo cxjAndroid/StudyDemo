@@ -2,19 +2,17 @@ package com.example.andychen.activity;
 
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.andychen.myapplication.R;
 import com.example.andychen.adapter.BottomSheetDialogAdapter;
-import com.example.andychen.adapter.ListRecyclerAdapter;
 import com.example.andychen.base.BaseActivity;
 import com.example.andychen.mvp_presenter.DesignPresenter;
 import com.example.andychen.mvp_view.DesignView;
+import com.example.andychen.myapplication.R;
 
 import java.util.List;
 
@@ -79,7 +77,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
         RecyclerView recyclerView = ButterKnife.findById(view, R.id.recyclerView);
         bottomSheetDialog.setContentView(view);
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
-        mBehavior.setPeekHeight(500);
+        mBehavior.setPeekHeight(1000);
 
         BottomSheetDialogAdapter adapter = new BottomSheetDialogAdapter(data,R.layout.item);
         recyclerView.setAdapter(adapter);
