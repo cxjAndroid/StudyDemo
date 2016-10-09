@@ -67,6 +67,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     public void adjustAdvLayout() {
         ViewGroup.LayoutParams layoutParams = adv_viewpager.getLayoutParams();
         int[] pixels = MetricsUtils.getPixels();
+        //高度为宽度的1/2
         layoutParams.height = (int) (pixels[0] * 0.5);
         adv_viewpager.setLayoutParams(layoutParams);
     }

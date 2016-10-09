@@ -12,6 +12,12 @@ import android.util.AttributeSet;
 
 public class MyRecyclerView extends RecyclerView {
     private  Context context;
+    private LinearLayoutManager layoutManager;
+
+    @Override
+    public LinearLayoutManager getLayoutManager() {
+        return layoutManager;
+    }
 
     public MyRecyclerView(Context context) {
         this(context,null);
@@ -28,7 +34,7 @@ public class MyRecyclerView extends RecyclerView {
     }
 
     private void initView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        layoutManager = new LinearLayoutManager(context);
         layoutManager.setSmoothScrollbarEnabled(true);
         setLayoutManager(layoutManager);
         addItemDecoration(new DividerItemDecoration(context,DividerItemDecoration.VERTICAL_LIST));
