@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         recyclerView.setAdapter(adapter);
     }
 
-    @OnClick({R.id.btn, R.id.btn1,R.id.floatBtn})
+    @OnClick({R.id.btn, R.id.btn1,R.id.btn2,R.id.floatBtn})
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
@@ -127,6 +128,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, DesignActivity.class);
                 EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
+                break;
+            case R.id.btn2:
+                IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
                 break;
             case R.id.floatBtn:
                 recyclerView.getLayoutManager().scrollToPosition(0);

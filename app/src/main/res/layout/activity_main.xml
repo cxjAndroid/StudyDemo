@@ -82,8 +82,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv"
                     android:layout_gravity="bottom"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
                     android:text="button" />
 
                 <Button
@@ -92,6 +90,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn"
                     android:text="button1" />
+
+                <Button
+                    android:id="@+id/btn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn"
+                    android:text="drawPage" />
+
             </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.SlidingPaneLayout>
