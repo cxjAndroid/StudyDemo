@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 
 
     <application
@@ -28,17 +30,23 @@
         android:theme="@style/AppTheme">
 
         <activity android:name="com.example.andychen.activity.MainActivity">
+            <!-- <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>-->
+        </activity>
+        <activity
+            android:name="com.example.andychen.activity.BannerActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity android:name="com.example.andychen.activity.ThirdActivity" />
+        <activity android:name="com.example.andychen.activity.DesignActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.andychen.activity.BannerActivity"
-            android:theme="@style/NoActionBarTheme" />
-        <activity android:name="com.example.andychen.activity.ThirdActivity" />
-        <activity android:name="com.example.andychen.activity.DesignActivity" />
         <activity android:name="com.example.andychen.activity.DrawViewActivity" />
 
         <meta-data

@@ -34,6 +34,24 @@
                 android:layout_height="wrap_content"
                 android:text="Dialog 显示/隐藏" />
 
+            <Button
+                android:id="@+id/record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="录音" />
+
+            <Button
+                android:id="@+id/stop_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="停止" />
+
+            <Button
+                android:id="@+id/play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="播放录音" />
+
         </LinearLayout>
 
         <LinearLayout

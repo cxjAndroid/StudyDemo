@@ -1,5 +1,8 @@
 package com.example.andychen.activity;
 
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
+import android.os.Environment;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +16,11 @@ import com.example.andychen.base.BaseActivity;
 import com.example.andychen.mvp_presenter.DesignPresenter;
 import com.example.andychen.mvp_view.DesignView;
 import com.example.andychen.myapplication.R;
+import com.example.andychen.utils.LogUtils;
+import com.example.andychen.utils.ToastUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,10 +37,22 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     LinearLayout tab_layout;
     @BindView(R.id.btn_bottom_sheet_control)
     Button btn_bottom_sheet_control;
+    @BindView(R.id.record)
+    Button record;
+    @BindView(R.id.stop_record)
+    Button stop_record;
+    @BindView(R.id.play)
+    Button play;
 
     private BottomSheetBehavior<LinearLayout> mBottomSheetBehavior;
     private BottomSheetDialog bottomSheetDialog;
     private BottomSheetBehavior mBehavior;
+    public static final String VOICE_PATH = Environment.getExternalStorageDirectory() + "/cxj/voice/";
+    private boolean isSuccess;
+    private File voicePath;
+    private File audioRecFile;
+    private MediaRecorder mediaRecorder;
+    private MediaPlayer mediaPlayer;
 
     @Override
     public int getContentViewLayoutID() {
@@ -56,9 +75,14 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     @Override
     public void initDate() {
         mPresenter.getBottomSheetDialogData();
+        voicePath = new File(VOICE_PATH);
+        if (!voicePath.exists()) {
+            voicePath.mkdirs();
+        }
+
     }
 
-    @OnClick({R.id.btn_bottom_sheet_control, R.id.btn_bottom_dialog_control})
+    @OnClick({R.id.btn_bottom_sheet_control, R.id.btn_bottom_dialog_control, R.id.record, R.id.stop_record,R.id.play })
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn_bottom_sheet_control:
@@ -66,6 +90,17 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
                 break;
             case R.id.btn_bottom_dialog_control:
                 showBottomSheetDialog();
+                break;
+            case R.id.record:
+                ToastUtils.show("录音");
+                startRecording();
+                break;
+            case R.id.stop_record:
+                ToastUtils.show("stop");
+                stopRecording();
+                break;
+            case R.id.play:
+                playRecord();
                 break;
         }
     }
@@ -79,7 +114,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setPeekHeight(1000);
 
-        BottomSheetDialogAdapter adapter = new BottomSheetDialogAdapter(data,R.layout.item);
+        BottomSheetDialogAdapter adapter = new BottomSheetDialogAdapter(data, R.layout.item);
         recyclerView.setAdapter(adapter);
     }
 
@@ -105,4 +140,83 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
     }
+
+    private void startRecording() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    audioRecFile = File.createTempFile("Record_", ".amr", voicePath);
+                    LogUtils.e(audioRecFile.getPath());
+                    mediaRecorder = new MediaRecorder();
+                    mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 采样音频源为麦克风
+                    mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);// 输出文件格式
+                    mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 音频编码方式
+                    mediaRecorder.setOutputFile(audioRecFile.getAbsolutePath());// 输出文件位置
+                    // mediaRecorder.setMaxDuration(60);//设置最大录制时间
+                    mediaRecorder.setAudioSamplingRate(8000);    // 采样率
+                    mediaRecorder.prepare();
+                    mediaRecorder.start();
+                    isSuccess = true;
+                } catch (Exception e) {
+                    LogUtils.e(e);
+                }
+            }
+        }).start();
+    }
+
+    private void stopRecording() {
+        if (audioRecFile != null && mediaRecorder != null) {
+            try {
+                mediaRecorder.setOnErrorListener(null);
+                mediaRecorder.setOnInfoListener(null);
+                /* 停止*/
+                mediaRecorder.stop();
+            } catch (RuntimeException e) {
+                    /* 如果发生异常，很可能是在不合适的状态执行了stop操作*/
+                    /* 所以等待一会儿*/
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e1) {
+                }
+            }
+                /* 然后再进行reset、release */
+//            mediaRecorder.reset();
+            mediaRecorder.release();
+            mediaRecorder = null;
+        }
+    }
+
+    private void playRecord() {
+        if (audioRecFile != null && audioRecFile.exists()) {
+            mediaPlayer = new MediaPlayer();
+            try {
+                FileInputStream fis = new FileInputStream(audioRecFile);
+                mediaPlayer.setDataSource(fis.getFD());
+                fis.close();
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                    public void onCompletion(MediaPlayer arg0) {
+                        stopMediaPlayer();
+                    }
+
+                });
+            } catch (Exception e) {
+                LogUtils.e("Voice Playing Error", e);
+                ToastUtils.show("语音播放错误");
+                stopMediaPlayer();
+            }
+        }
+    }
+
+    private void stopMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
 }

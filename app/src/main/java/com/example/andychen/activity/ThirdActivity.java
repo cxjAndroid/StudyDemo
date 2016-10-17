@@ -101,13 +101,13 @@ public class ThirdActivity extends BaseActivity {
     @Subscribe(sticky = true)
     public void onEvent(EventMessage<String> message) {
         String s = message.getMessage();
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
 
     class MyViewPagerAdapter extends FragmentPagerAdapter {
 
-        public MyViewPagerAdapter(FragmentManager fm) {
+        MyViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

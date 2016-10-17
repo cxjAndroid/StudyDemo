@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <android.support.v4.widget.SlidingPaneLayout
@@ -72,7 +73,6 @@
                     android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/toolbar"
                     android:layout_marginTop="10dp"
                     android:text="Hello World!" />
 
@@ -80,7 +80,6 @@
                     android:id="@+id/btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv"
                     android:layout_gravity="bottom"
                     android:text="button" />
 
@@ -88,7 +87,6 @@
                     android:id="@+id/btn1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/btn"
                     android:text="button1" />
 
                 <Button

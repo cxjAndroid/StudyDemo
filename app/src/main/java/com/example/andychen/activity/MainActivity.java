@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.example.andychen.mvp_view.MainView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.utils.AnimatorUtil;
 import com.example.andychen.utils.IntentUtils;
+import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.ToastUtils;
 import com.example.andychen.view.MyListView;
 import com.example.andychen.view.MyRecyclerView;
@@ -65,7 +67,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     protected void initView() {
         initToolBar(toolbar, R.menu.menu);
-        AnimatorUtil.scaleHide(floatBtn,0,null);
+        AnimatorUtil.scaleHide(floatBtn, 0, null);
     }
 
     @Override
@@ -74,6 +76,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         showLoadingPage();
         mPresenter.getDoctorsInfo("20");
         mPresenter.getSlidingMenuData();
+
+        btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                btn.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                LogUtils.e(String.valueOf(btn.getLeft()));
+                LogUtils.e(String.valueOf(btn.getTop()));
+                LogUtils.e(String.valueOf(btn.getRight()));
+                LogUtils.e(String.valueOf(btn.getBottom()));
+            }
+        });
     }
 
     @Override

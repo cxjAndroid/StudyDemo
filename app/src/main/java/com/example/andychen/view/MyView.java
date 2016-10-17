@@ -3,6 +3,7 @@ package com.example.andychen.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -46,13 +47,11 @@ public class MyView extends View {
         } else if (widthMode == MeasureSpec.AT_MOST) {
             width = 500;
         }
-
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else if (heightMode == MeasureSpec.AT_MOST) {
             height = 1150;
         }
-
         setMeasuredDimension(width, height);
     }
 
