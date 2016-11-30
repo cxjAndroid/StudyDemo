@@ -1,19 +1,29 @@
 package com.example.andychen.activity;
 
+import android.animation.ObjectAnimator;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.RelativeLayout;
 
+import com.example.andychen.model.ChatMessage;
+import com.example.andychen.model.UserKm;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.adapter.BannerAdapter;
-import com.example.andychen.mvp_model.ShareInfo;
+import com.example.andychen.model.ShareInfo;
 import com.example.andychen.event.EventMessage;
 import com.example.andychen.base.BaseActivity;
-import com.example.andychen.mvp_presenter.BannerPresenter;
-import com.example.andychen.mvp_view.BannerView;
+import com.example.andychen.presenter.BannerPresenter;
+import com.example.andychen.mvpview.BannerView;
+import com.example.andychen.retrofit.RespCallback;
+import com.example.andychen.retrofit.RetrofitMethods;
+import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.MetricsUtils;
 import com.example.andychen.view.MyViewPager;
 
@@ -34,6 +44,8 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     Toolbar toolbar;
     @BindView(R.id.mDrawerLayout)
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.rlShow)
+    RelativeLayout rlShow;
     private Handler handler;
     private MyRunnable myRunnable;
 
@@ -56,6 +68,29 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
         showLoadingPage();
         mPresenter.getShareInfo();
+
+        /*UserKm user = new UserKm();
+        user.setRealName("");
+        user.setBirthday(132312312);
+        user.setAddress("哈哈哈");
+        user.setMemberIdNumber("111");
+        RetrofitMethods.getApiService().updatePersonInfo(App.sharedUtility.getAccount(),user)
+                .enqueue(new RespCallback() {
+                    @Override
+                    public void onSuccessResp(String responseString, String data) {
+
+                    }
+
+                    @Override
+                    public void onFailureResp(String responseString, String data) {
+
+                    }
+
+                    @Override
+                    public void onFail(Throwable t) {
+
+                    }
+                });*/
     }
 
     @Override
@@ -98,14 +133,38 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         BannerAdapter bannerAdapter = new BannerAdapter(this, shareInfoList);
         adv_viewpager.setAdapter(bannerAdapter);
 
+        rlShow.setVisibility(View.VISIBLE);
+       /* TranslateAnimation translateAnimation = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0, 0,
+                Animation.RELATIVE_TO_SELF,
+                Animation.RELATIVE_TO_SELF, -1, 0,
+                Animation.RELATIVE_TO_SELF);
+        translateAnimation.setDuration(1000);
+        rlShow.setAnimation(translateAnimation);*/
+
+        rlShow.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                rlShow.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                float currentTranslationY = rlShow.getTranslationY();
+                int height = rlShow.getHeight();
+                ObjectAnimator animator = ObjectAnimator.ofFloat(rlShow, "translationY", -height, currentTranslationY);
+                animator.setDuration(1000);
+                animator.start();
+            }
+        });
+
+
         myRunnable = new MyRunnable();
         handler = new Handler();
         handler.postDelayed(myRunnable, 2000);
     }
 
     @Subscribe(sticky = true)
-    public void onEvent(EventMessage msg) {
-        //Toast.makeText(this, (CharSequence) msg.getMessage(), Toast.LENGTH_SHORT).show();
+    public void onEvent(EventMessage<ChatMessage> msg) {
+        ChatMessage message = msg.getMessage();
+        LogUtils.e(message.getUserId());
+        LogUtils.e(message.getWatchId());
     }
 
     @Override

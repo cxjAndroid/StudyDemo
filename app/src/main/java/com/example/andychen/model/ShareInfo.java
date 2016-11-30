@@ -1,4 +1,4 @@
-package com.example.andychen.mvp_model;
+package com.example.andychen.model;
 
 /**
  * Created by chenxujun on 2016/8/31.

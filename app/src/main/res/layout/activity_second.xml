@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <include layout="@layout/toolbar" />
 
     <android.support.v4.widget.DrawerLayout
@@ -15,12 +16,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <RelativeLayout
+                android:id="@+id/rlShow"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/adv_viewpager"
+                android:background="@color/light_grey"
+                android:visibility="gone" />
+
             <com.example.andychen.view.MyViewPager
                 android:id="@+id/adv_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_below="@id/toolbar"
                 android:background="@drawable/pic_white_background" />
+
 
         </RelativeLayout>
 

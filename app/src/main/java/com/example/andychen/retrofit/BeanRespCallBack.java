@@ -1,7 +1,7 @@
 package com.example.andychen.retrofit;
 
 
-import com.example.andychen.mvp_model.Result;
+import com.example.andychen.model.Result;
 import com.example.andychen.utils.LogUtils;
 
 import okhttp3.HttpUrl;

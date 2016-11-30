@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.mvp_presenter.BasePresenter;
-import com.example.andychen.mvp_view.BaseView;
+import com.example.andychen.presenter.BasePresenter;
+import com.example.andychen.mvpview.BaseView;
 import com.example.andychen.utils.MetricsUtils;
 import com.example.andychen.utils.RxUtils;
 import com.example.andychen.view.LoadStatusPage;

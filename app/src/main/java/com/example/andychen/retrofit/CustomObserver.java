@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.example.andychen.base.BaseActivity;
-import com.example.andychen.mvp_model.Result;
+import com.example.andychen.model.Result;
 import com.example.andychen.utils.ToastUtils;
 import com.example.andychen.view.LoadStatusPage;
 

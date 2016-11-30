@@ -1,18 +1,21 @@
-package com.example.andychen.mvp_presenter;
+package com.example.andychen.presenter;
 
 import android.content.Context;
 import android.os.Environment;
 
-import com.example.andychen.mvp_model.Doctor;
-import com.example.andychen.mvp_view.MainView;
+import com.example.andychen.model.Doctor;
+import com.example.andychen.model.Doctor2;
+import com.example.andychen.mvpview.MainView;
 import com.example.andychen.retrofit.ApiService;
 import com.example.andychen.retrofit.CustomObserver;
 import com.example.andychen.retrofit.OkHttpUtils;
 import com.example.andychen.retrofit.RequestParams;
+import com.example.andychen.retrofit.RespCallback;
 import com.example.andychen.retrofit.RetrofitMethods;
 import com.example.andychen.retrofit.RetrofitUtils;
 import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.RxUtils;
+import com.example.andychen.utils.ToastUtils;
 
 import org.json.JSONObject;
 
@@ -96,24 +99,34 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     public void getDoctorsInfo(String endIndex) {
         HashMap<String, Object> params = new HashMap<>();
-        params.put("HospitalId", "601");
-        params.put("IsShowAvailableCount", true);
         params.put("StartIndex", 0);
         params.put("EndIndex", endIndex);
-        params.put("OrderBy", 0);
-        params.put("DoctorType", "2");
-        params.put("ProfessionDepartmentId", "");
         params.put("CityId", "2157");
-        params.put("SchedulingDate", "");
-        params.put("DistrictId", "0");
 
         RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
-                , new CustomObserver<List<Doctor>>(mContext) {
+                , new CustomObserver<List<Doctor2>>(mContext) {
                     @Override
-                    public void doOnNext(List<Doctor> doctorList) {
+                    public void doOnNext(List<Doctor2> doctorList) {
                          mView.refreshDocList(doctorList);
                     }
                 });
+
+        /*RetrofitMethods.getApiService().queryDoc(params).enqueue(new RespCallback() {
+            @Override
+            public void onSuccessResp(String responseString, String data) {
+                ToastUtils.show(responseString);
+            }
+
+            @Override
+            public void onFailureResp(String responseString, String data) {
+                ToastUtils.show(responseString);
+            }
+
+            @Override
+            public void onFail(Throwable t) {
+
+            }
+        });*/
 
 
 

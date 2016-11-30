@@ -1,8 +1,8 @@
-package com.example.andychen.mvp_presenter;
+package com.example.andychen.presenter;
 
 import android.content.Context;
 
-import com.example.andychen.mvp_view.DesignView;
+import com.example.andychen.mvpview.DesignView;
 
 import java.util.ArrayList;
 

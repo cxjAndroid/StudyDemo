@@ -1,11 +1,17 @@
 package com.example.andychen.activity;
 
-import com.example.andychen.mvp_model.People;
+import com.example.andychen.model.People;
 import com.example.andychen.base.BaseActivity;
 import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.NullStringToEmptyAdapterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
+
 
 /**
  * Created by chenxujun on 16-9-9.
@@ -24,7 +30,7 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initDate() {
-
+        rxDemo();
     }
 
     private void GsonDemo() {
@@ -51,6 +57,40 @@ public class TestActivity extends BaseActivity {
     }
 
     private void rxDemo() {
+
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext("onNext1");
+                subscriber.onNext("onNext2");
+                subscriber.onCompleted();
+            }
+        }).subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                LogUtils.e("onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                LogUtils.e(s);
+            }
+        });
+
+
+        Observable.just("onNextJust1","onNextJust2").subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.e(s);
+            }
+        });
+
+
     /* Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
          @Override
          public void call(Subscriber<? super String> subscriber) {

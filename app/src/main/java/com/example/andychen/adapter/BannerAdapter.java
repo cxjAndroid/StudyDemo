@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andychen.myapplication.R;
-import com.example.andychen.mvp_model.ShareInfo;
+import com.example.andychen.model.ShareInfo;
 import com.example.andychen.utils.FrescoUtils;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.SimpleDraweeView;

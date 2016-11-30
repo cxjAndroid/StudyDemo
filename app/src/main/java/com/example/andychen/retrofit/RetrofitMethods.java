@@ -1,6 +1,7 @@
 package com.example.andychen.retrofit;
 
-import com.example.andychen.mvp_model.Result;
+import com.example.andychen.model.DoctorResult;
+import com.example.andychen.model.Result;
 import com.example.andychen.utils.NullStringToEmptyAdapterFactory;
 import com.example.andychen.utils.RxUtils;
 import com.google.gson.Gson;
@@ -100,9 +101,7 @@ public class RetrofitMethods {
                 .subscribe(observer);
         RxUtils.get().addList(subscription);
         return subscription;
-
     }
-
 
     public static Subscription originRequest(final Observable<ResponseBody> observable, final Subscriber<ResponseBody> subscriber) {
         Subscription subscription = observable.subscribeOn(Schedulers.io())
@@ -135,7 +134,7 @@ public class RetrofitMethods {
 
 
     public static <T> Subscription flatRequest(Observable<T> observable, final flatCallback<T> callback,
-                                               Subscriber<T> subscriber) {
+                                               Observer<T> observer) {
         return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<T, Observable<T>>() {
@@ -144,7 +143,7 @@ public class RetrofitMethods {
                         return callback.onFlat(t);
                     }
                 })
-                .subscribe(subscriber);
+                .subscribe(observer);
     }
 
 

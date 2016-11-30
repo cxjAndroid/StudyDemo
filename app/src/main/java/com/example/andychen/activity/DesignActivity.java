@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 
 import com.example.andychen.adapter.BottomSheetDialogAdapter;
 import com.example.andychen.base.BaseActivity;
-import com.example.andychen.mvp_presenter.DesignPresenter;
-import com.example.andychen.mvp_view.DesignView;
+import com.example.andychen.presenter.DesignPresenter;
+import com.example.andychen.mvpview.DesignView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.ToastUtils;
@@ -26,6 +26,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by chenxujun on 16-9-19.
@@ -48,7 +52,6 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     private BottomSheetDialog bottomSheetDialog;
     private BottomSheetBehavior mBehavior;
     public static final String VOICE_PATH = Environment.getExternalStorageDirectory() + "/cxj/voice/";
-    private boolean isSuccess;
     private File voicePath;
     private File audioRecFile;
     private MediaRecorder mediaRecorder;
@@ -82,7 +85,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
 
     }
 
-    @OnClick({R.id.btn_bottom_sheet_control, R.id.btn_bottom_dialog_control, R.id.record, R.id.stop_record,R.id.play })
+    @OnClick({R.id.btn_bottom_sheet_control, R.id.btn_bottom_dialog_control, R.id.record, R.id.stop_record, R.id.play})
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn_bottom_sheet_control:
@@ -142,9 +145,9 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     }
 
     private void startRecording() {
-        new Thread(new Runnable() {
+        Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
-            public void run() {
+            public void call(Subscriber<? super Object> subscriber) {
                 try {
                     audioRecFile = File.createTempFile("Record_", ".amr", voicePath);
                     LogUtils.e(audioRecFile.getPath());
@@ -157,12 +160,16 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
                     mediaRecorder.setAudioSamplingRate(8000);    // 采样率
                     mediaRecorder.prepare();
                     mediaRecorder.start();
-                    isSuccess = true;
                 } catch (Exception e) {
                     LogUtils.e(e);
                 }
             }
-        }).start();
+        }).subscribeOn(Schedulers.io()).subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+
+            }
+        });
     }
 
     private void stopRecording() {
@@ -196,7 +203,6 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
                 fis.close();
                 mediaPlayer.prepare();
                 mediaPlayer.start();
-
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
                     public void onCompletion(MediaPlayer arg0) {
@@ -214,6 +220,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
 
     private void stopMediaPlayer() {
         if (mediaPlayer != null) {
+            mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
         }

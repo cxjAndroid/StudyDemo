@@ -1,4 +1,4 @@
-package com.example.andychen.mvp_view;
+package com.example.andychen.mvpview;
 
 
 /**

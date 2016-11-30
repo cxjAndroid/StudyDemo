@@ -1,6 +1,6 @@
-package com.example.andychen.mvp_view;
+package com.example.andychen.mvpview;
 
-import com.example.andychen.mvp_model.ShareInfo;
+import com.example.andychen.model.ShareInfo;
 
 import java.util.List;
 

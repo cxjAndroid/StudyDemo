@@ -1,10 +1,10 @@
-package com.example.andychen.mvp_presenter;
+package com.example.andychen.presenter;
 
 import android.content.Context;
 
-import com.example.andychen.mvp_model.ShareInfo;
-import com.example.andychen.mvp_view.BannerView;
-import com.example.andychen.mvp_view.BaseView;
+import com.example.andychen.model.ShareInfo;
+import com.example.andychen.mvpview.BannerView;
+import com.example.andychen.mvpview.BaseView;
 import com.example.andychen.retrofit.CustomObserver;
 import com.example.andychen.retrofit.RetrofitMethods;
 

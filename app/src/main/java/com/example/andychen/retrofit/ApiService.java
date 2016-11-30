@@ -1,10 +1,11 @@
 package com.example.andychen.retrofit;
 
-import com.example.andychen.mvp_model.Doctor;
-import com.example.andychen.mvp_model.Hospital;
-import com.example.andychen.mvp_model.Movie;
-import com.example.andychen.mvp_model.Result;
-import com.example.andychen.mvp_model.ShareInfo;
+import com.example.andychen.model.Doctor;
+import com.example.andychen.model.Doctor2;
+import com.example.andychen.model.Hospital;
+import com.example.andychen.model.Movie;
+import com.example.andychen.model.Result;
+import com.example.andychen.model.ShareInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -50,21 +51,21 @@ public interface ApiService {
     @FormUrlEncoded
     Call<ResponseBody> getHotHos(@FieldMap Map<String, Object> map);
 
-    @POST("PreTreatment/QueryDoctors")
+    @POST("RecommendDoctorsList")
     @FormUrlEncoded
     Call<Result<List<Doctor>>> queryDoctors(@FieldMap Map<String, Object> map);
 
-    @POST("PreTreatment/QueryDoctors")
+    @POST("RecommendDoctorsList")
     @FormUrlEncoded
     Call<ResponseBody> queryDoc(@FieldMap Map<String, Object> map);
 
-    @POST("PreTreatment/QueryDoctors")
+    @POST("RecommendDoctorsList")
     @FormUrlEncoded
     Observable<ResponseBody> originQueryDoctors(@FieldMap Map<String, Object> map);
 
-    @POST("PreTreatment/QueryDoctors")
+    @POST("RecommendDoctorsList")
     @FormUrlEncoded
-    Observable<Result<List<Doctor>>> rxQueryDoctors(@FieldMap Map<String, Object> map);
+    Observable<Result<List<Doctor2>>> rxQueryDoctors(@FieldMap Map<String, Object> map);
 
     @GET
     @Streaming
@@ -87,4 +88,5 @@ public interface ApiService {
     @POST("Home/QureyHomeInfo")
     @FormUrlEncoded
     Observable<ResponseBody> getShare(@FieldMap Map<String, Object> map);
+
 }

@@ -17,6 +17,7 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
         mViews = new SparseArray<>();
     }
 
+
     /**
      * 通过viewId获取控件
      *

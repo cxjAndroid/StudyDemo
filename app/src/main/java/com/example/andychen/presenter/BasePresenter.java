@@ -1,4 +1,4 @@
-package com.example.andychen.mvp_presenter;
+package com.example.andychen.presenter;
 
 import android.content.Context;
 

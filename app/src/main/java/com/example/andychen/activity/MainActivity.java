@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -19,9 +17,11 @@ import com.example.andychen.adapter.DoctorListAdapter;
 import com.example.andychen.adapter.MenuAdapter;
 import com.example.andychen.base.BaseActivity;
 import com.example.andychen.event.EventMessage;
-import com.example.andychen.mvp_model.Doctor;
-import com.example.andychen.mvp_presenter.MainPresenter;
-import com.example.andychen.mvp_view.MainView;
+import com.example.andychen.model.ChatMessage;
+import com.example.andychen.model.Doctor;
+import com.example.andychen.model.Doctor2;
+import com.example.andychen.presenter.MainPresenter;
+import com.example.andychen.mvpview.MainView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.utils.AnimatorUtil;
 import com.example.andychen.utils.IntentUtils;
@@ -71,10 +71,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        initDate();
+    }
+
+    @Override
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
-        showLoadingPage();
-        mPresenter.getDoctorsInfo("20");
+        /*showLoadingPage();
+        mPresenter.getDoctorsInfo("20");*/
         mPresenter.getSlidingMenuData();
 
         btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -88,6 +94,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             }
         });
     }
+
+
 
     @Override
     protected void initPresenter() {
@@ -126,7 +134,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     @Override
-    public void refreshDocList(List<Doctor> doctorList) {
+    public void refreshDocList(List<Doctor2> doctorList) {
         DoctorListAdapter adapter = new DoctorListAdapter(doctorList, R.layout.item_doctor);
         recyclerView.setAdapter(adapter);
     }
@@ -136,7 +144,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         switch (v.getId()) {
             case R.id.btn:
                 IntentUtils.startActivityLeftIn(this, BannerActivity.class);
-                EventBus.getDefault().postSticky(new EventMessage<>("send message"));
+                ChatMessage chatMessage = new ChatMessage();
+                chatMessage.setUserId("1111");
+                chatMessage.setWatchId("2222");
+                EventBus.getDefault().postSticky(new EventMessage<>(chatMessage));
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, DesignActivity.class);
