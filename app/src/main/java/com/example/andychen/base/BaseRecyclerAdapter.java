@@ -29,7 +29,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
 
     @Override
     public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
-        RefreshView(holder, mData.get(position), position);
+        refreshView(holder, mData.get(position), position);
     }
 
     @Override
@@ -37,7 +37,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
         return mData == null ? 0 : mData.size();
     }
 
-    public abstract void RefreshView(BaseRecyclerViewHolder holder, T t, int position);
+    public abstract void refreshView(BaseRecyclerViewHolder holder, T t, int position);
 
 
 }

@@ -19,10 +19,9 @@ import com.example.andychen.base.BaseActivity;
 import com.example.andychen.event.EventMessage;
 import com.example.andychen.model.ChatMessage;
 import com.example.andychen.model.Doctor;
-import com.example.andychen.model.Doctor2;
-import com.example.andychen.presenter.MainPresenter;
 import com.example.andychen.mvpview.MainView;
 import com.example.andychen.myapplication.R;
+import com.example.andychen.presenter.MainPresenter;
 import com.example.andychen.utils.AnimatorUtil;
 import com.example.andychen.utils.IntentUtils;
 import com.example.andychen.utils.LogUtils;
@@ -79,8 +78,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
-        /*showLoadingPage();
-        mPresenter.getDoctorsInfo("20");*/
+        showLoadingPage();
+        mPresenter.getDoctorsInfo("20");
         mPresenter.getSlidingMenuData();
 
         btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -94,7 +93,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             }
         });
     }
-
 
 
     @Override
@@ -134,20 +132,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     @Override
-    public void refreshDocList(List<Doctor2> doctorList) {
+    public void refreshDocList(List<Doctor> doctorList) {
         DoctorListAdapter adapter = new DoctorListAdapter(doctorList, R.layout.item_doctor);
         recyclerView.setAdapter(adapter);
     }
 
-    @OnClick({R.id.btn, R.id.btn1,R.id.btn2,R.id.floatBtn})
+    @OnClick({R.id.btn, R.id.btn1, R.id.btn2, R.id.floatBtn})
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
                 IntentUtils.startActivityLeftIn(this, BannerActivity.class);
-                ChatMessage chatMessage = new ChatMessage();
-                chatMessage.setUserId("1111");
-                chatMessage.setWatchId("2222");
-                EventBus.getDefault().postSticky(new EventMessage<>(chatMessage));
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, DesignActivity.class);

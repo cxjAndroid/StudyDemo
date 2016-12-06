@@ -1,9 +1,9 @@
 package com.example.andychen.retrofit;
 
 import com.example.andychen.model.Doctor;
-import com.example.andychen.model.Doctor2;
 import com.example.andychen.model.Hospital;
 import com.example.andychen.model.Movie;
+import com.example.andychen.model.RecommendDoctors;
 import com.example.andychen.model.Result;
 import com.example.andychen.model.ShareInfo;
 
@@ -65,7 +65,7 @@ public interface ApiService {
 
     @POST("RecommendDoctorsList")
     @FormUrlEncoded
-    Observable<Result<List<Doctor2>>> rxQueryDoctors(@FieldMap Map<String, Object> map);
+    Observable<Result<RecommendDoctors>> rxQueryDoctors(@FieldMap Map<String, Object> map);
 
     @GET
     @Streaming

@@ -18,7 +18,7 @@ public class BottomSheetDialogAdapter extends BaseRecyclerAdapter<String> {
     }
 
     @Override
-    public void RefreshView(BaseRecyclerViewHolder holder, String s, int position) {
+    public void refreshView(BaseRecyclerViewHolder holder, String s, int position) {
         TextView textView = holder.getView(R.id.tv_title);
         textView.setText(s);
     }

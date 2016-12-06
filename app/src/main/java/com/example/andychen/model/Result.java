@@ -8,7 +8,6 @@ public class Result<T> {
     private String ReturnMessage;
     private boolean IsSuccess;
     private T ReturnData;
-    private RecommendDoctors<T> recommendDoctors;
 
     public String getReturnMessage() {
         return ReturnMessage;
@@ -32,17 +31,5 @@ public class Result<T> {
 
     public void getData(T returnData) {
         ReturnData = returnData;
-    }
-
-    public RecommendDoctors<T> getRecommendDoctors() {
-        return recommendDoctors;
-    }
-
-    public void setRecommendDoctors(RecommendDoctors<T> recommendDoctors) {
-        this.recommendDoctors = recommendDoctors;
-    }
-
-    public class RecommendDoctors<T> {
-
     }
 }

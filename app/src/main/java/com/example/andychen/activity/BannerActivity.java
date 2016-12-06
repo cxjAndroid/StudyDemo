@@ -160,12 +160,6 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         handler.postDelayed(myRunnable, 2000);
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(EventMessage<ChatMessage> msg) {
-        ChatMessage message = msg.getMessage();
-        LogUtils.e(message.getUserId());
-        LogUtils.e(message.getWatchId());
-    }
 
     @Override
     protected void onDestroy() {

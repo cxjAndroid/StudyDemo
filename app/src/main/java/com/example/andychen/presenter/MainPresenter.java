@@ -3,19 +3,16 @@ package com.example.andychen.presenter;
 import android.content.Context;
 import android.os.Environment;
 
-import com.example.andychen.model.Doctor;
-import com.example.andychen.model.Doctor2;
+import com.example.andychen.model.RecommendDoctors;
 import com.example.andychen.mvpview.MainView;
 import com.example.andychen.retrofit.ApiService;
 import com.example.andychen.retrofit.CustomObserver;
 import com.example.andychen.retrofit.OkHttpUtils;
 import com.example.andychen.retrofit.RequestParams;
-import com.example.andychen.retrofit.RespCallback;
 import com.example.andychen.retrofit.RetrofitMethods;
 import com.example.andychen.retrofit.RetrofitUtils;
 import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.RxUtils;
-import com.example.andychen.utils.ToastUtils;
 
 import org.json.JSONObject;
 
@@ -25,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -89,7 +85,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
 
-    public void getSlidingMenuData(){
+    public void getSlidingMenuData() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
             arrayList.add(String.valueOf(i));
@@ -101,13 +97,13 @@ public class MainPresenter extends BasePresenter<MainView> {
         HashMap<String, Object> params = new HashMap<>();
         params.put("StartIndex", 0);
         params.put("EndIndex", endIndex);
-        params.put("CityId", "2157");
+        params.put("CityId", "2430");
 
         RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
-                , new CustomObserver<List<Doctor2>>(mContext) {
+                , new CustomObserver<RecommendDoctors>(mContext) {
                     @Override
-                    public void doOnNext(List<Doctor2> doctorList) {
-                         mView.refreshDocList(doctorList);
+                    public void doOnNext(RecommendDoctors recommendDoctors) {
+                        mView.refreshDocList(recommendDoctors.getRecommendDoctors());
                     }
                 });
 
