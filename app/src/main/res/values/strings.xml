@@ -6,4 +6,28 @@
     <string name="drawer_open">DrawerOpen</string>
     <string name="drawer_close">DrawerClose</string>
     <string name="back_to_top_behavior">com.example.andychen.view.BackTopBehavior</string>
+
+    <!-- 语音-->
+    <string name="voice_talk">按住说话</string>
+    <string name="voice_stop">松开结束</string>
+    <string name="send_voice">发送语音</string>
+    <string name="is_record_permission">录音失败,请检查是否开启录音权限</string>
+    <string name="record_too_short">录音时间太短</string>
+    <string name="slipping_up_cancel">上滑取消发送</string>
+    <string name="finger_up_cancel">松手取消发送</string>
+    <string name="no_more_data">没有更多数据了！</string>
+    <string name="voice">语音通话</string>
+    <string name="watch_tip">手表提示音</string>
+    <string name="repeat_tip">重播提示音</string>
+    <string name="watch_volume">手表音量</string>
+    <string name="setting_volume">音量设置</string>
+    <string name="mute_slot">静音时段</string>
+    <string name="work_mode">工作模式</string>
+    <string name="language_setting">语言设置</string>
+    <string name="remote_control">远程控制</string>
+    <string name="remote_control_tip">唤醒手表、通话模式</string>
+    <string name="recall_watch">唤醒手表</string>
+    <string name="call_mode">通话模式</string>
+    <string name="monitor">实时监听</string>
+    <string name="recording_monitor">录音监控</string>
 </resources>

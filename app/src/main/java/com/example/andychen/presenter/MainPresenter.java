@@ -99,7 +99,7 @@ public class MainPresenter extends BasePresenter<MainView> {
         params.put("EndIndex", endIndex);
         params.put("CityId", "2430");
 
-        RetrofitMethods.commonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
+        RetrofitMethods.hkCommonRequest(RetrofitUtils.getApiService().rxQueryDoctors(params)
                 , new CustomObserver<RecommendDoctors>(mContext) {
                     @Override
                     public void doOnNext(RecommendDoctors recommendDoctors) {

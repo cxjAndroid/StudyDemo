@@ -18,7 +18,7 @@ import rx.Subscription;
 public abstract class CustomObserver<T> implements Observer<T> {
 
     private Context context;
-    private Observable<Result<T>> observable;
+    private Observable<KmResult<T>> observable;
     private Subscription subscription;
 
     public CustomObserver() {
@@ -29,11 +29,11 @@ public abstract class CustomObserver<T> implements Observer<T> {
     }
 
 
-    public Observable<Result<T>> getObservable() {
+    public Observable<KmResult<T>> getObservable() {
         return observable;
     }
 
-    public void setObservable(Observable<Result<T>> observable) {
+    public void setObservable(Observable<KmResult<T>> observable) {
         this.observable = observable;
     }
 

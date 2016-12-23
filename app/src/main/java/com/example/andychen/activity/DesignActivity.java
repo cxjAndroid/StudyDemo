@@ -16,6 +16,7 @@ import com.example.andychen.base.BaseActivity;
 import com.example.andychen.presenter.DesignPresenter;
 import com.example.andychen.mvpview.DesignView;
 import com.example.andychen.myapplication.R;
+import com.example.andychen.utils.IntentUtils;
 import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.ToastUtils;
 
@@ -85,7 +86,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
 
     }
 
-    @OnClick({R.id.btn_bottom_sheet_control, R.id.btn_bottom_dialog_control, R.id.record, R.id.stop_record, R.id.play})
+    @OnClick({R.id.btn_bottom_sheet_control, R.id.btn_bottom_dialog_control, R.id.record, R.id.stop_record, R.id.play,R.id.voiceBtn})
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn_bottom_sheet_control:
@@ -104,6 +105,9 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
                 break;
             case R.id.play:
                 playRecord();
+                break;
+            case R.id.voiceBtn:
+                IntentUtils.startActivityLeftIn(this,VoiceActivity.class);
                 break;
         }
     }

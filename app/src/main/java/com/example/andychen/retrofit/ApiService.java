@@ -6,6 +6,7 @@ import com.example.andychen.model.Movie;
 import com.example.andychen.model.RecommendDoctors;
 import com.example.andychen.model.Result;
 import com.example.andychen.model.ShareInfo;
+import com.example.andychen.model.WatchInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -88,5 +89,8 @@ public interface ApiService {
     @POST("Home/QureyHomeInfo")
     @FormUrlEncoded
     Observable<ResponseBody> getShare(@FieldMap Map<String, Object> map);
+
+    @GET("member/getbindDeviceWithWearersInfo/{account}?_type=json")
+    Observable<KmResult<List<WatchInfo>>> getWatchList(@Path("account") String account);
 
 }

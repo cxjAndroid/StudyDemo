@@ -78,8 +78,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public void initDate() {
         MobclickAgent.openActivityDurationTrack(false);
-        showLoadingPage();
-        mPresenter.getDoctorsInfo("20");
+     /*   showLoadingPage();
+        mPresenter.getDoctorsInfo("20");*/
         mPresenter.getSlidingMenuData();
 
         btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -148,7 +148,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
                 break;
             case R.id.btn2:
-                IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
+                //IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
+                IntentUtils.startActivityLeftIn(this, WatchListActivity.class);
                 break;
             case R.id.floatBtn:
                 recyclerView.getLayoutManager().scrollToPosition(0);

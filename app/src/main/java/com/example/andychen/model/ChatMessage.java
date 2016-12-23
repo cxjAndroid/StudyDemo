@@ -8,7 +8,7 @@ public class ChatMessage {
 
     private String id;
     /**时间戳  */
-    private String timestamp = "" ;
+    private String timeDateStr = "" ;
 
     /**语音文件网络地址 */
     private String voiceDataUrl = "" ;
@@ -28,6 +28,48 @@ public class ChatMessage {
     private String watchId;
 
     private String userId;
+
+    private boolean isPlaying;
+
+    private int showTimeFlag;
+    /** 语音上传状态 0成功 1失败*/
+    private int uploadState = 0;
+
+    private long timeStamp;
+
+    public String watchName;
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public int getUploadState() {
+        return uploadState;
+    }
+
+    public void setUploadState(int uploadState) {
+        this.uploadState = uploadState;
+    }
+
+    public int getShowTimeFlag() {
+        return showTimeFlag;
+    }
+
+    public void setShowTimeFlag(int showTimeFlag) {
+        this.showTimeFlag = showTimeFlag;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
 
     public String getUserId() {
         return userId;
@@ -77,12 +119,12 @@ public class ChatMessage {
         this.id = id;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getTimeDateStr() {
+        return timeDateStr;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimeDateStr(String timeDateStr) {
+        this.timeDateStr = timeDateStr;
     }
 
     public String getVoiceDataUrl() {
@@ -108,4 +150,36 @@ public class ChatMessage {
     public void setVoiceDuration(int voiceDuration) {
         this.voiceDuration = voiceDuration;
     }
+
+    public String getWatchName() {
+        return watchName;
+    }
+
+    public void setWatchName(String watchName) {
+        this.watchName = watchName;
+    }
+
+    public ChatMessage(String id, String timeDateStr, long timeStamp, String voiceDataUrl,
+                       String voiceDataLocalPath, int voiceDuration, int contentType,
+                       int layoutType, String headPicUrl, String watchId, String userId,
+                       int showTimeFlag, int uploadState) {
+        this.id = id;
+        this.timeDateStr = timeDateStr;
+        this.timeStamp = timeStamp;
+        this.voiceDataUrl = voiceDataUrl;
+        this.voiceDataLocalPath = voiceDataLocalPath;
+        this.voiceDuration = voiceDuration;
+        this.contentType = contentType;
+        this.layoutType = layoutType;
+        this.headPicUrl = headPicUrl;
+        this.watchId = watchId;
+        this.userId = userId;
+        this.showTimeFlag = showTimeFlag;
+        this.uploadState = uploadState;
+    }
+
+    public ChatMessage() {
+    }
+
+
 }

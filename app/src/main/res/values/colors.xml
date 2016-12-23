@@ -40,4 +40,119 @@
         <item>@color/orange</item>
         <item>@color/red</item>
     </integer-array>
+
+
+    <color name="white1">#fffffe</color>
+    <color name="main_text">#272636</color>
+    <color name="black_2">#282b31</color>
+    <color name="orange_2">#fccfa1</color>
+    <color name="orange_3">#fff29101</color>
+    <color name="grey">#747474</color>
+    <color name="grey_2">#a3a3a3</color>
+    <color name="blud">#7189C5</color>
+    <color name="blud_high">#0000FF</color>
+    <color name="black_3">#33373f</color>
+    <color name="grey_3">#bdbdbd</color>
+    <color name="grey_background">#f9f7f5</color>
+    <color name="title_background">#762BF5</color>
+    <color name="background_main_click">#EAEAEA</color>
+    <color name="login_line">#e5e5e5</color>
+    <!--背景-->
+    <color name="background">#ffffff</color>
+    <!--标题栏颜色-->
+    <color name="title_blue">#219AD1</color>
+    <color name="title_orange">#F38418</color>
+    <color name="title_orange1">#fc9d31</color>
+    <color name="title_green">#3FCDB5</color>
+    <color name="health_title">#eaeaea</color>
+    <color name="health_title_text_unclick">#a3a3a3</color>
+    <!--线条颜色-->
+    <color name="line_color">#d8d9d6</color>
+
+    <!--图表线颜色-->
+    <color name="line_h_press">#7493dc</color>
+    <color name="line_l_press">#2dc0cb</color>
+    <color name="line_glucose">#2dc0cb</color>
+    <color name="line_step">#2dc0cb</color>
+    <color name="line_step1">#3F52DF</color>
+    <color name="line_hr">#2dc0cb</color>
+    <color name="line_ox">#2dc0cb</color>
+
+    <color name="common_bg">#fffcf8</color>
+    <color name="health_common_title_bg">#F9F9F9</color>
+
+    <color name="background_white">#ffffff</color>
+    <!--软件界面nav条的背景色-->
+    <color name="nav_background">#f9f9f9</color>
+    <!--软件界面主背景浅灰-->
+    <color name="background_light_gray">#f5f5f5</color>
+    <!--副标题底色等等，浅灰+-->
+    <color name="background_gray">#f2f2f2</color>
+    <!--底部工具栏等等，浅灰++-->
+    <color name="background_gray_deepen">#ebebeb</color>
+    <!--可点击模块点击时色彩（由白变灰）-->
+
+    <!--公告栏底色-->
+    <color name="background_light_yellow">#fff7d6</color>
+    <color name="background_popup_window">#b0000000</color>
+    <!--文字用色-->
+    <!--深色背景下的文字-->
+    <color name="text_white">#ffffff</color>
+    <!--提示输入类辅助类文字-->
+    <color name="text_light_gray">#b8bcc6</color>
+    <!--主要文字或副标题（正文字体）-->
+    <color name="text_gray">#656565</color>
+    <!--标题，强调文字-->
+    <color name="text_black">#000000</color>
+    <!--提示性字体蓝-->
+    <color name="text_blue">#548dd4</color>
+
+    <!--间隔线色彩-->
+    <!--浅灰间隔线（用于同级内容的间隔）-->
+    <!--用于不同模块的间隔-->
+    <color name="divide_gray">#adadad</color>
+
+    <!-- 聊天页面长按消息操作框背景颜色 -->
+    <color name="bg_chat_operation_window">#cc000000</color>
+    <!-- 聊天页面长按消息操作框背景颜色 -->
+    <color name="bg_chat_operation_window_active">#cc222222</color>
+    <!-- 聊天页面加载中默认图片的背景色 -->
+    <color name="bg_chat_image_loading">#e2e8ee</color>
+
+    <!--软件主色-->
+    <!--主色彩-->
+    <color name="main_color_blue">#0096ff</color>
+    <!--辅助红和标签红-->
+    <color name="sub_color_red">#f05e4b</color>
+    <!--辅助绿和标签绿-->
+    <color name="sub_color_green">#33cc33</color>
+    <!--标签橙-->
+    <color name="label_orange">#fc973f</color>
+    <!--标签天蓝-->
+    <color name="label_blue">#00aeef</color>
+    <!--标签海蓝-->
+    <color name="label_navy_blue">#5392ef</color>
+    <!--主色彩点击-->
+    <color name="main_color_blue_click">#008ae5</color>
+    <!--辅助红点击-->
+    <color name="sub_color_red_click">#d65442</color>
+    <!--辅助绿点击-->
+    <color name="sub_color_green_click">#2eb62e</color>
+    <!--提示金额按钮黑-->
+    <color name="cash_black">#e92d2d2d</color>
+    <!--提示金额按钮红-->
+    <color name="cash_red_normal">#ef4343</color>
+    <!--提示金额按钮红-->
+    <color name="cash_red_pressed">#d65442</color>
+    <!--标签挂号-->
+    <color name="label_register">#f68b43</color>
+    <!--标签缴费-->
+    <color name="label_pay">#f8aa02</color>
+    <!--标签排队-->
+    <color name="label_take_medicine">#01cf97</color>
+    <!--标签住院-->
+    <color name="label_in_hos">#f04c75</color>
+
+    <color name="thin_orage">#F1EFE4</color>
+    <color name="orage">#D08F50</color>
 </resources>

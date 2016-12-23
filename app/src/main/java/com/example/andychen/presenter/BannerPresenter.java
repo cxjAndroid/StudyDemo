@@ -23,7 +23,8 @@ public class BannerPresenter extends BasePresenter<BaseView> {
     public void getShareInfo(){
         HashMap<String, Object> params = new HashMap<>();
         params.put("BlockType",2);
-        RetrofitMethods.commonRequest(getApiService().getShareInfo(params), new CustomObserver<List<ShareInfo>>(mContext) {
+        RetrofitMethods.hkCommonRequest(getApiService().getShareInfo(params),
+                new CustomObserver<List<ShareInfo>>(mContext) {
             @Override
             public void doOnNext(List<ShareInfo> shareInfo) {
                 ((BannerView)mView).initBanner(shareInfo);

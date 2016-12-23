@@ -63,34 +63,12 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @Override
     public void initDate() {
-        registerEventBus();
+//        registerEventBus();
         setResult(RESULT_OK);
 
         showLoadingPage();
         mPresenter.getShareInfo();
 
-        /*UserKm user = new UserKm();
-        user.setRealName("");
-        user.setBirthday(132312312);
-        user.setAddress("哈哈哈");
-        user.setMemberIdNumber("111");
-        RetrofitMethods.getApiService().updatePersonInfo(App.sharedUtility.getAccount(),user)
-                .enqueue(new RespCallback() {
-                    @Override
-                    public void onSuccessResp(String responseString, String data) {
-
-                    }
-
-                    @Override
-                    public void onFailureResp(String responseString, String data) {
-
-                    }
-
-                    @Override
-                    public void onFail(Throwable t) {
-
-                    }
-                });*/
     }
 
     @Override

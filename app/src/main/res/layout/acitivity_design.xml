@@ -11,7 +11,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">-->
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/appbar_toolbar"
+            />
+
         <!--  </android.support.design.widget.AppBarLayout>-->
 
         <LinearLayout
@@ -51,6 +53,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="播放录音" />
+            <Button
+                android:id="@+id/voiceBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="进入语音页面" />
 
         </LinearLayout>
 

@@ -1,6 +1,5 @@
 package com.example.andychen.retrofit;
 
-import com.example.andychen.model.DoctorResult;
 import com.example.andychen.model.Result;
 import com.example.andychen.utils.NullStringToEmptyAdapterFactory;
 import com.example.andychen.utils.RxUtils;
@@ -26,7 +25,9 @@ import rx.schedulers.Schedulers;
 public class RetrofitMethods {
 
     public static final String HK_BASE_URL = "https://patientapi.hk515.com/";
-    public static final String KM_BASE_URL = "http://120.25.225.5:8090/";
+    //public static final String BASE_URL = "http://120.25.225.5:8090/kmhc-modem-restful/services/";
+    //public static final String BASE_URL = NetUrl.URL + "/kmhc-modem-restful/services/";
+    public static final String KM_BASE_URL = "http://120.25.225.5:8090/kmhc-modem-restful/services/";
     private static ApiService apiService;
     private static RetrofitMethods retrofitMethods = null;
 
@@ -38,7 +39,7 @@ public class RetrofitMethods {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(HK_BASE_URL)
+                .baseUrl(KM_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(OkHttpUtils.getHttpClient())
@@ -65,7 +66,7 @@ public class RetrofitMethods {
     }
 
 
-    public static <T> Subscription commonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
+    public static <T> Subscription hkCommonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<Result<T>, T>() {
@@ -83,7 +84,7 @@ public class RetrofitMethods {
 
     }
 
-    public static <T> Subscription commonRequest(final Observable<Result<T>> observable, final Observer<T> observer) {
+    public static <T> Subscription hkCommonRequest(final Observable<Result<T>> observable, final Observer<T> observer) {
         if (observer instanceof CustomObserver) {
             ((CustomObserver) observer).setObservable(observable);
         }
@@ -101,7 +102,47 @@ public class RetrofitMethods {
                 .subscribe(observer);
         RxUtils.get().addList(subscription);
         return subscription;
+
     }
+
+    public static <T> Subscription commonRequest(final Observable<KmResult<T>> observable, final Subscriber<T> subscriber) {
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<KmResult<T>, T>() {
+                    @Override
+                    public T call(KmResult<T> tResult) {
+                        if (tResult.getErrorCode() != 0) {
+                            throw new ApiException(tResult.getErrorCode(), tResult.getMsg());
+                        }
+                        return tResult.getContent().getList();
+                    }
+                })
+                .subscribe(subscriber);
+        RxUtils.get().addList(subscription);
+        return subscription;
+
+    }
+
+    public static <T> Subscription commonRequest(final Observable<KmResult<T>> observable, final Observer<T> observer) {
+        if (observer instanceof CustomObserver) {
+            ((CustomObserver) observer).setObservable(observable);
+        }
+        Subscription subscription = observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<KmResult<T>, T>() {
+                    @Override
+                    public T call(KmResult<T> tResult) {
+                        if (tResult.getErrorCode() != 0) {
+                            throw new ApiException(tResult.getErrorCode(), tResult.getMsg());
+                        }
+                        return tResult.getContent().getList();
+                    }
+                })
+                .subscribe(observer);
+        RxUtils.get().addList(subscription);
+        return subscription;
+    }
+
 
     public static Subscription originRequest(final Observable<ResponseBody> observable, final Subscriber<ResponseBody> subscriber) {
         Subscription subscription = observable.subscribeOn(Schedulers.io())
@@ -118,19 +159,41 @@ public class RetrofitMethods {
                 .subscribe(observer);
         RxUtils.get().addList(subscription);
         return subscription;
+    }
 
+    public static Subscription originRequest(final Observable<ResponseBody> observable,
+                                             boolean isUpload, final Observer<ResponseBody> observer) {
+        if (observer instanceof CustomObserver) {
+            ((CustomObserver) observer).setObservable(observable);
+            //((CustomObserver) observer).setUpload(isUpload);
+        }
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        RxUtils.get().addList(subscription);
+        return subscription;
     }
 
 
-    public static <T> Call<Result<T>> commonRequest(Call<Result<T>> call, BeanRespCallBack<T> callBack) {
-        call.enqueue(callBack);
-        return call;
+    public static Subscription download(final Observable<ResponseBody> observable, final Observer<ResponseBody> observer) {
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(observer);
+        //RxUtils.get().addList(subscription);
+        return subscription;
     }
+
 
     public static Call<ResponseBody> originRequest(Call<ResponseBody> call, RespCallback callBack) {
         call.enqueue(callBack);
         return call;
     }
+
+
+   /* public static <T> Call<Result<T>> commonRequest(Call<Result<T>> call, BeanRespCallBack<T> callBack) {
+        call.enqueue(callBack);
+        return call;
+    }*/
 
 
     public static <T> Subscription flatRequest(Observable<T> observable, final flatCallback<T> callback,
