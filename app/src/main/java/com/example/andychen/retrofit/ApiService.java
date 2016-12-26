@@ -6,6 +6,7 @@ import com.example.andychen.model.Movie;
 import com.example.andychen.model.RecommendDoctors;
 import com.example.andychen.model.Result;
 import com.example.andychen.model.ShareInfo;
+import com.example.andychen.model.UploadMessage;
 import com.example.andychen.model.WatchInfo;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -92,5 +94,9 @@ public interface ApiService {
 
     @GET("member/getbindDeviceWithWearersInfo/{account}?_type=json")
     Observable<KmResult<List<WatchInfo>>> getWatchList(@Path("account") String account);
+
+    @POST("voice/upload")
+    Observable<ResponseBody> rxUploadVoiceMsg(@Body UploadMessage message);
+
 
 }

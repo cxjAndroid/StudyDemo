@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    tools:background="@color/background_light_gray">
+
+    <TextView
+        android:background="@drawable/shape_chat_hint_text"
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        tools:text="15:05" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_time">
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/image_photo"
+            android:textSize="13sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/text_gray"
+            />
+
+        <com.example.andychen.view.CircleImageView
+            android:id="@+id/image_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/p" />
+
+        <RelativeLayout
+            android:id="@+id/rl_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/image_photo"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/image_photo"
+            android:background="@drawable/selector_msg_right_background"
+            android:gravity="center_vertical|left"
+            android:maxWidth="230dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/icon_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/msg_pic_bluesound3" />
+
+            <View
+                android:id="@+id/length"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_toRightOf="@+id/icon_voice" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/text_voice_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/rl_voice"
+            android:textColor="@color/text_light_gray"
+            android:textSize="15sp"
+            tools:text="3''" />
+
+        <ImageView
+            android:id="@+id/icon_progress_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/rl_voice"
+            android:layout_alignTop="@+id/text_voice_length"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/text_voice_length"
+            android:gravity="center_vertical"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

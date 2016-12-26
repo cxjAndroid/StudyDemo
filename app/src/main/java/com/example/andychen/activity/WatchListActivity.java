@@ -1,6 +1,5 @@
 package com.example.andychen.activity;
 
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.andychen.adapter.WatchListAdapter;
@@ -9,6 +8,7 @@ import com.example.andychen.model.WatchInfo;
 import com.example.andychen.mvpview.WatchListView;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.presenter.WatchListPresenter;
+import com.example.andychen.view.LoadStatusPage;
 import com.example.andychen.view.MyRecyclerView;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class WatchListActivity extends BaseActivity<WatchListPresenter> implemen
 
     @Override
     protected void initView() {
-
+        showLoadingPage();
     }
 
     @Override
@@ -49,7 +49,8 @@ public class WatchListActivity extends BaseActivity<WatchListPresenter> implemen
 
     @Override
     public void RefreshWatchList(List<WatchInfo> watchInfoList) {
-        WatchListAdapter adapter = new WatchListAdapter(watchInfoList, R.layout.item_watch);
+        showSuccessPage();
+        WatchListAdapter adapter = new WatchListAdapter(this,watchInfoList, R.layout.item_watch);
         myRecyclerView.setAdapter(adapter);
     }
 }
