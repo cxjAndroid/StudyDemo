@@ -8,26 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
-import com.example.andychen.model.ChatMessage;
-import com.example.andychen.model.UserKm;
-import com.example.andychen.myapplication.R;
 import com.example.andychen.adapter.BannerAdapter;
-import com.example.andychen.model.ShareInfo;
-import com.example.andychen.event.EventMessage;
 import com.example.andychen.base.BaseActivity;
-import com.example.andychen.presenter.BannerPresenter;
+import com.example.andychen.model.ShareInfo;
 import com.example.andychen.mvpview.BannerView;
-import com.example.andychen.retrofit.RespCallback;
-import com.example.andychen.retrofit.RetrofitMethods;
-import com.example.andychen.utils.LogUtils;
+import com.example.andychen.myapplication.R;
+import com.example.andychen.presenter.BannerPresenter;
 import com.example.andychen.utils.MetricsUtils;
 import com.example.andychen.view.MyViewPager;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 

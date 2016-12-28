@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     public void initDate() {
+
         MobclickAgent.openActivityDurationTrack(false);
      /*   showLoadingPage();
         mPresenter.getDoctorsInfo("20");*/

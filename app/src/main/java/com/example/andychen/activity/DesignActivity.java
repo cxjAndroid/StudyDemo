@@ -159,7 +159,8 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
                     mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 采样音频源为麦克风
                     mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);// 输出文件格式
                     mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 音频编码方式
-                    mediaRecorder.setOutputFile(audioRecFile.getAbsolutePath());// 输出文件位置
+                    mediaRecorder.setOutputFile(audioRecFile.getAbsolutePath());// 输出文件位置/storage/emulated/0/cxj/voice/Record_-1469417521.amr
+                    audioRecFile.getPath();///storage/emulated/0/cxj/voice/Record_-1469417521.amr
                     // mediaRecorder.setMaxDuration(60);//设置最大录制时间
                     mediaRecorder.setAudioSamplingRate(8000);    // 采样率
                     mediaRecorder.prepare();
