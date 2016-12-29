@@ -5,6 +5,7 @@ import com.example.andychen.model.Hospital;
 import com.example.andychen.model.Movie;
 import com.example.andychen.model.RecommendDoctors;
 import com.example.andychen.model.Result;
+import com.example.andychen.model.ServerChatMessage;
 import com.example.andychen.model.ShareInfo;
 import com.example.andychen.model.UploadMessage;
 import com.example.andychen.model.WatchInfo;
@@ -98,5 +99,9 @@ public interface ApiService {
     @POST("voice/upload")
     Observable<ResponseBody> rxUploadVoiceMsg(@Body UploadMessage message);
 
-
+    @GET("voice/getVoiceList/{account}/{imei}/{timestamp}")
+    Observable<KmResult<List<ServerChatMessage>>>
+    getVoiceList(@Path("account") String account
+            , @Path("imei") String imei
+            , @Path("timestamp") long timestamp);
 }

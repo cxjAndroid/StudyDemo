@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.andychen.base.BaseApplication;
 import com.example.andychen.model.ChatMessage;
 
 import java.util.LinkedList;
@@ -26,24 +27,24 @@ public class ChatMessageDAO {
     private static ChatMessageDAO chatMessageDAO;
     private long lastMsgTimestamp;
 
-    private ChatMessageDAO(Context context) {
-        PackageManager packageManager = context.getPackageManager();
+    private ChatMessageDAO() {
+        PackageManager packageManager = BaseApplication.getApplication().getPackageManager();
         PackageInfo packInfo;
         try {
-            packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            packInfo = packageManager.getPackageInfo(BaseApplication.getApplication().getPackageName(), 0);
             if (helper == null) {
-                helper = new ChatMessageDbHelper(context, packInfo.versionCode);
+                helper = new ChatMessageDbHelper(BaseApplication.getApplication(), packInfo.versionCode);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public static ChatMessageDAO getInstance(Context context) {
+    public static ChatMessageDAO getInstance() {
         if (chatMessageDAO == null) {
             synchronized (ChatMessageDAO.class) {
                 if (chatMessageDAO == null) {
-                    chatMessageDAO = new ChatMessageDAO(context);
+                    chatMessageDAO = new ChatMessageDAO();
                 }
             }
         }

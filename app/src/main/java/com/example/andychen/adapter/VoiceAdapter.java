@@ -13,7 +13,10 @@ import com.example.andychen.base.BaseViewHolder;
 import com.example.andychen.base.Constants;
 import com.example.andychen.database.ChatMessageDAO;
 import com.example.andychen.model.ChatMessage;
+import com.example.andychen.mvpview.VoiceAdapterView;
 import com.example.andychen.myapplication.R;
+import com.example.andychen.presenter.VoiceAdapterPresenter;
+import com.example.andychen.utils.CacheUtils;
 import com.example.andychen.utils.DpUtils;
 import com.example.andychen.utils.LogUtils;
 import com.example.andychen.utils.TimeUtils;
@@ -27,7 +30,7 @@ import java.util.List;
  * Created by chenxujun on 16-10-24.
  */
 
-public class VoiceAdapter extends BaseListAdapter<ChatMessage> {
+public class VoiceAdapter extends BaseListAdapter<ChatMessage> implements VoiceAdapterView {
     /**
      * 语音型，左边
      */
@@ -37,25 +40,24 @@ public class VoiceAdapter extends BaseListAdapter<ChatMessage> {
      * 语音型，右边
      */
     private static final int TYPE_VOICE_RIGHT = 2;
-    //private final String watchRealName;
+    private final String watchRealName;
 
     private List<ChatMessage> messageList;
     private ChatMessage lastChatMessage;
     private ImageView lastImageVoice;
-    //private final VoiceAdapterPresenter mPresenter;
+    private final VoiceAdapterPresenter mPresenter;
     private final ChatMessageDAO chatMessageDAO;
-    //private final String realName;
+    private final String realName;
     private ChatMessage chatMessage;
-    private MediaPlayer mediaPlayer;
 
-    public VoiceAdapter(List<ChatMessage> data, ChatMessage chatMessage) {
+    public VoiceAdapter(List<ChatMessage> data,ChatMessage chatMessage) {
         super(data, -1);
         this.chatMessage = chatMessage;
         messageList = data;
-        //mPresenter = new VoiceAdapterPresenter(this);
-        chatMessageDAO = ChatMessageDAO.getInstance(BaseApplication.getApplication());
-        /*realName = CacheUtils.getString("realName", "");
-        watchRealName = CacheUtils.getString(chatMessage.getWatchId()+"watchRealName", "");*/
+        mPresenter = new VoiceAdapterPresenter(this);
+        chatMessageDAO = ChatMessageDAO.getInstance();
+        realName = CacheUtils.getString("realName", "");
+        watchRealName = CacheUtils.getString(chatMessage.getWatchId()+"watchRealName", "");
     }
 
     @Override
@@ -125,63 +127,21 @@ public class VoiceAdapter extends BaseListAdapter<ChatMessage> {
                 //语音在播放时再次点击同一条语音，停止播放
                 if (chatMessage.isPlaying() &&
                         lastChatMessage == chatMessage) {
-                    stopMediaPlayer(chatMessage, image_voice);
+                    mPresenter.stopMediaPlayer(chatMessage, image_voice);
                 }//语音在播放时点击另一条语音，正在播放的停止，播放点击的语音条目
                 else if (lastChatMessage != chatMessage
                         && lastChatMessage.isPlaying()) {
-                    stopMediaPlayer(lastChatMessage, lastImageVoice);
-                    playRecord(chatMessage, image_voice);
+                    mPresenter.stopMediaPlayer(lastChatMessage, lastImageVoice);
+                    mPresenter.playRecord(chatMessage, image_voice);
                 } else {
-                    playRecord(chatMessage, image_voice);
+                    mPresenter.playRecord(chatMessage, image_voice);
                 }
             }//首次点击，播放语音
             else {
-                playRecord(chatMessage, image_voice);
+                mPresenter.playRecord(chatMessage, image_voice);
             }
             lastChatMessage = chatMessage;
             lastImageVoice = image_voice;
-        }
-    }
-
-
-
-    public  void playRecord(final ChatMessage message, final ImageView image_voice) {
-        setMediaAnimationDrawableDirection(message,image_voice);
-        message.setPlaying(true);
-        String voiceDataLocalPath = message.getVoiceDataLocalPath();
-        File voiceFile = new File(voiceDataLocalPath);
-        if (voiceFile != null && voiceFile.exists()) {
-            mediaPlayer = new MediaPlayer();
-            try {
-                FileInputStream fis = new FileInputStream(voiceFile);
-                mediaPlayer.setDataSource(fis.getFD());
-                fis.close();
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    public void onCompletion(MediaPlayer arg0) {
-                        stopMediaPlayer(message, image_voice);
-                    }
-                });
-            } catch (Exception e) {
-                LogUtils.e("Voice Playing Error", e);
-                ToastUtils.show("语音播放错误");
-                stopMediaPlayer(message, image_voice);
-            }
-        }
-    }
-
-    public void stopMediaPlayer(ChatMessage message, ImageView image_voice) {
-        message.setPlaying(false);
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        if (message.getLayoutType() == Constants.LayoutType.RIGHT) {  /*发送型*/
-            image_voice.setImageResource(R.drawable.msg_pic_bluesound3);
-        } else {                                                                      /*接收型*/
-            image_voice.setImageResource(R.drawable.msg_pic_whitesound3);
         }
     }
 
@@ -212,6 +172,7 @@ public class VoiceAdapter extends BaseListAdapter<ChatMessage> {
     }
 
 
+    @Override
     public void adjustVoiceItemLength(ChatMessage chatMessage, TextView text_voice_length, View length) {
         text_voice_length.setText(chatMessage.getVoiceDuration() + "''");
         length.setVisibility(View.VISIBLE);
@@ -220,7 +181,8 @@ public class VoiceAdapter extends BaseListAdapter<ChatMessage> {
         length.setLayoutParams(layoutParams);
     }
 
-    public void setVoicePic(ChatMessage chatMessage, ImageView image_voice, ImageView icon_progress_failed, TextView text_name) {
+    @Override
+    public void setVoicePic(ChatMessage chatMessage, ImageView image_voice,ImageView icon_progress_failed,TextView text_name) {
         if(chatMessage.getUploadState()==1){
             icon_progress_failed.setVisibility(View.VISIBLE);
         }else{
@@ -229,13 +191,14 @@ public class VoiceAdapter extends BaseListAdapter<ChatMessage> {
 
         if (chatMessage.getLayoutType() == Constants.LayoutType.RIGHT) {            // 发送型消息
             image_voice.setImageResource(R.drawable.msg_pic_bluesound3);
-            //text_name.setText(realName);
+            text_name.setText(realName);
         } else {                                                                    // 接收型消息
             image_voice.setImageResource(R.drawable.msg_pic_whitesound3);
-            //text_name.setText(watchRealName);
+            text_name.setText(watchRealName);
         }
     }
 
+    @Override
     public void setMediaAnimationDrawableDirection(ChatMessage chatMessage, ImageView view) {
         if (chatMessage.getLayoutType() == Constants.LayoutType.RIGHT) {
             view.setImageDrawable(BaseApplication.getApplication().getResources().getDrawable(R.drawable.anim_chat_voice_playing_left));

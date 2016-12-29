@@ -5,19 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/appbar_toolbar"
-        />
+    <include layout="@layout/appbar_toolbar" />
 
-    <com.example.andychen.view.MyListView
-        android:background="@color/red"
-        android:layout_above="@+id/rl_voice"
-        android:id="@+id/chatList"
+    <com.example.andychen.swipy_refresh_layout.RefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cacheColorHint="@null"
-        android:divider="#00000000"
-        android:listSelector="#00000000"
-        android:overScrollMode="ifContentScrolls" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_voice"
+        android:layout_below="@+id/appbar">
+
+        <com.example.andychen.view.MyListView
+            android:id="@+id/chatList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@null"
+            android:divider="#00000000"
+            android:listSelector="#00000000"
+            android:overScrollMode="ifContentScrolls" />
+    </com.example.andychen.swipy_refresh_layout.RefreshLayout>
     <!--录音弹窗-->
     <RelativeLayout
         android:id="@+id/ll_record"

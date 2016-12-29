@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import com.example.andychen.myapplication.R;
 import com.example.andychen.presenter.BasePresenter;
 import com.example.andychen.mvpview.BaseView;
+import com.example.andychen.swipy_refresh_layout.RefreshLayout;
+import com.example.andychen.swipy_refresh_layout.RefreshLayoutDirection;
 import com.example.andychen.utils.MetricsUtils;
 import com.example.andychen.utils.RxUtils;
 import com.example.andychen.view.LoadStatusPage;
@@ -96,6 +98,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         isBindEventBus = true;
         //Toast.makeText(this, "register eventBus", Toast.LENGTH_SHORT).show();
     }
+
+    protected RefreshLayout initRefreshLayout(RefreshLayout layout) {
+        layout.setEnabled(true);
+        layout.setDirection(RefreshLayoutDirection.TOP);
+        layout.setDefaultColor();
+        return layout;
+    }
+
 
     @Override
     protected void onDestroy() {

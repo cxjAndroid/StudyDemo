@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="typeTextView">
+        <attr name="myhint" format="string"/>
+        <attr name="myhint_size" format="integer"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="RefreshLayout">
+        <attr name="direction">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="both" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="Carousel">
+        <attr name="android:gravity" />
+        <attr name="android:animationDuration" />
+        <attr name="UseReflection" format="boolean"/>
+        <attr name="Items" format="integer"/>
+        <attr name="SelectedItem" format="integer"/>
+        <attr name="maxTheta" format="float"/>
+        <attr name="minQuantity" format="integer"/>
+        <attr name="maxQuantity" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="MyTitleBar">
+        <attr name="text_title" format="string" />
+        <attr name="show_function_text" format="boolean" />
+        <attr name="show_add_icon" format="boolean" />
+    </declare-styleable>
+</resources>

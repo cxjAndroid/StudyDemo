@@ -1,67 +1,76 @@
 package com.example.andychen.activity;
 
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.media.MediaRecorder;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.andychen.adapter.VoiceAdapter;
 import com.example.andychen.base.BaseActivity;
-import com.example.andychen.base.Constants;
-import com.example.andychen.database.ChatMessageDAO;
 import com.example.andychen.event.EventMessage;
 import com.example.andychen.model.ChatMessage;
-import com.example.andychen.model.WatchInfo;
 import com.example.andychen.myapplication.R;
-import com.example.andychen.utils.LogUtils;
-import com.example.andychen.utils.StringUtils;
-import com.example.andychen.utils.TimeUtils;
+import com.example.andychen.presenter.VoicePresenter;
+import com.example.andychen.swipy_refresh_layout.RefreshLayout;
+import com.example.andychen.swipy_refresh_layout.RefreshLayoutDirection;
 import com.example.andychen.utils.ToastUtils;
-import com.example.andychen.view.MyListView;
-import com.example.andychen.view.MyRecyclerView;
+import com.example.andychen.view.VoiceView;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-
-import static com.example.andychen.myapplication.R.id.chatList;
 
 /**
  * Created by chenxujun on 16-12-22.
  */
 
 
-public class VoiceActivity extends BaseActivity {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+public class VoiceActivity extends BaseActivity<VoicePresenter> implements VoiceView, RefreshLayout.OnRefreshListener {
     @BindView(R.id.btnVoice)
     ImageButton btnVoice;
     @BindView(R.id.chatList)
-    MyListView chatList;
-
-    public static String VOICE_PATH = Environment.getExternalStorageDirectory() + "/cxj/voice/";
-    private File voicePath;
-    private File audioRecFile;
-    private MediaRecorder mediaRecorder;
-    private MediaPlayer mediaPlayer;
-    private long recordStartTime;
-    private ChatMessageDAO chatMessageDAO;
+    ListView chatList;
+    @BindView(R.id.icon_record)
+    ImageView icon_record;
+    @BindView(R.id.text_record_tip)
+    TextView text_record_tip;
+    @BindView(R.id.icon_record_cancel)
+    ImageView icon_record_cancel;
+    @BindView(R.id.ll_record)
+    RelativeLayout ll_record;
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
+    @BindView(R.id.text_tip)
+    TextView text_tip;
+    @BindView(R.id.text_click)
+    TextView text_click;
     private ChatMessage chatMessage;
-    private List<ChatMessage> messageList;
     private VoiceAdapter voiceAdapter;
-    private boolean initRecordComplete;
-    private boolean isStop;
+    private List<ChatMessage> chatMessageList;
+
+    /**
+     * 记录录音按下时手指初始y坐标值
+     */
+    private float recordOriginalY = 0.0f;
+    /**
+     * 标识录音时手指是否移动过，用于取消录音时的判断
+     */
+    private boolean isFingerMove = false;
+    private boolean isLoadMore;
+    private int lastMsgListSize;
+    private VoiceListHandler voiceListHandler;
+    private VoiceListRunnable voiceListRunnable;
+
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_voice;
@@ -69,56 +78,7 @@ public class VoiceActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initToolBar(toolbar);
-    }
-
-    @Override
-    public void initDate() {
-        createDir(new ChatMessage());
         registerEventBus();
-        chatMessageDAO = ChatMessageDAO.getInstance(this);
-        getChatMsgFromDatabase();
-
-        btnVoice.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        startRecording();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        //mPresenter.onActionUpOrCancel(isFingerMove);
-                        //mPresenter.stopRecording(!isFingerMove);
-                        stopRecording(true);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float moveY = event.getY();
-                       /* if (moveY - recordOriginalY < -50) {
-                            isFingerMove = true;
-                            showFingerUpCancelPic();
-                        } else {
-
-                            isFingerMove = false;
-                            showSlippingUpCancelPic();
-                        }*/
-                }
-                return false;
-            }
-        });
-    }
-
-
-    private void createDir(ChatMessage chatMessage) {
-       /* VOICE_PATH += "/" + chatMessage.getUserId() + "/" + chatMessage.getWatchId();
-        voicePath = new File(VOICE_PATH);
-        if (!voicePath.exists()) {
-            voicePath.mkdirs();
-        }*/
-        voicePath = new File(VOICE_PATH);
-        if (!voicePath.exists()) {
-            voicePath.mkdirs();
-        }
     }
 
     @Subscribe(sticky = true)
@@ -126,187 +86,187 @@ public class VoiceActivity extends BaseActivity {
         chatMessage = eventMessage.getMessage();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        initDate();
+    }
 
-    public void startRecording() {
-        ToastUtils.show("start");
-        LogUtils.e("start");
-        audioRecFile = null;
+    @Override
+    public void initDate() {
 
-        if(mediaRecorder!=null) {
-            mediaRecorder.reset();
-            mediaRecorder.release();
-            mediaRecorder = null;
-        }
+        chatMessageList = mPresenter.getChatMsgFromDatabase();
+        //mPresenter.getVoiceList();
 
-     /*   mCountDownTimer.start();
-        mView.showSlippingUpCancelPic();
-        mView.stopTiming();*/
-        recordStartTime = System.currentTimeMillis();
+      /*  voiceListRunnable = new VoiceListRunnable();
+        voiceListHandler = new VoiceListHandler(new WeakReference<>(this));
+        voiceListHandler.sendEmptyMessage(0);*/
 
-        Observable.create(new Observable.OnSubscribe<Object>() {
+        //titleBar.setTextTitle(CacheUtils.getString(chatMessage.getWatchId()+"watchRealName", ""));
+        btnVoice.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void call(Subscriber<? super Object> subscriber) {
-                try {
-                    initRecordComplete = false;
-                    audioRecFile = File.createTempFile("Record_" + recordStartTime, ".amr", new File(VOICE_PATH));
-                    //LogUtils.e(audioRecFile.getPath());
-                    mediaRecorder = new MediaRecorder();
-                    mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 采样音频源为麦克风
-                    mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);// 输出文件格式
-                    mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 音频编码方式
-                    mediaRecorder.setOutputFile(audioRecFile.getAbsolutePath());// 输出文件位置
-                    // mediaRecorder.setMaxDuration(60);//设置最大录制时间
-                    mediaRecorder.setAudioSamplingRate(8000);    // 采样率
-                    mediaRecorder.prepare();
-                    LogUtils.e("prepare");
-                    mediaRecorder.start();
-                    LogUtils.e("mediaRecorder.start()");
-                } catch (Exception e) {
-                    LogUtils.e(e);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mPresenter.startRecording();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        mPresenter.recordComplete(isFingerMove);
+                        //mPresenter.stopRecording(!isFingerMove);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float moveY = event.getY();
+                        if (moveY - recordOriginalY < -50) {
+                            isFingerMove = true;
+                            showFingerUpCancelPic();
+                        } else {
+                            isFingerMove = false;
+                            showSlippingUpCancelPic();
+                        }
                 }
-                initRecordComplete = true;
-                LogUtils.e("initRecordComplete");
-            }
-        }).subscribeOn(Schedulers.newThread()).subscribe(new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-
+                return false;
             }
         });
+        initRefreshLayout(refreshLayout).setOnRefreshListener(this);
     }
 
-    public void stopRecording(boolean isSend) {
-        ToastUtils.show("stop");
-        LogUtils.e("stop");
-        int recordLength = (int) ((System.currentTimeMillis() - recordStartTime) / 1000);   /*计算出录音时长*/
-      /*  mCountDownTimer.cancel();
-        mView.restoreVoicePage();*/
-        if (audioRecFile != null && mediaRecorder != null) {
-            try {
-                mediaRecorder.setOnErrorListener(null);
-                mediaRecorder.setOnInfoListener(null);
-                /* 停止*/
-                mediaRecorder.stop();
-            } catch (RuntimeException e) {
-                    /* 如果发生异常，很可能是在不合适的状态执行了stop操作*/
-                    /* 所以等待一会儿*/
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e1) {
-                }
-            }
-            /* 然后再进行reset、release */
-            if (mediaRecorder != null&&initRecordComplete) {
-                mediaRecorder.reset();
-                mediaRecorder.release();
-                mediaRecorder = null;
-                LogUtils.e("release");
-            }
+
+    static class VoiceListHandler extends Handler {
+        private VoiceActivity voiceActivity;
+
+        public VoiceListHandler(WeakReference<VoiceActivity> weakReference) {
+            super();
+            VoiceActivity voiceActivity = weakReference.get();
+            this.voiceActivity = voiceActivity;
         }
-        if (isSend) {
-            ChatMessage message = insertDatabase(recordLength);
-            messageList.add(message);
-            refreshVoiceList(messageList);
-            if (recordLength > 0) {   //判断录音时间是否太短
-                if (audioRecFile != null && !StringUtils.isEmpty(audioRecFile.getPath())) {   //判断是否录音失败
-                    //sendMessage(message);
-                } else {
-                    ToastUtils.show(R.string.is_record_permission);
-                }
-            } else {  //时间太短
-                ToastUtils.show(R.string.record_too_short);
-            }
-        } else {
-            ToastUtils.show("录音已取消");
+
+        @Override
+        public void handleMessage(Message msg) {
+            voiceActivity.mPresenter.getVoiceList();
+            postDelayed(voiceActivity.voiceListRunnable, 10000);
         }
     }
 
-    public List<ChatMessage> getChatMsgFromDatabase() {
-        messageList = chatMessageDAO.queryChatMessage(chatMessage.getUserId(),
-                chatMessage.getWatchId(), Constants.VOICE_PAGE_SIZE);
-        refreshVoiceList(messageList);
-        return messageList;
+    class VoiceListRunnable implements Runnable {
+        @Override
+        public void run() {
+            mPresenter.getVoiceList();
+            voiceListHandler.postDelayed(this, 10000);
+        }
     }
 
 
+
+    @Override
+    public void onRefresh(RefreshLayoutDirection direction) {
+        switch (direction) {
+            case TOP:
+                //上滑加载更多
+                //lastVisiblePosition = chatList.getLastVisiblePosition();
+                isLoadMore = true;
+                mPresenter.loadMoreMsgFromDatabase(chatMessageList);
+                refreshLayout.setRefreshing(false);
+                break;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //voiceListHandler.removeCallbacks(voiceListRunnable);
+        mPresenter.detach();
+        mPresenter = null;
+    }
+
+    @Override
+    protected void initPresenter() {
+        super.initPresenter();
+        mPresenter = new VoicePresenter(this, this, chatMessage);
+    }
+
+    @Override
     public void refreshVoiceList(List<ChatMessage> chatMessageList) {
         if (voiceAdapter != null) {
             voiceAdapter.notifyDataSetChanged();
-           /* if (!isLoadMore) {
+            if (!isLoadMore) {
                 isLoadMore = false;
                 chatList.setSelection(voiceAdapter.getCount() - 1);
             } else {
                 isLoadMore = false;
                 chatList.setSelection(chatMessageList.size() - lastMsgListSize);
-            }*/
+            }
         } else {
-            voiceAdapter = new VoiceAdapter(chatMessageList, chatMessage);
+            voiceAdapter = new VoiceAdapter(chatMessageList,chatMessage);
             chatList.setAdapter(voiceAdapter);
             if (voiceAdapter.getCount() > 1) {
-                /*if (!isLoadMore) {
+                if (!isLoadMore) {
                     isLoadMore = false;
                     chatList.setSelection(voiceAdapter.getCount() - 1);
-                }*/
+                }
             }
         }
-        //lastMsgListSize = chatMessageList.size();
+        lastMsgListSize = chatMessageList.size();
     }
 
-    /*private void sendMessage(final ChatMessage message) {
+    @Override
+    public void showSlippingUpCancelPic() {
+        text_tip.setText(getString(R.string.slipping_up_cancel));
+      /*  text_record_tip.setText(getResources().getString(R.string.slipping_up_cancel));
+        ll_record.setVisibility(View.VISIBLE);
+        icon_record_cancel.setVisibility(View.GONE);
+        icon_record.setVisibility(View.VISIBLE);*/
+    }
 
-        UploadMessage uploadMessage = new UploadMessage();
-        uploadMessage.setAccount(message.getUserId());
-        uploadMessage.setImei(message.getWatchId());
-        uploadMessage.setTimeStamp(TimeUtils.getTimeLong(message.getTimeDateStr()));
-        uploadMessage.setRecord(FileUtils.encodeBase64File(message.getVoiceDataLocalPath()));
-        uploadMessage.setDuration(message.getVoiceDuration());
+    @Override
+    public void showFingerUpCancelPic() {
+        text_tip.setText(getResources().getString(R.string.finger_up_cancel));
+        /*  icon_record_cancel.setVisibility(View.VISIBLE);
+        icon_record.setVisibility(View.GONE);*/
+    }
 
-        RetrofitMethods.originRequest(RetrofitMethods.getApiService().rxUploadVoiceMsg(uploadMessage),
-                new CustomObserver<ResponseBody>() {
-                    @Override
-                    public void doOnNext(ResponseBody responseBody) {
-                        try {
-                            String res = responseBody.string();
-                            JSONObject jsonObject = new JSONObject(res);
-                            int errorCode = jsonObject.optInt("errorCode");
-                            if (errorCode == 0) {
-                                messageList.add(message);
-                                mView.refreshVoiceList(messageList);
-                            } else {
-                                showSendFailedMsg(message);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            showSendFailedMsg(message);
-                        }
-                    }
+    @Override
+    public void restoreVoicePage() {
+        text_tip.setText(getString(R.string.voice_talk));
+        stopTiming();
+        //ll_record.setVisibility(View.GONE);
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        showSendFailedMsg(message);
-                    }
-                }
-        );
-    }*/
-    @NonNull
-    private ChatMessage insertDatabase(int recordLength) {
-        ChatMessage message = new ChatMessage();
-        String date = TimeUtils.getDate(0);
-        message.setTimeDateStr(date);
-        message.setTimeStamp(TimeUtils.getTimeLong(date));
-        message.setUserId(chatMessage.getUserId());
-        message.setWatchId(chatMessage.getWatchId());
-        message.setVoiceDataUrl("");
-        message.setVoiceDataLocalPath(audioRecFile.getPath());
-        message.setVoiceDuration(recordLength + 1);
-        message.setContentType(Constants.ContentType.VOICE);
-        message.setLayoutType(Constants.LayoutType.RIGHT);
-        message.setShowTimeFlag(chatMessage.getShowTimeFlag());
-        message.setHeadPicUrl("");
-        return chatMessageDAO.addMessage(message);
+    @Override
+    public void showNoMoreDataTip() {
+        ToastUtils.show(getString(R.string.no_more_data));
     }
 
 
+    @Override
+    public void showTiming(long time) {
+        text_click.setVisibility(View.VISIBLE);
+        long l = 60 - time / 1000;
+        text_click.setText("0:" + l);
+    }
+
+    @Override
+    public void stopTiming() {
+        text_click.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showRecordVolume(MediaRecorder mediaRecorder) {
+      /*  if (mediaRecorder == null) return;
+        int voice = mediaRecorder.getMaxAmplitude();
+        if (voice < 12000) {
+            icon_record.setImageResource(R.drawable.msg_bg_voicesend1);
+        } else if (voice >= 12000 && voice < 16000) {
+            icon_record.setImageResource(R.drawable.msg_bg_voicesend2);
+        } else if (voice >= 16000 && voice < 20000) {
+            icon_record.setImageResource(R.drawable.msg_bg_voicesend3);
+        } else if (voice >= 20000 && voice < 24000) {
+            icon_record.setImageResource(R.drawable.msg_bg_voicesend4);
+        } else if (voice >= 24000 && voice < 28000) {
+            icon_record.setImageResource(R.drawable.msg_bg_voicesend5);
+        } else if (voice >= 28000) {
+            icon_record.setImageResource(R.drawable.msg_bg_voicesend6);
+        }*/
+    }
 
 }
