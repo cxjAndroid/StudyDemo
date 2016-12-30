@@ -98,9 +98,9 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
         chatMessageList = mPresenter.getChatMsgFromDatabase();
         //mPresenter.getVoiceList();
 
-      /*  voiceListRunnable = new VoiceListRunnable();
+        voiceListRunnable = new VoiceListRunnable();
         voiceListHandler = new VoiceListHandler(new WeakReference<>(this));
-        voiceListHandler.sendEmptyMessage(0);*/
+        voiceListHandler.sendEmptyMessage(0);
 
         //titleBar.setTextTitle(CacheUtils.getString(chatMessage.getWatchId()+"watchRealName", ""));
         btnVoice.setOnTouchListener(new View.OnTouchListener() {
@@ -157,7 +157,6 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
     }
 
 
-
     @Override
     public void onRefresh(RefreshLayoutDirection direction) {
         switch (direction) {
@@ -174,9 +173,7 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
     @Override
     protected void onStop() {
         super.onStop();
-        //voiceListHandler.removeCallbacks(voiceListRunnable);
-        mPresenter.detach();
-        mPresenter = null;
+        voiceListHandler.removeCallbacks(voiceListRunnable);
     }
 
     @Override
@@ -197,7 +194,7 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
                 chatList.setSelection(chatMessageList.size() - lastMsgListSize);
             }
         } else {
-            voiceAdapter = new VoiceAdapter(chatMessageList,chatMessage);
+            voiceAdapter = new VoiceAdapter(chatMessageList, chatMessage);
             chatList.setAdapter(voiceAdapter);
             if (voiceAdapter.getCount() > 1) {
                 if (!isLoadMore) {
@@ -212,24 +209,24 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
     @Override
     public void showSlippingUpCancelPic() {
         text_tip.setText(getString(R.string.slipping_up_cancel));
-      /*  text_record_tip.setText(getResources().getString(R.string.slipping_up_cancel));
+        text_record_tip.setText(getResources().getString(R.string.slipping_up_cancel));
         ll_record.setVisibility(View.VISIBLE);
         icon_record_cancel.setVisibility(View.GONE);
-        icon_record.setVisibility(View.VISIBLE);*/
+        icon_record.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showFingerUpCancelPic() {
         text_tip.setText(getResources().getString(R.string.finger_up_cancel));
-        /*  icon_record_cancel.setVisibility(View.VISIBLE);
-        icon_record.setVisibility(View.GONE);*/
+        icon_record_cancel.setVisibility(View.VISIBLE);
+        icon_record.setVisibility(View.GONE);
     }
 
     @Override
     public void restoreVoicePage() {
         text_tip.setText(getString(R.string.voice_talk));
         stopTiming();
-        //ll_record.setVisibility(View.GONE);
+        ll_record.setVisibility(View.GONE);
     }
 
     @Override
@@ -252,7 +249,7 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
 
     @Override
     public void showRecordVolume(MediaRecorder mediaRecorder) {
-      /*  if (mediaRecorder == null) return;
+        if (mediaRecorder == null) return;
         int voice = mediaRecorder.getMaxAmplitude();
         if (voice < 12000) {
             icon_record.setImageResource(R.drawable.msg_bg_voicesend1);
@@ -266,7 +263,7 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
             icon_record.setImageResource(R.drawable.msg_bg_voicesend5);
         } else if (voice >= 28000) {
             icon_record.setImageResource(R.drawable.msg_bg_voicesend6);
-        }*/
+        }
     }
 
 }

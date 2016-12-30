@@ -271,7 +271,7 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
             long timeStamp = serverChatMessages.get(i).getTimen();
             chatMessage.setTimeStamp(timeStamp);
             chatMessage.setTimeDateStr(TimeUtils.getLongDate(timeStamp));
-            //chatMessage.setUserId(App.sharedUtility.getAccount());
+            chatMessage.setUserId(this.chatMessage.getUserId());
             chatMessage.setWatchId(this.chatMessage.getWatchId());
             chatMessage.setVoiceDataUrl(serverChatMessages.get(i).getUrl());
             chatMessage.setContentType(Constants.ContentType.VOICE);

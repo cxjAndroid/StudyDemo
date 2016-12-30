@@ -106,6 +106,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return layout;
     }
 
+    protected RefreshLayout initRefreshLayout(RefreshLayout layout,RefreshLayoutDirection direction) {
+        layout.setEnabled(true);
+        layout.setDirection(direction);
+        layout.setDefaultColor();
+        return layout;
+    }
+
+
+
 
     @Override
     protected void onDestroy() {
