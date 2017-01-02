@@ -33,6 +33,7 @@ public class WatchListActivity extends BaseActivity<WatchListPresenter> implemen
 
     @Override
     protected void initView() {
+        initToolBar(toolbar);
         showLoadingPage();
     }
 

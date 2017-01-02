@@ -107,7 +107,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
                 playRecord();
                 break;
             case R.id.voiceBtn:
-                IntentUtils.startActivityLeftIn(this,VoiceActivity.class);
+                //IntentUtils.startActivityLeftIn(this,VoiceActivity.class);
                 break;
         }
     }

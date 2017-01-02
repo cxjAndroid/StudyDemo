@@ -30,8 +30,7 @@
                 android:id="@+id/rl_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:mContext=".activity.activity.MainActivity">
+                android:orientation="vertical">
 
                 <include layout="@layout/appbar_toolbar" />
                 <!--<ImageView

@@ -27,7 +27,8 @@ public class RetrofitMethods {
     public static final String HK_BASE_URL = "https://patientapi.hk515.com/";
     //public static final String BASE_URL = "http://120.25.225.5:8090/kmhc-modem-restful/services/";
     //public static final String BASE_URL = NetUrl.URL + "/kmhc-modem-restful/services/";
-    public static final String KM_BASE_URL = "http://120.25.225.5:8090/kmhc-modem-restful/services/";
+    //public static final String KM_BASE_URL = "http://120.25.225.5:8090/kmhc-modem-restful/services/";
+    public static final String KM_BASE_URL = "http://watch.medquotient.com:8880/kmhc-modem-restful/services/";
     private static ApiService apiService;
     private static RetrofitMethods retrofitMethods = null;
 
