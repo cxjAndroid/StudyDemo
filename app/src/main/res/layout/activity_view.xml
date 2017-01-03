@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.andychen.view.MyView
+    <com.example.jonchen.view.MyView
         android:id="@+id/myView"
         android:layout_centerHorizontal="true"
         android:background="@color/background_gray_click"
