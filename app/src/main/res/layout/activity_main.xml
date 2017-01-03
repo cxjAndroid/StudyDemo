@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <com.example.jonchen.view.MyListView
-                android:id="@+id/menu_list"
+                android:id="@+id/menuList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -27,7 +27,7 @@
 
             <android.support.design.widget.CoordinatorLayout
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/rl_main"
+                android:id="@+id/mainRL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"

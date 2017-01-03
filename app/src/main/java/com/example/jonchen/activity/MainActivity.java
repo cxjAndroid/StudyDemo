@@ -48,14 +48,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     MyRecyclerView recyclerView;
     @BindView(R.id.slidingLayout)
     SlidingPaneLayout slidingPaneLayout;
-    @BindView(R.id.menu_list)
-    MyListView menu_list;
+    @BindView(R.id.menuList)
+    MyListView menuList;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.floatBtn)
     FloatingActionButton floatBtn;
-    @BindView(R.id.rl_main)
-    CoordinatorLayout rl_main;
+    @BindView(R.id.mainRL)
+    CoordinatorLayout mainRL;
 
     @Override
     public int getContentViewLayoutID() {
@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     public void createSlidingMenuView(List<String> data) {
         MenuAdapter adapter = new MenuAdapter(data, android.R.layout.simple_list_item_1, slidingPaneLayout);
         adapter.setMenuItemCallBack(this);
-        menu_list.setAdapter(adapter);
+        menuList.setAdapter(adapter);
     }
 
     @Override

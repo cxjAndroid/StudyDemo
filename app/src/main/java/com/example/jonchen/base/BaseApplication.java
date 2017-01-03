@@ -7,6 +7,8 @@ import android.os.Looper;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by chenxujun on 2016/6/20.
  */
@@ -34,6 +36,8 @@ public class BaseApplication extends Application {
         LeakCanary.install(this);
         Fresco.initialize(this);
 
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     public static BaseApplication getApplication() {
