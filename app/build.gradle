@@ -22,7 +22,6 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
-
         ndk {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86','x86_64','mips','mips64'
@@ -38,7 +37,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "boolean", "IS_DEBUG", "true"
+            buildConfigField "boolean", "IS_DEBUG", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
