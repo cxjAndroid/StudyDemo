@@ -5,7 +5,7 @@
     <string name="menu_feedback">意见反馈</string>
     <string name="drawer_open">DrawerOpen</string>
     <string name="drawer_close">DrawerClose</string>
-    <string name="back_to_top_behavior">com.example.andychen.view.BackTopBehavior</string>
+    <string name="back_to_top_behavior">com.example.jonchen.view.BackTopBehavior</string>
 
     <!-- 语音-->
     <string name="voice_talk">按住说话</string>

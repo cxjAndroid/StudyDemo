@@ -36,7 +36,7 @@
             android:textColor="@color/text_gray"
             />
 
-        <com.example.andychen.view.CircleImageView
+        <com.example.jonchen.view.CircleImageView
             android:id="@+id/image_photo"
             android:layout_width="40dp"
             android:layout_height="40dp"

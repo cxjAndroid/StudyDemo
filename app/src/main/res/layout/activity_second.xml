@@ -24,7 +24,7 @@
                 android:background="@color/light_grey"
                 android:visibility="gone" />
 
-            <com.example.andychen.view.MyViewPager
+            <com.example.jonchen.view.MyViewPager
                 android:id="@+id/adv_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
