@@ -1,5 +1,10 @@
 package com.example.jonchen.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -56,6 +61,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     FloatingActionButton floatBtn;
     @BindView(R.id.mainRL)
     CoordinatorLayout mainRL;
+    @BindView(R.id.btn1)
+    Button btn1;
 
     @Override
     public int getContentViewLayoutID() {
@@ -141,7 +148,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
-                IntentUtils.startActivityLeftIn(this, BannerActivity.class);
+                //IntentUtils.startActivityLeftIn(this, BannerActivity.class);
+                ObjectAnimator alpha = ObjectAnimator.ofFloat(btn1, "alpha", 1f, 0.1f,1f);
+                ObjectAnimator translationY = ObjectAnimator.ofFloat(btn1, "translationX", 0, -500,0);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.play(alpha).with(translationY);
+                animatorSet.setDuration(3000);
+                //animator.setRepeatCount(ValueAnimator.INFINITE);
+                animatorSet.start();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        ToastUtils.show("end");
+                    }
+                });
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, DesignActivity.class);
