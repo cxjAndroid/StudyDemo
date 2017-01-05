@@ -1,5 +1,6 @@
 package com.example.jonchen.activity;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -56,7 +57,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 //        registerEventBus();
         setResult(RESULT_OK);
 
-        showLoadingPage();
+        //showLoadingPage();
         mPresenter.getShareInfo();
 
     }
@@ -101,7 +102,20 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         BannerAdapter bannerAdapter = new BannerAdapter(this, shareInfoList);
         adv_viewpager.setAdapter(bannerAdapter);
 
-        rlShow.setVisibility(View.VISIBLE);
+        //rlShow.setVisibility(View.VISIBLE);
+        ObjectAnimator rotation = ObjectAnimator.ofFloat(adv_viewpager, "rotation", 0, 360);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(adv_viewpager, "scaleX", 0, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(adv_viewpager, "scaleY", 0, 1f);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(adv_viewpager, "alpha", 0, 1f);
+        rotation.setRepeatCount(5);
+        rotation.setDuration(300);
+        scaleX.setDuration(3000);
+        scaleY.setDuration(3000);
+        alpha.setDuration(3000);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(rotation).with(scaleX).with(scaleY).with(alpha);
+        animatorSet.start();
        /* TranslateAnimation translateAnimation = new TranslateAnimation(
                 Animation.RELATIVE_TO_SELF, 0, 0,
                 Animation.RELATIVE_TO_SELF,
@@ -110,7 +124,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         translateAnimation.setDuration(1000);
         rlShow.setAnimation(translateAnimation);*/
 
-        rlShow.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+     /* rlShow.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 rlShow.getViewTreeObserver().removeGlobalOnLayoutListener(this);
@@ -120,8 +134,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
                 animator.setDuration(1000);
                 animator.start();
             }
-        });
-
+        });*/
 
         myRunnable = new MyRunnable();
         handler = new Handler();

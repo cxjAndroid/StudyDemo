@@ -1,10 +1,5 @@
 package com.example.jonchen.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -18,13 +13,13 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.jonchen.R;
 import com.example.jonchen.adapter.DoctorListAdapter;
 import com.example.jonchen.adapter.MenuAdapter;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.Doctor;
 import com.example.jonchen.mvpview.MainView;
-import com.example.jonchen.R;
 import com.example.jonchen.presenter.MainPresenter;
 import com.example.jonchen.utils.AnimatorUtil;
 import com.example.jonchen.utils.IntentUtils;
@@ -148,21 +143,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
-                //IntentUtils.startActivityLeftIn(this, BannerActivity.class);
-                ObjectAnimator alpha = ObjectAnimator.ofFloat(btn1, "alpha", 1f, 0.1f,1f);
+                IntentUtils.startActivityLeftIn(this, BannerActivity.class);
+                /*ObjectAnimator alpha = ObjectAnimator.ofFloat(btn1, "alpha", 1f, 0.1f,1f);
                 ObjectAnimator translationY = ObjectAnimator.ofFloat(btn1, "translationX", 0, -500,0);
                 AnimatorSet animatorSet = new AnimatorSet();
                 animatorSet.play(alpha).with(translationY);
-                animatorSet.setDuration(3000);
+                animatorSet.setDuration(300);
                 //animator.setRepeatCount(ValueAnimator.INFINITE);
                 animatorSet.start();
                 animatorSet.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        ToastUtils.show("end");
+                        IntentUtils.startActivityLeftIn(MainActivity.this, BannerActivity.class);
                     }
-                });
+                });*/
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, DesignActivity.class);
