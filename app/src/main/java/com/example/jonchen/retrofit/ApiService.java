@@ -1,5 +1,6 @@
 package com.example.jonchen.retrofit;
 
+import com.example.jonchen.model.DailyNewspaper;
 import com.example.jonchen.model.Doctor;
 import com.example.jonchen.model.Hospital;
 import com.example.jonchen.model.Movie;
@@ -9,6 +10,7 @@ import com.example.jonchen.model.ServerChatMessage;
 import com.example.jonchen.model.ShareInfo;
 import com.example.jonchen.model.UploadMessage;
 import com.example.jonchen.model.WatchInfo;
+import com.example.jonchen.model.ZhiHuResult;
 
 import java.util.List;
 import java.util.Map;
@@ -108,4 +110,6 @@ public interface ApiService {
     @GET("news/latest")
     Observable<ResponseBody> rxGetZhiHuNews();
 
+    @GET("news/latest")
+    Observable<ZhiHuResult<List<DailyNewspaper>>> getZhiHuNews();
 }

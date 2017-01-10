@@ -1,6 +1,7 @@
 package com.example.jonchen.retrofit;
 
 import com.example.jonchen.model.Result;
+import com.example.jonchen.model.ZhiHuResult;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;
 import com.example.jonchen.utils.RxUtils;
 import com.google.gson.Gson;
@@ -165,6 +166,28 @@ public class RetrofitMethods {
         RxUtils.get().addList(subscription);
         return subscription;
     }
+
+    public static <T> Subscription spCommonRequest(final Observable<ZhiHuResult<T>> observable, final Observer<T> observer) {
+        if (observer instanceof CustomObserver) {
+            ((CustomObserver) observer).setObservable(observable);
+        }
+        Subscription subscription = observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<ZhiHuResult<T>, T>() {
+                    @Override
+                    public T call(ZhiHuResult<T> zhiHuResult) {
+                        if (zhiHuResult==null) {
+                            throw new ApiException(110, "error zh");
+                        }
+                        return zhiHuResult.getStories();
+                    }
+                })
+                .subscribe(observer);
+        RxUtils.get().addList(subscription);
+        return subscription;
+    }
+
+
 
 
     public static Subscription originRequest(final Observable<ResponseBody> observable, final Subscriber<ResponseBody> subscriber) {

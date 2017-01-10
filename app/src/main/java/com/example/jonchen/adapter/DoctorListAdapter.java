@@ -23,14 +23,14 @@ public class DoctorListAdapter extends BaseRecyclerAdapter<Doctor> {
 
     @Override
     public void refreshView(BaseRecyclerViewHolder holder, final Doctor doctor, int position) {
-        TextView text_dep = holder.getView(R.id.text_dep);
+     /*   TextView text_dep = holder.getView(R.id.text_dep);
         TextView text_doc = holder.getView(R.id.text_doc);
         SimpleDraweeView image_doc = holder.getView(R.id.image_doc);
         RelativeLayout doc_item = holder.getView(R.id.rl_doc_item);
 
         text_dep.setText(doctor.getHospitalDepartmentName());
         text_doc.setText(doctor.getDoctorName());
-        image_doc.setImageURI(Uri.parse(doctor.getAvatarUrl()));
+        image_doc.setImageURI(Uri.parse(doctor.getAvatarUrl()));*/
     }
 
     /*@Override

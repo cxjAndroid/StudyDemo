@@ -3,6 +3,7 @@ package com.example.jonchen.presenter;
 import android.content.Context;
 import android.os.Environment;
 
+import com.example.jonchen.model.DailyNewspaper;
 import com.example.jonchen.model.RecommendDoctors;
 import com.example.jonchen.mvpview.MainView;
 import com.example.jonchen.retrofit.ApiService;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -93,8 +95,19 @@ public class MainPresenter extends BasePresenter<MainView> {
         mView.createSlidingMenuView(arrayList);
     }
 
-    public void getDoctorsInfo(String endIndex) {
-        HashMap<String, Object> params = new HashMap<>();
+    public void getDailyInfo() {
+
+        RetrofitMethods retrofitMethods = new RetrofitMethods(RetrofitMethods.ZH_BASE_URL);
+        retrofitMethods.spCommonRequest(RetrofitMethods.getSpApiService().getZhiHuNews(), new CustomObserver<List<DailyNewspaper>>(mContext) {
+            @Override
+            public void doOnNext(List<DailyNewspaper> dailyNewspapers) {
+                mView.refreshPage(dailyNewspapers);
+            }
+        });
+
+
+
+       /* HashMap<String, Object> params = new HashMap<>();
         params.put("StartIndex", 0);
         params.put("EndIndex", endIndex);
         params.put("CityId", "2430");
@@ -105,7 +118,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                     public void doOnNext(RecommendDoctors recommendDoctors) {
                         mView.refreshDocList(recommendDoctors.getRecommendDoctors());
                     }
-                });
+                });*/
 
         /*RetrofitMethods.getApiService().queryDoc(params).enqueue(new RespCallback() {
             @Override

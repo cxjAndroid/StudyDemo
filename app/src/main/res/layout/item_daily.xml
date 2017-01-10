@@ -11,33 +11,32 @@
     android:orientation="vertical">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/image_doc"
+        android:id="@+id/newsImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:padding="5dp"
         android:scaleType="fitXY"
-        app:failureImage="@drawable/default_avatar"
-        app:placeholderImage="@drawable/default_avatar"
-        app:roundAsCircle="true" />
+        app:failureImage="@drawable/loading"
+        app:placeholderImage="@drawable/loading" />
 
     <TextView
-        android:id="@+id/text_doc"
+        android:id="@+id/titleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/image_doc"
+        android:layout_toRightOf="@+id/newsImage"
         android:textSize="18sp"
         tools:text="name" />
 
     <TextView
-        android:id="@+id/text_dep"
+        android:id="@+id/urlTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/image_doc"
+        android:layout_alignBottom="@+id/newsImage"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/image_doc"
+        android:layout_toRightOf="@+id/newsImage"
         android:textSize="18sp"
         tools:text="dep" />
 </RelativeLayout>
