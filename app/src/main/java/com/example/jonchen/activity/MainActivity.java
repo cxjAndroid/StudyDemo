@@ -21,6 +21,8 @@ import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.Doctor;
 import com.example.jonchen.mvpview.MainView;
 import com.example.jonchen.presenter.MainPresenter;
+import com.example.jonchen.retrofit.CustomObserver;
+import com.example.jonchen.retrofit.RetrofitMethods;
 import com.example.jonchen.utils.AnimatorUtil;
 import com.example.jonchen.utils.IntentUtils;
 import com.example.jonchen.utils.LogUtils;
@@ -32,10 +34,12 @@ import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
     @BindView(R.id.btn)
@@ -58,7 +62,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     CoordinatorLayout mainRL;
     @BindView(R.id.btn1)
     Button btn1;
-
+    int i = 0;
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_main;
@@ -94,6 +98,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 LogUtils.e(String.valueOf(btn.getBottom()));
             }
         });
+
+
+        RetrofitMethods retrofitMethods = new RetrofitMethods(RetrofitMethods.ZH_BASE_URL);
+        retrofitMethods.originRequest(RetrofitMethods.getSpApiService().rxGetZhiHuNews(), new CustomObserver<ResponseBody>() {
+                   @Override
+                   public void doOnNext(ResponseBody responseBody) {
+                       try {
+                           i++;
+                           LogUtils.e(String.valueOf(i)+responseBody.string());
+                       } catch (IOException e) {
+                           e.printStackTrace();
+                       }
+                   }
+               });
+
     }
 
 

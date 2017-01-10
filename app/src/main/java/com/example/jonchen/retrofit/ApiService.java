@@ -104,4 +104,8 @@ public interface ApiService {
     getVoiceList(@Path("account") String account
             , @Path("imei") String imei
             , @Path("timestamp") long timestamp);
+
+    @GET("news/latest")
+    Observable<ResponseBody> rxGetZhiHuNews();
+
 }
