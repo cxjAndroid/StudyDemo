@@ -18,6 +18,7 @@ import com.example.jonchen.swipy_refresh_layout.RefreshLayout;
 import com.example.jonchen.swipy_refresh_layout.RefreshLayoutDirection;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.utils.RxUtils;
+import com.example.jonchen.utils.StatusBarUtil;
 import com.example.jonchen.view.LoadStatusPage;
 import com.umeng.analytics.MobclickAgent;
 
@@ -66,6 +67,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         initView();
         initPresenter();
         initDate();
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.colorPrimaryDark));
     }
 
     public abstract int getContentViewLayoutID();

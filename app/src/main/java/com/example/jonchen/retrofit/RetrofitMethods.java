@@ -28,26 +28,42 @@ public class RetrofitMethods {
     //public static final String BASE_URL = "http://120.25.225.5:8090/kmhc-modem-restful/services/";
     //public static final String BASE_URL = NetUrl.URL + "/kmhc-modem-restful/services/";
     public static final String KM_BASE_URL = "http://120.25.225.5:8090/kmhc-modem-restful/services/";
+    public static final String ZH_BASE_URL = "http://news-at.zhihu.com/api/4/";
     public static final String JKY_URL = "http://218.17.23.74:8089/jkyh_app/";
     private static ApiService apiService;
+    private static ApiService spApiService;
     private static RetrofitMethods retrofitMethods = null;
 
 
     private RetrofitMethods() {
+        Retrofit retrofit = createRetrofit();
+        apiService = retrofit.create(ApiService.class);
+    }
 
+
+
+    private Retrofit createRetrofit() {
+       return createRetrofit(KM_BASE_URL);
+    }
+
+    private Retrofit createRetrofit(String url) {
         Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
                 .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(KM_BASE_URL)
+        return new Retrofit.Builder()
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(OkHttpUtils.getHttpClient())
                 .build();
+    }
 
-        apiService = retrofit.create(ApiService.class);
+
+    public RetrofitMethods(String url){
+        Retrofit retrofit = createRetrofit(url);
+        spApiService = retrofit.create(ApiService.class);
     }
 
 
@@ -66,6 +82,10 @@ public class RetrofitMethods {
     public static ApiService getApiService() {
         getInstance();
         return apiService;
+    }
+
+    public static ApiService getSpApiService() {
+        return spApiService;
     }
 
 

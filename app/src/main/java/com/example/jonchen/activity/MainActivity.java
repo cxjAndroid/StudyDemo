@@ -13,14 +13,16 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.jonchen.R;
 import com.example.jonchen.adapter.DoctorListAdapter;
 import com.example.jonchen.adapter.MenuAdapter;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.Doctor;
 import com.example.jonchen.mvpview.MainView;
-import com.example.jonchen.R;
 import com.example.jonchen.presenter.MainPresenter;
+import com.example.jonchen.retrofit.CustomObserver;
+import com.example.jonchen.retrofit.RetrofitMethods;
 import com.example.jonchen.utils.AnimatorUtil;
 import com.example.jonchen.utils.IntentUtils;
 import com.example.jonchen.utils.LogUtils;
@@ -32,10 +34,12 @@ import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
     @BindView(R.id.btn)
@@ -56,7 +60,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     FloatingActionButton floatBtn;
     @BindView(R.id.mainRL)
     CoordinatorLayout mainRL;
-
+    @BindView(R.id.btn1)
+    Button btn1;
+    int i = 0;
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_main;
@@ -92,6 +98,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 LogUtils.e(String.valueOf(btn.getBottom()));
             }
         });
+
+
+        RetrofitMethods retrofitMethods = new RetrofitMethods(RetrofitMethods.ZH_BASE_URL);
+        retrofitMethods.originRequest(RetrofitMethods.getSpApiService().rxGetZhiHuNews(), new CustomObserver<ResponseBody>() {
+                   @Override
+                   public void doOnNext(ResponseBody responseBody) {
+                       try {
+                           i++;
+                           LogUtils.e(String.valueOf(i)+responseBody.string());
+                       } catch (IOException e) {
+                           e.printStackTrace();
+                       }
+                   }
+               });
+
     }
 
 
@@ -142,6 +163,20 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         switch (v.getId()) {
             case R.id.btn:
                 IntentUtils.startActivityLeftIn(this, BannerActivity.class);
+                /*ObjectAnimator alpha = ObjectAnimator.ofFloat(btn1, "alpha", 1f, 0.1f,1f);
+                ObjectAnimator translationY = ObjectAnimator.ofFloat(btn1, "translationX", 0, -500,0);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.play(alpha).with(translationY);
+                animatorSet.setDuration(300);
+                //animator.setRepeatCount(ValueAnimator.INFINITE);
+                animatorSet.start();
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        IntentUtils.startActivityLeftIn(MainActivity.this, BannerActivity.class);
+                    }
+                });*/
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, DesignActivity.class);
