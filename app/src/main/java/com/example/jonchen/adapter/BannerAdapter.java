@@ -48,8 +48,8 @@ public class BannerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         //super.destroyItem(container, position, object);
-        if (object != null && object instanceof LinearLayout) {
-            LinearLayout bannerLayout = (LinearLayout) object;
+        if (object != null && object instanceof SimpleDraweeView) {
+            SimpleDraweeView bannerLayout = (SimpleDraweeView) object;
             container.removeView(bannerLayout);
         }
     }
@@ -57,13 +57,10 @@ public class BannerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         //return super.instantiateItem(container, position);
-       /* SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
+        SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
         simpleDraweeView.setHierarchy(FrescoUtils.getHierarchy(context,
                 R.drawable.banner_default2,
-                R.drawable.banner_default2, ScalingUtils.ScaleType.FIT_XY));*/
-
-        LinearLayout bannerLayout = (LinearLayout) View.inflate(context, R.layout.layout_banner, null);
-        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) bannerLayout.findViewById(R.id.bannerSd);
+                R.drawable.banner_default2, ScalingUtils.ScaleType.FIT_XY));
 
         if (storiesBeanList.size() > 0) {
             final int index = position % storiesBeanList.size();
@@ -72,7 +69,9 @@ public class BannerAdapter extends PagerAdapter {
         } else {
             simpleDraweeView.setBackgroundResource(R.drawable.banner_default2);
         }
-        container.addView(bannerLayout);
+        container.addView(simpleDraweeView);
         return simpleDraweeView;
     }
+
+
 }

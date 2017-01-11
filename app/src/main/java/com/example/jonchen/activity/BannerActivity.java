@@ -1,14 +1,16 @@
 package com.example.jonchen.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Handler;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
@@ -30,20 +32,20 @@ import butterknife.BindView;
  */
 public class BannerActivity extends BaseActivity<BannerPresenter> implements BannerView {
 
-    @BindView(R.id.adv_viewpager)
-    MyViewPager adv_viewpager;
+    @BindView(R.id.advViewpager)
+    MyViewPager advViewpager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.mDrawerLayout)
     DrawerLayout mDrawerLayout;
-    @BindView(R.id.rlShow)
-    RelativeLayout rlShow;
+    @BindView(R.id.describeTv)
+    TextView describeTv;
     private Handler handler;
     private MyRunnable myRunnable;
 
     @Override
     public int getContentViewLayoutID() {
-        return R.layout.activity_second;
+        return R.layout.activity_banner;
     }
 
     @Override
@@ -58,8 +60,8 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 //        registerEventBus();
         setResult(RESULT_OK);
 
-        //showLoadingPage();
-        mPresenter.getShareInfo();
+        showLoadingPage();
+        mPresenter.getBannerInfo();
 
     }
 
@@ -70,46 +72,58 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @Override
     public void adjustAdvLayout() {
-        ViewGroup.LayoutParams layoutParams = adv_viewpager.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = advViewpager.getLayoutParams();
         int[] pixels = MetricsUtils.getPixels();
         //高度为宽度的1/2
-        layoutParams.height = (int) (pixels[0]*0.62);
-        LogUtils.e(String.valueOf((int) (pixels[0]*0.62)));
+        layoutParams.height = (int) (pixels[0] * 0.62);
+        LogUtils.e(String.valueOf((int) (pixels[0] * 0.62)));
         LogUtils.e(String.valueOf((pixels[0])));
-        adv_viewpager.setLayoutParams(layoutParams);
+        advViewpager.setLayoutParams(layoutParams);
     }
 
     @Override
     public void syncDrawLayout() {
         ActionBarDrawerToggle actionBarDrawerToggle =
-                new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
-                        R.string.drawer_open, R.string.drawer_close) {
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        super.onDrawerOpened(drawerView);
-                        setTitle(getString(R.string.drawer_open));
-                    }
-
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                        super.onDrawerClosed(drawerView);
-                        setTitle(getString(R.string.app_name));
-                    }
-                };
+                new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         actionBarDrawerToggle.syncState();
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+        //mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
 
     @Override
-    public void initBanner(List<DailyBean.TopStoriesBean> storiesBeen) {
+    public void initBanner(final List<DailyBean.TopStoriesBean> storiesBeen) {
         BannerAdapter bannerAdapter = new BannerAdapter(this, storiesBeen);
-        adv_viewpager.setAdapter(bannerAdapter);
 
-        //rlShow.setVisibility(View.VISIBLE);
-        ObjectAnimator rotation = ObjectAnimator.ofFloat(adv_viewpager, "rotation", 0, 360);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(adv_viewpager, "scaleX", 0, 1f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(adv_viewpager, "scaleY", 0, 1f);
-        ObjectAnimator alpha = ObjectAnimator.ofFloat(adv_viewpager, "alpha", 0, 1f);
+        advViewpager.setAdapter(bannerAdapter);
+        advViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                int i = position % storiesBeen.size();
+                describeTv.setText(storiesBeen.get(i).getTitle());
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        startAnimator();
+
+        myRunnable = new MyRunnable();
+        handler = new Handler();
+        handler.postDelayed(myRunnable, 2000);
+    }
+
+    private void startAnimator() {
+        ObjectAnimator rotation = ObjectAnimator.ofFloat(advViewpager, "rotation", 0, 360);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(advViewpager, "scaleX", 0, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(advViewpager, "scaleY", 0, 1f);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(advViewpager, "alpha", 0, 1f);
         rotation.setRepeatCount(5);
         rotation.setDuration(300);
         scaleX.setDuration(3000);
@@ -119,10 +133,13 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(rotation).with(scaleX).with(scaleY).with(alpha);
         animatorSet.start();
-
-        myRunnable = new MyRunnable();
-        handler = new Handler();
-        handler.postDelayed(myRunnable, 2000);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                describeTv.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 
@@ -137,7 +154,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     class MyRunnable implements Runnable {
         @Override
         public void run() {
-            adv_viewpager.setCurrentItem(adv_viewpager.getCurrentItem() + 1);
+            advViewpager.setCurrentItem(advViewpager.getCurrentItem() + 1);
             handler.postDelayed(this, 2000);
         }
     }

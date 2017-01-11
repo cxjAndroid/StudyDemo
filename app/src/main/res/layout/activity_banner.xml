@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
-
-    <include layout="@layout/toolbar" />
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/mDrawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/rlShow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/adv_viewpager"
-                android:background="@color/light_grey"
-                android:visibility="gone" />
+            <include layout="@layout/toolbar"
+                android:id="@+id/toolbar"
+                />
 
             <com.example.jonchen.view.MyViewPager
-                android:id="@+id/adv_viewpager"
+                android:id="@+id/advViewpager"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_below="@id/toolbar"
-                android:background="@color/red"
-            />
+                android:layout_below="@id/toolbar" />
+
+            <TextView
+                android:id="@+id/describeTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/advViewpager"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="19sp"
+                android:visibility="gone"
+                tools:text="this is describe" />
         </RelativeLayout>
 
         <android.support.design.widget.NavigationView

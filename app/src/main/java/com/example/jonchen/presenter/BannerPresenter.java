@@ -18,10 +18,9 @@ public class BannerPresenter extends BasePresenter<BannerView> {
         super(mView, mContext);
     }
 
-    public void getShareInfo(){
-
+    public void getBannerInfo(){
         new RetrofitMethods(RetrofitMethods.ZH_BASE_URL)
-                .request(getSpApiService().rxGetZhiHuNews(), new CustomObserver<DailyBean>() {
+                .request(getSpApiService().rxGetZhiHuNews(), new CustomObserver<DailyBean>(mContext) {
                     @Override
                     public void doOnNext(DailyBean dailyBean) {
                         List<DailyBean.TopStoriesBean> topStories = dailyBean.getTop_stories();
