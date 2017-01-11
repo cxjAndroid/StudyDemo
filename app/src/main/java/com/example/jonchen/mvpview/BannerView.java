@@ -1,5 +1,6 @@
 package com.example.jonchen.mvpview;
 
+import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.model.ShareInfo;
 
 import java.util.List;
@@ -16,9 +17,9 @@ public interface BannerView extends BaseView  {
 
     /**
      * 初始化广告轮播图
-     * @param shareInfoList
+     *
      */
-    void initBanner(List<ShareInfo> shareInfoList);
+    void initBanner(List<DailyBean.TopStoriesBean> storiesBeen);
 
     /**
      * 关联侧滑菜单

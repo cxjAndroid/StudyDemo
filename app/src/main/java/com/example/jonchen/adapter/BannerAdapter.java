@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.jonchen.R;
+import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.model.ShareInfo;
 import com.example.jonchen.utils.FrescoUtils;
 import com.facebook.drawee.drawable.ScalingUtils;
@@ -19,15 +21,15 @@ import java.util.List;
  */
 public class BannerAdapter extends PagerAdapter {
 
-    private List<ShareInfo> shareInfoList;
+    private List<DailyBean.TopStoriesBean> storiesBeanList;
     private Context context;
 
-    public BannerAdapter(List<ShareInfo> shareInfoList) {
-        this.shareInfoList = shareInfoList;
+    public BannerAdapter(List<DailyBean.TopStoriesBean> shareInfoList) {
+        this.storiesBeanList = shareInfoList;
 
     }
 
-    public BannerAdapter(Context context, List<ShareInfo> shareInfoList) {
+    public BannerAdapter(Context context, List<DailyBean.TopStoriesBean> shareInfoList) {
         this(shareInfoList);
         this.context = context;
     }
@@ -37,6 +39,7 @@ public class BannerAdapter extends PagerAdapter {
         return Integer.MAX_VALUE;
     }
 
+
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
@@ -45,28 +48,31 @@ public class BannerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         //super.destroyItem(container, position, object);
-        if (object != null && object instanceof SimpleDraweeView) {
-            SimpleDraweeView simpleDraweeView = (SimpleDraweeView) object;
-            container.removeView(simpleDraweeView);
+        if (object != null && object instanceof LinearLayout) {
+            LinearLayout bannerLayout = (LinearLayout) object;
+            container.removeView(bannerLayout);
         }
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         //return super.instantiateItem(container, position);
-        SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
+       /* SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
         simpleDraweeView.setHierarchy(FrescoUtils.getHierarchy(context,
                 R.drawable.banner_default2,
-                R.drawable.banner_default2, ScalingUtils.ScaleType.FIT_XY));
+                R.drawable.banner_default2, ScalingUtils.ScaleType.FIT_XY));*/
 
-        if (shareInfoList.size() > 0) {
-            final int index = position % shareInfoList.size();
-            ShareInfo shareInfo = shareInfoList.get(index);
-            simpleDraweeView.setImageURI(Uri.parse(shareInfo.getItemPicURL()));
+        LinearLayout bannerLayout = (LinearLayout) View.inflate(context, R.layout.layout_banner, null);
+        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) bannerLayout.findViewById(R.id.bannerSd);
+
+        if (storiesBeanList.size() > 0) {
+            final int index = position % storiesBeanList.size();
+            DailyBean.TopStoriesBean storiesBean = storiesBeanList.get(index);
+            simpleDraweeView.setImageURI(Uri.parse(storiesBean.getImage()));
         } else {
             simpleDraweeView.setBackgroundResource(R.drawable.banner_default2);
         }
-        container.addView(simpleDraweeView);
+        container.addView(bannerLayout);
         return simpleDraweeView;
     }
 }

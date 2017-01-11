@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import com.example.jonchen.R;
 import com.example.jonchen.presenter.BasePresenter;
 import com.example.jonchen.mvpview.BaseView;
+import com.example.jonchen.retrofit.ApiService;
+import com.example.jonchen.retrofit.RetrofitMethods;
 import com.example.jonchen.swipy_refresh_layout.RefreshLayout;
 import com.example.jonchen.swipy_refresh_layout.RefreshLayoutDirection;
 import com.example.jonchen.utils.MetricsUtils;
@@ -55,6 +57,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         this.call = call;
     }
 
+    public ApiService getApiService(){
+        return RetrofitMethods.getApiService();
+    }
+
+    public ApiService getSpApiService(){
+        return RetrofitMethods.getSpApiService();
+    }
     //private Object subscriber;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

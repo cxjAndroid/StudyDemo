@@ -3,6 +3,7 @@ package com.example.jonchen.presenter;
 import android.content.Context;
 import android.os.Environment;
 
+import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.model.DailyNewspaper;
 import com.example.jonchen.model.RecommendDoctors;
 import com.example.jonchen.mvpview.MainView;
@@ -104,7 +105,6 @@ public class MainPresenter extends BasePresenter<MainView> {
                 mView.refreshPage(dailyNewspapers);
             }
         });
-
 
 
        /* HashMap<String, Object> params = new HashMap<>();

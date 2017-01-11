@@ -8,15 +8,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.jonchen.R;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseActivity;
-import com.example.jonchen.model.ShareInfo;
+import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
-import com.example.jonchen.R;
 import com.example.jonchen.presenter.BannerPresenter;
+import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.view.MyViewPager;
 
@@ -72,7 +73,9 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         ViewGroup.LayoutParams layoutParams = adv_viewpager.getLayoutParams();
         int[] pixels = MetricsUtils.getPixels();
         //高度为宽度的1/2
-        layoutParams.height = (int) (pixels[0] * 0.5);
+        layoutParams.height = (int) (pixels[0]*0.62);
+        LogUtils.e(String.valueOf((int) (pixels[0]*0.62)));
+        LogUtils.e(String.valueOf((pixels[0])));
         adv_viewpager.setLayoutParams(layoutParams);
     }
 
@@ -98,8 +101,8 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     }
 
     @Override
-    public void initBanner(List<ShareInfo> shareInfoList) {
-        BannerAdapter bannerAdapter = new BannerAdapter(this, shareInfoList);
+    public void initBanner(List<DailyBean.TopStoriesBean> storiesBeen) {
+        BannerAdapter bannerAdapter = new BannerAdapter(this, storiesBeen);
         adv_viewpager.setAdapter(bannerAdapter);
 
         //rlShow.setVisibility(View.VISIBLE);
@@ -116,25 +119,6 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(rotation).with(scaleX).with(scaleY).with(alpha);
         animatorSet.start();
-       /* TranslateAnimation translateAnimation = new TranslateAnimation(
-                Animation.RELATIVE_TO_SELF, 0, 0,
-                Animation.RELATIVE_TO_SELF,
-                Animation.RELATIVE_TO_SELF, -1, 0,
-                Animation.RELATIVE_TO_SELF);
-        translateAnimation.setDuration(1000);
-        rlShow.setAnimation(translateAnimation);*/
-
-     /* rlShow.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                rlShow.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                float currentTranslationY = rlShow.getTranslationY();
-                int height = rlShow.getHeight();
-                ObjectAnimator animator = ObjectAnimator.ofFloat(rlShow, "translationY", -height, currentTranslationY);
-                animator.setDuration(1000);
-                animator.start();
-            }
-        });*/
 
         myRunnable = new MyRunnable();
         handler = new Handler();

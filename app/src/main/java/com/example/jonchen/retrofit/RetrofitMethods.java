@@ -1,12 +1,22 @@
 package com.example.jonchen.retrofit;
 
+import com.example.jonchen.model.DailyBean;
+import com.example.jonchen.model.Doctor;
 import com.example.jonchen.model.Result;
 import com.example.jonchen.model.ZhiHuResult;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;
 import com.example.jonchen.utils.RxUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import butterknife.OnCheckedChanged;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -187,7 +197,16 @@ public class RetrofitMethods {
         return subscription;
     }
 
-
+    public static <T> Subscription modelCommonRequest(final Observable<T> observable, final Observer<T> observer) {
+        if (observer instanceof CustomObserver) {
+            ((CustomObserver) observer).setObservable(observable);
+        }
+        Subscription subscription = observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        RxUtils.get().addList(subscription);
+        return subscription;
+    }
 
 
     public static Subscription originRequest(final Observable<ResponseBody> observable, final Subscriber<ResponseBody> subscriber) {
@@ -206,6 +225,34 @@ public class RetrofitMethods {
         RxUtils.get().addList(subscription);
         return subscription;
     }
+
+    public static <T> Subscription request(final Observable<ResponseBody> observable, final Observer<T> observer) {
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<ResponseBody, T>() {
+                    @Override
+                    public T call(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            Gson gson = new GsonBuilder()
+                                    .serializeNulls()
+                                    .registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory<>())
+                                    .create();
+
+                            Type genType = observer.getClass().getGenericSuperclass();
+                            Class<T> tClass = (Class<T>) ((ParameterizedType) genType).getActualTypeArguments()[0];
+                            return gson.fromJson(res, tClass);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                })
+                .subscribe(observer);
+        RxUtils.get().addList(subscription);
+        return subscription;
+    }
+
 
     public static Subscription originRequest(final Observable<ResponseBody> observable,
                                              boolean isUpload, final Observer<ResponseBody> observer) {

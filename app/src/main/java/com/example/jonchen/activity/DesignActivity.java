@@ -120,6 +120,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setPeekHeight(1000);
 
+
         BottomSheetDialogAdapter adapter = new BottomSheetDialogAdapter(data, R.layout.item);
         recyclerView.setAdapter(adapter);
     }

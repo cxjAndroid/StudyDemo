@@ -1,5 +1,6 @@
 package com.example.jonchen.retrofit;
 
+import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.model.DailyNewspaper;
 import com.example.jonchen.model.Doctor;
 import com.example.jonchen.model.Hospital;
@@ -112,4 +113,7 @@ public interface ApiService {
 
     @GET("news/latest")
     Observable<ZhiHuResult<List<DailyNewspaper>>> getZhiHuNews();
+
+    @GET("news/latest")
+    Observable<DailyBean> getDailyBean();
 }

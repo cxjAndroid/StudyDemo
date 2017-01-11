@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -19,7 +20,7 @@
             <RelativeLayout
                 android:id="@+id/rlShow"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/adv_viewpager"
                 android:background="@color/light_grey"
                 android:visibility="gone" />
@@ -27,11 +28,10 @@
             <com.example.jonchen.view.MyViewPager
                 android:id="@+id/adv_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
                 android:layout_below="@id/toolbar"
-                android:background="@drawable/pic_white_background" />
-
-
+                android:background="@color/red"
+            />
         </RelativeLayout>
 
         <android.support.design.widget.NavigationView
