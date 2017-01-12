@@ -3,6 +3,8 @@ package com.example.jonchen.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +15,7 @@ import android.view.View;
  * Created by chenxujun on 16-9-22.
  */
 
-public class DividerItemDecoration extends RecyclerView.ItemDecoration{
+public class MyDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
@@ -26,12 +28,27 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration{
     private Drawable mDivider;
 
     private int mOrientation;
+    private Context mContext;
+    private Paint mPaint;
 
-    public DividerItemDecoration(Context context, int orientation) {
+    public MyDividerItemDecoration(Context context, int orientation) {
+        mContext = context;
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);//系统属性中获取
         a.recycle();
+       /* mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.RED);
+        mPaint.setStyle(Paint.Style.FILL);*/
         setOrientation(orientation);
+    }
+
+    /**
+     * 设置分割线的显示样式
+     *
+     * @param resId drawable资源,可以使自定义的shape文件
+     */
+    public void setDivider(int resId) {
+        mDivider = mContext.getResources().getDrawable(resId);
     }
 
     public void setOrientation(int orientation) {
@@ -53,6 +70,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration{
     /**
      * 绘制纵向列表时的分隔线  这时分隔线是横着的
      * 每次 left相同，top根据child变化，right相同，bottom也变化
+     *
      * @param c
      * @param parent
      */
@@ -69,12 +87,16 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration{
             final int bottom = top + mDivider.getIntrinsicHeight();
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
+           /* if (mPaint != null) {
+                c.drawRect(left, top, right, bottom, mPaint);
+            }*/
         }
     }
 
     /**
      * 绘制横向列表时的分隔线  这时分隔线是竖着的
      * l、r 变化； t、b 不变
+     *
      * @param c
      * @param parent
      */

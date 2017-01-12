@@ -1,22 +1,16 @@
 package com.example.jonchen.retrofit;
 
-import com.example.jonchen.model.DailyBean;
-import com.example.jonchen.model.Doctor;
 import com.example.jonchen.model.Result;
 import com.example.jonchen.model.ZhiHuResult;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;
 import com.example.jonchen.utils.RxUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
-import butterknife.OnCheckedChanged;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;

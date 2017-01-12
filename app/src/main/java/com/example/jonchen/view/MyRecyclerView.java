@@ -2,6 +2,7 @@ package com.example.jonchen.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -37,6 +38,9 @@ public class MyRecyclerView extends RecyclerView {
         layoutManager = new LinearLayoutManager(context);
         layoutManager.setSmoothScrollbarEnabled(true);
         setLayoutManager(layoutManager);
-        addItemDecoration(new DividerItemDecoration(context,DividerItemDecoration.VERTICAL_LIST));
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
+        //itemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider_style));
+        addItemDecoration(itemDecoration);
     }
 }

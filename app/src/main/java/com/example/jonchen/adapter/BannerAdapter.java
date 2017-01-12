@@ -60,7 +60,7 @@ public class BannerAdapter extends PagerAdapter {
         SimpleDraweeView simpleDraweeView = new SimpleDraweeView(context);
         simpleDraweeView.setHierarchy(FrescoUtils.getHierarchy(context,
                 R.drawable.banner_default2,
-                R.drawable.banner_default2, ScalingUtils.ScaleType.FIT_XY));
+                R.drawable.banner_default2, ScalingUtils.ScaleType.CENTER_CROP));
 
         if (storiesBeanList.size() > 0) {
             final int index = position % storiesBeanList.size();
