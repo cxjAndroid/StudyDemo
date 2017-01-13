@@ -48,7 +48,8 @@ android {
     buildTypes {
         release {
             buildConfigField "boolean", "IS_DEBUG", "false"
-            minifyEnabled false
+            //混淆
+            minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
