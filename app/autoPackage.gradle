@@ -1,0 +1,35 @@
+def packageLocPath = rootDir.getAbsolutePath()+"/apk/"
+//def packageLocPath ="F:/km9000_v2"
+// 发布包前缀
+def projectName = "MyStyle"
+def publish = project.tasks.create("publish")
+//def svnLastNumber = "3124"
+
+android.applicationVariants.all { variant ->
+
+    def copyDir = "${packageLocPath}"
+    def copyAndRename = project.task("copy${variant.name.capitalize()}", type: Copy)
+    def newCopyFileName = "${projectName}_${android.defaultConfig.versionName}_" +
+            "${android.defaultConfig.versionCode}_${variant.name.capitalize()}.apk"
+
+    copyAndRename.from(variant.outputs[0].outputFile)
+    copyAndRename.into(copyDir)
+    copyAndRename.rename { newCopyFileName }
+    copyAndRename.outputs.file(copyDir + newCopyFileName)
+
+    if (variant.buildType.name == "release") {
+        copyAndRename.dependsOn project.getTasksByName("assembleRelease", false)
+    } else if (variant.buildType.name == "debug") {
+        copyAndRename.dependsOn project.getTasksByName("assembleDebug", false)
+    }
+
+    def oldApkFileTree = fileTree(packageLocPath).include("*.apk")
+    oldApkFileTree.each { it.delete() }
+
+    copyAndRename.doLast {
+        println "Copy ${variant.name.capitalize()} APK File To ${packageLocPath} Done!"
+    }
+    publish.dependsOn copyAndRename
+}
+
+
