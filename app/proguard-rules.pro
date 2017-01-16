@@ -1,22 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @cxjAndroid
-You don’t have any verified emails. We recommend verifying at least one email.
-Email verification helps our support team verify ownership if you lose account access and allows you to receive all the notifications you ask for.
- Unwatch 1
-  Star 0
-  Fork 0 cxjAndroid/StudyDemo
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs  Settings
-Tree: 36767d8623 Find file Copy pathStudyDemo/app/proguard-rules.pro
-36767d8  a day ago
- chenxujun change proguard
-0 contributors
-RawBlameHistory     
-180 lines (142 sloc)  6.32 KB
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
 # in E:\sdk_studio\sdk_studio/tools/proguard/proguard-android.txt
@@ -112,8 +93,6 @@ RawBlameHistory
 -dontwarn okhttp3.**
 -dontwarn javax.annotation.**
 -dontwarn com.android.volley.toolbox.**
-
-
 
 ###-------- Gson 相关的混淆配置--------
 -keepattributes Signature
