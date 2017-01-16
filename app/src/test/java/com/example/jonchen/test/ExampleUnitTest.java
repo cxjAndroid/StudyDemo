@@ -1,11 +1,11 @@
-package com.xys.libzxing;
+package com.example.jonchen.test;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
- * To work on unit tests, switch the Test Artifact in the Build Variants view.
+ * To work on unit tests, switch the Test Artifact in the Build Variants mView.
  */
 public class ExampleUnitTest {
     @Test

@@ -1,4 +1,4 @@
-package com.example.jonchen.myapplication;
+package com.example.jonchen.test;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
