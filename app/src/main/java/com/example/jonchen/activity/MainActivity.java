@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 });*/
                 break;
             case R.id.btn1:
-                IntentUtils.startActivityLeftIn(this, DesignActivity.class);
+                IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
                 EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
                 break;
             case R.id.btn2:

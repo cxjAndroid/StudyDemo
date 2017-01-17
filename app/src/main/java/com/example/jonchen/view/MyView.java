@@ -18,6 +18,11 @@ public class MyView extends View {
     RectF rectFOral = new RectF(250, 400, 500, 800);
     RectF rectFArc = new RectF(250, 900, 500, 1150);
 
+    private int startX;
+    private int startY;
+    private int stopX;
+    private int stopY;
+
     public MyView(Context context) {
         this(context, null);
     }
@@ -30,6 +35,13 @@ public class MyView extends View {
         super(context, attrs, defStyleAttr);
     }
 
+    public void setAction(int startX,int startY,int stopX,int stopY){
+        this.startX = startX;
+        this.startY = startY;
+        this.stopX = stopX;
+        this.stopY = stopY;
+        invalidate();
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -53,6 +65,7 @@ public class MyView extends View {
         }
         setMeasuredDimension(width, height);
     }
+
 
 
     @Override
@@ -101,6 +114,8 @@ public class MyView extends View {
         paint.setTextSize(100);
         //绘制文本
         canvas.drawText("jEh", 700, 250, paint);*/
+
+        canvas.drawCircle(stopX,startY,50,paint);
 
     }
 }
