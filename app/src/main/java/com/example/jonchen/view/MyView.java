@@ -18,10 +18,13 @@ public class MyView extends View {
     RectF rectFOral = new RectF(250, 400, 500, 800);
     RectF rectFArc = new RectF(250, 900, 500, 1150);
 
+
     private int startX;
     private int startY;
     private int stopX;
     private int stopY;
+    private int width;
+    private int height;
 
     public MyView(Context context) {
         this(context, null);
@@ -50,8 +53,8 @@ public class MyView extends View {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int width = 0;
-        int height = 0;
+        width = 0;
+        height = 0;
 
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
@@ -63,6 +66,11 @@ public class MyView extends View {
         } else if (heightMode == MeasureSpec.AT_MOST) {
             height = 1150;
         }
+
+        //为了将小球绘制到画布中央
+        stopX = width/2;
+        startY = height/2;
+
         setMeasuredDimension(width, height);
     }
 
@@ -114,8 +122,7 @@ public class MyView extends View {
         paint.setTextSize(100);
         //绘制文本
         canvas.drawText("jEh", 700, 250, paint);*/
-
+        paint.setStyle(Paint.Style.FILL);
         canvas.drawCircle(stopX,startY,50,paint);
-
     }
 }
