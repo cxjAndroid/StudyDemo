@@ -97,7 +97,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     public void getDailyInfo() {
-
+        mView.showLoadingPage();
         RetrofitMethods retrofitMethods = new RetrofitMethods(RetrofitMethods.ZH_BASE_URL);
         retrofitMethods.spCommonRequest(RetrofitMethods.getSpApiService().getZhiHuNews(), new CustomObserver<List<DailyNewspaper>>(mContext) {
             @Override

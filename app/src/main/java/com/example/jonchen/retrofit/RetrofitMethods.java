@@ -1,5 +1,6 @@
 package com.example.jonchen.retrofit;
 
+import com.example.jonchen.model.KmResult;
 import com.example.jonchen.model.Result;
 import com.example.jonchen.model.ZhiHuResult;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;

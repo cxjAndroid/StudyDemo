@@ -81,7 +81,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     public void initDate() {
 
         MobclickAgent.openActivityDurationTrack(false);
-        showLoadingPage();
         mPresenter.getDailyInfo();
         mPresenter.getSlidingMenuData();
 
@@ -95,7 +94,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
                 LogUtils.e(String.valueOf(btn.getBottom()));
             }
         });
-
     }
 
 
@@ -135,12 +133,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         slidingPaneLayout.closePane();
     }
 
-   /* @Override
-    public void refreshDocList(List<Doctor> doctorList) {
-        DoctorListAdapter adapter = new DoctorListAdapter(doctorList, R.layout.item_doctor);
-        recyclerView.setAdapter(adapter);
-    }*/
-
     @Override
     public void refreshPage(List<DailyNewspaper> dailyNewspapers) {
         DailyListAdapter dailyListAdapter = new DailyListAdapter(dailyNewspapers, R.layout.item_daily);
@@ -152,20 +144,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         switch (v.getId()) {
             case R.id.btn:
                 IntentUtils.startActivityLeftIn(this, BannerActivity.class);
-                /*ObjectAnimator alpha = ObjectAnimator.ofFloat(btn1, "alpha", 1f, 0.1f,1f);
-                ObjectAnimator translationY = ObjectAnimator.ofFloat(btn1, "translationX", 0, -500,0);
-                AnimatorSet animatorSet = new AnimatorSet();
-                animatorSet.play(alpha).with(translationY);
-                animatorSet.setDuration(300);
-                //animator.setRepeatCount(ValueAnimator.INFINITE);
-                animatorSet.start();
-                animatorSet.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        IntentUtils.startActivityLeftIn(MainActivity.this, BannerActivity.class);
-                    }
-                });*/
                 break;
             case R.id.btn1:
                 IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);

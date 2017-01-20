@@ -19,6 +19,7 @@ public class BannerPresenter extends BasePresenter<BannerView> {
     }
 
     public void getBannerInfo(){
+        mView.showLoadingPage();
         new RetrofitMethods(RetrofitMethods.ZH_BASE_URL)
                 .request(getSpApiService().rxGetZhiHuNews(), new CustomObserver<DailyBean>(mContext) {
                     @Override

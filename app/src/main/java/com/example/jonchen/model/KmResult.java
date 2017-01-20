@@ -1,4 +1,4 @@
-package com.example.jonchen.retrofit;
+package com.example.jonchen.model;
 
 /**
  * Created by chenxujun on 16-10-28.

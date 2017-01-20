@@ -44,7 +44,7 @@ public class DrawViewActivity extends BaseActivity {
         myView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
+              /*  switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         startX = (int) event.getX();
                         startY = (int) event.getY();
@@ -56,7 +56,14 @@ public class DrawViewActivity extends BaseActivity {
                         startX = moveX;
                         startY = moveY;
                         break;
-                }
+                }*/
+                startX = (int) event.getX();
+                startY = (int) event.getY();
+                moveX = (int) event.getX();
+                moveY = (int) event.getY();
+                myView.setAction(startX, startY, moveX, moveY);
+                startX = moveX;
+                startY = moveY;
                 return true;
             }
         });

@@ -60,9 +60,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 //        registerEventBus();
         setResult(RESULT_OK);
 
-        showLoadingPage();
         mPresenter.getBannerInfo();
-
     }
 
     @Override

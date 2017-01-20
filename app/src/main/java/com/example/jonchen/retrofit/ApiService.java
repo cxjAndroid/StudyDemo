@@ -4,6 +4,7 @@ import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.model.DailyNewspaper;
 import com.example.jonchen.model.Doctor;
 import com.example.jonchen.model.Hospital;
+import com.example.jonchen.model.KmResult;
 import com.example.jonchen.model.Movie;
 import com.example.jonchen.model.RecommendDoctors;
 import com.example.jonchen.model.Result;
