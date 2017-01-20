@@ -1,6 +1,5 @@
 package com.example.jonchen.presenter;
 
-import android.content.Context;
 import android.media.MediaRecorder;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -8,12 +7,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 
+import com.example.jonchen.R;
 import com.example.jonchen.base.Constants;
 import com.example.jonchen.database.ChatMessageDAO;
 import com.example.jonchen.model.ChatMessage;
 import com.example.jonchen.model.ServerChatMessage;
 import com.example.jonchen.model.UploadMessage;
-import com.example.jonchen.R;
 import com.example.jonchen.retrofit.CustomObserver;
 import com.example.jonchen.retrofit.RetrofitMethods;
 import com.example.jonchen.utils.CacheUtils;
@@ -79,8 +78,8 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
     private File voicePath;
 
 
-    public VoicePresenter(VoiceView mView, Context mContext, ChatMessage chatMessage) {
-        super(mView, mContext);
+    public VoicePresenter(VoiceView mView,ChatMessage chatMessage) {
+        super(mView);
         this.chatMessage = chatMessage;
         createDir(chatMessage);
         chatMessageDAO = ChatMessageDAO.getInstance();

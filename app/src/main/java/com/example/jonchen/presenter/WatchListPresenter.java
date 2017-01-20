@@ -1,7 +1,5 @@
 package com.example.jonchen.presenter;
 
-import android.content.Context;
-
 import com.example.jonchen.model.WatchInfo;
 import com.example.jonchen.mvpview.WatchListView;
 import com.example.jonchen.retrofit.RetrofitMethods;
@@ -16,8 +14,8 @@ import rx.Observer;
 
 public class WatchListPresenter extends BasePresenter<WatchListView> {
 
-    public WatchListPresenter(WatchListView mView, Context mContext) {
-        super(mView, mContext);
+    public WatchListPresenter(WatchListView mView) {
+        super(mView);
     }
 
     public void getWatchList(String account) {

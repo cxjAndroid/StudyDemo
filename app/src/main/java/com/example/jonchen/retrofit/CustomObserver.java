@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.model.KmResult;
+import com.example.jonchen.mvpview.BaseView;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.LoadStatusPage;
 
@@ -17,15 +18,17 @@ import rx.Subscription;
  */
 public abstract class CustomObserver<T> implements Observer<T> {
 
-    private Context context;
+    //private Context context;
     private Observable<KmResult<T>> observable;
     private Subscription subscription;
+    private BaseView mView;
 
     public CustomObserver() {
     }
 
-    public CustomObserver(Context context) {
-        this.context = context;
+
+    public CustomObserver(BaseView mView) {
+        this.mView = mView;
     }
 
 
@@ -41,22 +44,22 @@ public abstract class CustomObserver<T> implements Observer<T> {
 
     @Override
     public void onCompleted() {
-        if (context != null) {
-            ((BaseActivity) context).showSuccessPage();
+        if (mView != null) {
+            mView.showSuccessPage();
         }
     }
 
     @Override
     public void onError(final Throwable e) {
-        if (context != null) {
-            ((BaseActivity) context).showErrorPage(e instanceof ApiException ?
+        if (mView != null) {
+            mView.showErrorPage(e instanceof ApiException ?
                     LoadStatusPage.BIZ_ERROR : LoadStatusPage.SERVICE_ERROR);
 
-            ((BaseActivity) context).getStatusPage().setOnLayoutClickListener(new View.OnClickListener() {
+            mView.getStatusPage().setOnLayoutClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (getObservable() != null) {
-                        ((BaseActivity) context).showLoadingPage();
+                        mView.showLoadingPage();
                         RetrofitMethods.commonRequest(getObservable(), CustomObserver.this);
                     }
                 }

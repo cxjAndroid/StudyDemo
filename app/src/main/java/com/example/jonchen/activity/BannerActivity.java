@@ -65,7 +65,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @Override
     protected void initPresenter() {
-        mPresenter = new BannerPresenter(this, this);
+        mPresenter = new BannerPresenter(this);
     }
 
     @Override

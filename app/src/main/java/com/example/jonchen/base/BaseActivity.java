@@ -41,9 +41,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public boolean isNeedBindButterKnife = true;
     private int menuLayout;
 
-    public LoadStatusPage getStatusPage() {
+   /* public LoadStatusPage getStatusPage() {
         return statusPage;
-    }
+    }*/
 
     public void setStatusPage(LoadStatusPage statusPage) {
         this.statusPage = statusPage;
@@ -124,9 +124,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return layout;
     }
 
-
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -174,6 +171,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public void showSuccessPage() {
         if (statusPage != null) statusPage.setStatusType(LoadStatusPage.HIDE_LAYOUT);
+    }
+
+    @Override
+    public LoadStatusPage getStatusPage() {
+        return statusPage;
     }
 
     //NoActionBar style

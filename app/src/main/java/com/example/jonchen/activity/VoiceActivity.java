@@ -183,7 +183,7 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
     @Override
     protected void initPresenter() {
         super.initPresenter();
-        mPresenter = new VoicePresenter(this, this, chatMessage);
+        mPresenter = new VoicePresenter(this, chatMessage);
     }
 
     @Override

@@ -26,9 +26,6 @@ public class VoiceAdapterPresenter extends BasePresenter<VoiceAdapterView> {
         super(mView);
     }
 
-    public VoiceAdapterPresenter(VoiceAdapterView mView, Context mContext) {
-        super(mView, mContext);
-    }
 
     public  void playRecord(final ChatMessage message, final ImageView image_voice) {
         mView.setMediaAnimationDrawableDirection(message,image_voice);

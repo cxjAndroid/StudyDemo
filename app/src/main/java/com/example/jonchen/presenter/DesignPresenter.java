@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class DesignPresenter extends BasePresenter<DesignView> {
 
-    public DesignPresenter(DesignView mView, Context mContext) {
-        super(mView, mContext);
+    public DesignPresenter(DesignView mView) {
+        super(mView);
     }
 
     public void getBottomSheetDialogData() {

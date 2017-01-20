@@ -39,7 +39,7 @@ public class WatchListActivity extends BaseActivity<WatchListPresenter> implemen
     @Override
     protected void initPresenter() {
         super.initPresenter();
-        mPresenter = new WatchListPresenter(this, this);
+        mPresenter = new WatchListPresenter(this);
     }
 
     @Override

@@ -1,18 +1,14 @@
 package com.example.jonchen.presenter;
 
-import android.content.Context;
 import android.os.Environment;
 
-import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.model.DailyNewspaper;
-import com.example.jonchen.model.RecommendDoctors;
 import com.example.jonchen.mvpview.MainView;
 import com.example.jonchen.retrofit.ApiService;
 import com.example.jonchen.retrofit.CustomObserver;
 import com.example.jonchen.retrofit.OkHttpUtils;
 import com.example.jonchen.retrofit.RequestParams;
 import com.example.jonchen.retrofit.RetrofitMethods;
-import com.example.jonchen.retrofit.RetrofitUtils;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.RxUtils;
 
@@ -23,7 +19,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -46,8 +41,8 @@ public class MainPresenter extends BasePresenter<MainView> {
     private Subscription subscription;
 
 
-    public MainPresenter(MainView mView, Context mContext) {
-        super(mView, mContext);
+    public MainPresenter(MainView mView) {
+        super(mView);
     }
 
     public static final String PATH = Environment.getExternalStorageDirectory() + "/kmytj/";
@@ -99,7 +94,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     public void getDailyInfo() {
         mView.showLoadingPage();
         RetrofitMethods retrofitMethods = new RetrofitMethods(RetrofitMethods.ZH_BASE_URL);
-        retrofitMethods.spCommonRequest(RetrofitMethods.getSpApiService().getZhiHuNews(), new CustomObserver<List<DailyNewspaper>>(mContext) {
+        retrofitMethods.spCommonRequest(RetrofitMethods.getSpApiService().getZhiHuNews(), new CustomObserver<List<DailyNewspaper>>(mView) {
             @Override
             public void doOnNext(List<DailyNewspaper> dailyNewspapers) {
                 mView.refreshPage(dailyNewspapers);

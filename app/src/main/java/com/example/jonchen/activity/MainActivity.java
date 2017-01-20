@@ -43,8 +43,6 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
     @BindView(R.id.btn)
     Button btn;
-    /*@BindView(R.id.iv)
-    ImageView iv;*/
     @BindView(R.id.tv)
     TextView tv;
     @BindView(R.id.recyclerView)
@@ -96,12 +94,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         });
     }
 
-
     @Override
     protected void initPresenter() {
-        mPresenter = new MainPresenter(this, this);
+        mPresenter = new MainPresenter(this);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

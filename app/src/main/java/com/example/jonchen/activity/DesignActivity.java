@@ -72,7 +72,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     @Override
     protected void initPresenter() {
         super.initPresenter();
-        mPresenter = new DesignPresenter(this, this);
+        mPresenter = new DesignPresenter(this);
     }
 
     @Override

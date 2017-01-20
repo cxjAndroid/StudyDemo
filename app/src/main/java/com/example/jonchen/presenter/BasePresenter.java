@@ -10,16 +10,16 @@ import com.example.jonchen.retrofit.RetrofitMethods;
  */
 public class BasePresenter<T> {
     public T mView;
-    public Context mContext;
+    //public Context mContext;
 
     public BasePresenter(T mView) {
         attach(mView);
     }
 
-    public BasePresenter(T mView, Context mContext) {
+  /*  public BasePresenter(T mView, Context mContext) {
         this.mContext = mContext;
         attach(mView);
-    }
+    }*/
 
     public void attach(T view){
         this.mView = view;

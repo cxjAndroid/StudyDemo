@@ -1,6 +1,8 @@
 package com.example.jonchen.mvpview;
 
 
+import com.example.jonchen.view.LoadStatusPage;
+
 /**
  * Created by chenxujun on 2016/7/1.
  */
@@ -18,5 +20,7 @@ public interface BaseView {
      * 显示成功页面
      */
     void showSuccessPage();
+
+    LoadStatusPage getStatusPage();
 
 }
