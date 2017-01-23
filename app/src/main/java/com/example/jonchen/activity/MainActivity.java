@@ -1,166 +1,121 @@
 package com.example.jonchen.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.jonchen.R;
-import com.example.jonchen.adapter.DailyListAdapter;
-import com.example.jonchen.adapter.DoctorListAdapter;
-import com.example.jonchen.adapter.MenuAdapter;
 import com.example.jonchen.base.BaseActivity;
-import com.example.jonchen.event.EventMessage;
-import com.example.jonchen.model.DailyNewspaper;
-import com.example.jonchen.model.Doctor;
-import com.example.jonchen.mvpview.MainView;
-import com.example.jonchen.presenter.MainPresenter;
-import com.example.jonchen.utils.AnimatorUtil;
-import com.example.jonchen.utils.IntentUtils;
-import com.example.jonchen.utils.LogUtils;
-import com.example.jonchen.utils.ToastUtils;
-import com.example.jonchen.view.MyListView;
-import com.example.jonchen.view.MyRecyclerView;
-import com.umeng.analytics.MobclickAgent;
-import com.xys.libzxing.zxing.activity.CaptureActivity;
-
-import org.greenrobot.eventbus.EventBus;
+import com.example.jonchen.base.BaseFragment;
+import com.example.jonchen.mvpview.HomeView;
+import com.example.jonchen.presenter.HomePresenter;
+import com.example.jonchen.view.MyViewPager;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
-    @BindView(R.id.btn)
-    Button btn;
-    @BindView(R.id.tv)
-    TextView tv;
-    @BindView(R.id.recyclerView)
-    MyRecyclerView recyclerView;
-    @BindView(R.id.slidingLayout)
-    SlidingPaneLayout slidingPaneLayout;
-    @BindView(R.id.menuList)
-    MyListView menuList;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.floatBtn)
-    FloatingActionButton floatBtn;
-    @BindView(R.id.mainRL)
-    CoordinatorLayout mainRL;
-    @BindView(R.id.btn1)
-    Button btn1;
+/**
+ * Created by andychen on 2017/1/22.
+ */
+
+public class MainActivity extends BaseActivity implements HomeView {
+    @BindView(R.id.navigationBar)
+    BottomNavigationBar navigationBar;
+    @BindView(R.id.mViewpager)
+    MyViewPager mViewpager;
+    private ViewPageAdapter pageAdapter;
+
     @Override
     public int getContentViewLayoutID() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
     @Override
     protected void initView() {
-        initToolBar(toolbar, R.menu.menu);
-        AnimatorUtil.scaleHide(floatBtn, 0, null);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void initData() {
+        HomePresenter homePresenter = new HomePresenter(this);
+        homePresenter.getBottomNavigationData();
+        homePresenter.getFragmentPage();
     }
 
     @Override
-    public void initDate() {
-
-        MobclickAgent.openActivityDurationTrack(false);
-        mPresenter.getDailyInfo();
-        mPresenter.getSlidingMenuData();
-
-        btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    public void initBottomNavigationBar(List<BottomNavigationItem> itemList) {
+        navigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        navigationBar.setActiveColor(R.color.colorPrimary);
+        for (BottomNavigationItem item : itemList) {
+            navigationBar.addItem(item);
+        }
+        navigationBar.initialise();
+        navigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
-            public void onGlobalLayout() {
-                btn.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                LogUtils.e(String.valueOf(btn.getLeft()));
-                LogUtils.e(String.valueOf(btn.getTop()));
-                LogUtils.e(String.valueOf(btn.getRight()));
-                LogUtils.e(String.valueOf(btn.getBottom()));
+            public void onTabSelected(int position) {
+                mViewpager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabUnselected(int position) {
+
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+
             }
         });
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new MainPresenter(this);
+    public void initFragmentPage(final List<BaseFragment> fragmentList) {
+        pageAdapter = new ViewPageAdapter(getSupportFragmentManager(), fragmentList);
+        mViewpager.setAdapter(pageAdapter);
+        mViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                navigationBar.selectTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_capture:
-                IntentUtils.startActivityLeftIn(this, CaptureActivity.class, 0);
-                break;
-            case R.id.action_about_us:
-                ToastUtils.show("action_about_us");
-                break;
-            case R.id.action_feedback:
-                ToastUtils.show("action_feedback");
-                break;
+    class ViewPageAdapter extends FragmentPagerAdapter {
+        private List<BaseFragment> fragmentList;
+
+        ViewPageAdapter(FragmentManager fm, List<BaseFragment> fragmentList) {
+            super(fm);
+            this.fragmentList = fragmentList;
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    public void createSlidingMenuView(List<String> data) {
-        MenuAdapter adapter = new MenuAdapter(data, android.R.layout.simple_list_item_1, slidingPaneLayout);
-        adapter.setMenuItemCallBack(this);
-        menuList.setAdapter(adapter);
-    }
-
-    @Override
-    public void menuItemOnClick(String s) {
-        showLoadingPage();
-        mPresenter.getDailyInfo();
-        slidingPaneLayout.closePane();
-    }
-
-    @Override
-    public void refreshPage(List<DailyNewspaper> dailyNewspapers) {
-        DailyListAdapter dailyListAdapter = new DailyListAdapter(dailyNewspapers, R.layout.item_daily);
-        recyclerView.setAdapter(dailyListAdapter);
-    }
-
-    @OnClick({R.id.btn, R.id.btn1, R.id.btn2, R.id.floatBtn})
-    void click(View v) {
-        switch (v.getId()) {
-            case R.id.btn:
-                IntentUtils.startActivityLeftIn(this, BannerActivity.class);
-                break;
-            case R.id.btn1:
-                IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
-                EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
-                break;
-            case R.id.btn2:
-                //IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
-                IntentUtils.startActivityLeftIn(this, WatchListActivity.class);
-                break;
-            case R.id.floatBtn:
-                recyclerView.getLayoutManager().scrollToPosition(0);
-                break;
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
         }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            tv.setText(extras.getString("result"));
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container,position,object);
         }
     }
 

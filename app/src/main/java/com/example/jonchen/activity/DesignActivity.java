@@ -76,7 +76,7 @@ public class DesignActivity extends BaseActivity<DesignPresenter> implements Des
     }
 
     @Override
-    public void initDate() {
+    public void initData() {
         mPresenter.getBottomSheetDialogData();
         voicePath = new File(VOICE_PATH);
         if (!voicePath.exists()) {

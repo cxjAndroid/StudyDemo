@@ -1,1 +1,1 @@
-include ':app', ':libzxing', "library", "utils-v4", ':example'
+include ':app', ':libzxing', "library", "utils-v4"

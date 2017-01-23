@@ -140,12 +140,12 @@
         <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
         <!--+++++++++++++++++++++++++++++++++++++++++++++JPush end+++++++++++++++++++++++++++++++++++++++++-->
 
-        <activity android:name="com.example.jonchen.activity.MainActivity">
-            <intent-filter>
+        <activity android:name="com.example.jonchen.activity.HomeFragment">
+        <!--    <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <activity android:name="com.example.jonchen.activity.TestActivity">
@@ -159,6 +159,13 @@
         <activity android:name="com.example.jonchen.activity.DrawViewActivity" />
         <activity android:name="com.example.jonchen.activity.VoiceActivity" />
         <activity android:name="com.example.jonchen.activity.WatchListActivity" />
+        <activity android:name="com.example.jonchen.activity.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="UMENG_APPKEY"

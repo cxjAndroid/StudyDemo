@@ -56,7 +56,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     }
 
     @Override
-    public void initDate() {
+    public void initData() {
 //        registerEventBus();
         setResult(RESULT_OK);
 
@@ -101,12 +101,10 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
             @Override
             public void onPageSelected(int position) {
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 

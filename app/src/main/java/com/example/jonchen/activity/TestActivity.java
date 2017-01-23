@@ -29,7 +29,7 @@ public class TestActivity extends BaseActivity {
     }
 
     @Override
-    public void initDate() {
+    public void initData() {
         rxDemo();
     }
 

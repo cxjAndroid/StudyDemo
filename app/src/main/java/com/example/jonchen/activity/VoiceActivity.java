@@ -93,11 +93,11 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        initDate();
+        initData();
     }
 
     @Override
-    public void initDate() {
+    public void initData() {
 
         chatMessageList = mPresenter.getChatMsgFromDatabase();
         //mPresenter.getVoiceList();

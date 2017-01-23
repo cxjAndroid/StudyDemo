@@ -43,7 +43,7 @@ public class WatchListActivity extends BaseActivity<WatchListPresenter> implemen
     }
 
     @Override
-    public void initDate() {
+    public void initData() {
         mPresenter.getWatchList("13691993691");
     }
 

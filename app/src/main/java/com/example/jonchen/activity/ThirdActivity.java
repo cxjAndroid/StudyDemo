@@ -52,7 +52,7 @@ public class ThirdActivity extends BaseActivity {
     }
 
     @Override
-    public void initDate() {
+    public void initData() {
 
         ButterKnife.bind(this);
         registerEventBus();

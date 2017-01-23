@@ -34,7 +34,7 @@ import retrofit2.Call;
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
 
-    private boolean isBindEventBus;
+    public boolean isBindEventBus;
     private Call<?> call;
     private LoadStatusPage statusPage;
     public T mPresenter;
@@ -75,7 +75,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (isNeedBindButterKnife) ButterKnife.bind(this);
         initView();
         initPresenter();
-        initDate();
+        initData();
         StatusBarUtil.setColor(this,getResources().getColor(R.color.colorPrimaryDark));
     }
 
@@ -88,7 +88,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
 
-    public abstract void initDate();
+    public abstract void initData();
 
     @Override
     protected void onResume() {
@@ -132,6 +132,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             mPresenter.detach();
         }
         if (isBindEventBus) {
+            isBindEventBus = false;
             EventBus.getDefault().unregister(this);
             //Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
         }

@@ -40,7 +40,7 @@ public class DrawViewActivity extends BaseActivity {
     }
 
     @Override
-    public void initDate() {
+    public void initData() {
         myView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

@@ -1,8 +1,5 @@
 package com.example.jonchen.fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
@@ -18,19 +15,20 @@ public class HealthFragment extends BaseFragment {
     TextView mTextView;
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
-        View view = inflater.inflate(R.layout.fragment_health,null);
-        return view;
+    public int getContentViewLayoutID() {
+        return R.layout.fragment_health;
+    }
+
+    @Override
+    public void initView() {
     }
 
     @Override
     public void initData() {
-        super.initData();
+
     }
 
-    public void setText(String text){
+    public void setText(String text) {
         mTextView.setText(text);
     }
-
-
 }
