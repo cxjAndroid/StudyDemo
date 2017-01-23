@@ -27,12 +27,13 @@ import butterknife.ButterKnife;
 /**
  * Created by chenxujun on 2016/7/19.
  */
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment  implements BaseView {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
     public boolean isNeedBindButterKnife = true;
     private boolean isBindEventBus;
     public T mPresenter;
     private LoadStatusPage statusPage;
     private View view;
+    private boolean isViewCreated;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment  im
         }
         initView();
         initPresenter();
+        isViewCreated = true;
         return view;
     }
 
@@ -63,7 +65,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment  im
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
+        if (getUserVisibleHint()) {
+            initData();
+        }
     }
 
     /**
@@ -97,6 +101,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment  im
             //Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void showLoadingPage() {
         if (statusPage != null) {
@@ -125,6 +130,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment  im
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isViewCreated) {
+            initData();
+        }
 
     }
 
