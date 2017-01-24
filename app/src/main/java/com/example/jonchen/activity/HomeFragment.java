@@ -39,10 +39,10 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
     TextView tv;
     @BindView(R.id.recyclerView)
     MyRecyclerView recyclerView;
-    @BindView(R.id.slidingLayout)
-    SlidingPaneLayout slidingPaneLayout;
-    @BindView(R.id.menuList)
-    MyListView menuList;
+    /*@BindView(R.id.slidingLayout)
+    SlidingPaneLayout slidingPaneLayout;*/
+  /*  @BindView(R.id.menuList)
+    MyListView menuList;*/
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.floatBtn)
@@ -51,6 +51,8 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
     CoordinatorLayout mainRL;
     @BindView(R.id.btn1)
     Button btn1;
+    private DailyListAdapter dailyListAdapter;
+
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_main;
@@ -67,10 +69,17 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
     protected void initData() {
 
         MobclickAgent.openActivityDurationTrack(false);
-        mPresenter.getDailyInfo();
-        mPresenter.getSlidingMenuData();
 
-        btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        if (dailyListAdapter == null) {
+            mPresenter.getDailyInfo();
+        } else {
+            LogUtils.e("HomeFragment"+"----"+"setAdapter");
+            recyclerView.setAdapter(dailyListAdapter);
+        }
+
+
+        //mPresenter.getSlidingMenuData();
+        /*btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 btn.getViewTreeObserver().removeGlobalOnLayoutListener(this);
@@ -79,7 +88,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
                 LogUtils.e(String.valueOf(btn.getRight()));
                 LogUtils.e(String.valueOf(btn.getBottom()));
             }
-        });
+        });*/
     }
 
     @Override
@@ -105,20 +114,20 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
 
     @Override
     public void createSlidingMenuView(List<String> data) {
-        MenuAdapter adapter = new MenuAdapter(data, android.R.layout.simple_list_item_1, slidingPaneLayout);
+        /*MenuAdapter adapter = new MenuAdapter(data, android.R.layout.simple_list_item_1, slidingPaneLayout);
         adapter.setMenuItemCallBack(this);
-        menuList.setAdapter(adapter);
+        menuList.setAdapter(adapter);*/
     }
 
     @Override
     public void menuItemOnClick(String s) {
-        mPresenter.getDailyInfo();
-        slidingPaneLayout.closePane();
+       /* mPresenter.getDailyInfo();
+        slidingPaneLayout.closePane();*/
     }
 
     @Override
     public void refreshPage(List<DailyNewspaper> dailyNewspapers) {
-        DailyListAdapter dailyListAdapter = new DailyListAdapter(dailyNewspapers, R.layout.item_daily);
+        dailyListAdapter = new DailyListAdapter(dailyNewspapers, R.layout.item_daily);
         recyclerView.setAdapter(dailyListAdapter);
     }
 
@@ -143,7 +152,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
     }*/
 
     @Override
-    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();

@@ -4,7 +4,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.jonchen.R;
 import com.example.jonchen.activity.HomeFragment;
 import com.example.jonchen.base.BaseFragment;
-import com.example.jonchen.fragment.HealthFragment;
+import com.example.jonchen.fragment.SecondFragment;
+import com.example.jonchen.fragment.ThirdFragment1;
+import com.example.jonchen.fragment.FoursFragment2;
 import com.example.jonchen.mvpview.HomeView;
 
 import java.util.ArrayList;
@@ -32,9 +34,9 @@ public class HomePresenter extends BasePresenter<HomeView> {
     public void getFragmentPage(){
         ArrayList<BaseFragment> fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
-        fragmentList.add(new HealthFragment());
-        fragmentList.add(new HealthFragment());
-        fragmentList.add(new HealthFragment());
+        fragmentList.add(new SecondFragment());
+        fragmentList.add(new ThirdFragment1());
+        fragmentList.add(new FoursFragment2());
         mView.initFragmentPage(fragmentList);
     }
 }

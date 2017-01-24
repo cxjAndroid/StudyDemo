@@ -10,7 +10,7 @@ import butterknife.BindView;
 /**
  * Created by chenxujun on 2016/7/19.
  */
-public class HealthFragment extends BaseFragment {
+public class SecondFragment extends BaseFragment {
     @BindView(R.id.mTextView)
     TextView mTextView;
 

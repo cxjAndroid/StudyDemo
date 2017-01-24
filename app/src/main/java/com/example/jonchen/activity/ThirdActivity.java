@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.jonchen.R;
 import com.example.jonchen.event.EventMessage;
-import com.example.jonchen.fragment.HealthFragment;
+import com.example.jonchen.fragment.SecondFragment;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.view.MyViewPager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -37,7 +37,7 @@ public class ThirdActivity extends BaseActivity {
     Toolbar toolbar;
 
     private String[] arr;
-    private ArrayList<HealthFragment> fragmentList;
+    private ArrayList<SecondFragment> fragmentList;
 
     private boolean flag = true;
 
@@ -63,9 +63,9 @@ public class ThirdActivity extends BaseActivity {
         FragmentPagerItems pages = new FragmentPagerItems(this);
 
         for (String item : arr) {
-            HealthFragment healthFragment = new HealthFragment();
-            fragmentList.add(healthFragment);
-            pages.add(FragmentPagerItem.of(item, HealthFragment.class));
+            SecondFragment secondFragment = new SecondFragment();
+            fragmentList.add(secondFragment);
+            pages.add(FragmentPagerItem.of(item, SecondFragment.class));
         }
 
         mViewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));

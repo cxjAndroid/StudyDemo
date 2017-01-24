@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements HomeView {
         navigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                mViewpager.setCurrentItem(position);
+                mViewpager.setCurrentItem(position,false);
             }
 
             @Override
