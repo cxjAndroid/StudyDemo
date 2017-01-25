@@ -1,7 +1,5 @@
 package com.example.jonchen.presenter;
 
-import android.content.Context;
-
 import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.retrofit.CustomObserver;

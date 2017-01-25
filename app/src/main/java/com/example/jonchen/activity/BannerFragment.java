@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.adapter.BannerAdapter;
-import com.example.jonchen.base.BaseActivity;
+import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.model.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
@@ -30,7 +31,7 @@ import butterknife.BindView;
 /**
  * Created by chenxujun on 2016/6/1.
  */
-public class BannerActivity extends BaseActivity<BannerPresenter> implements BannerView {
+public class BannerFragment extends BaseFragment<BannerPresenter> implements BannerView {
 
     @BindView(R.id.advViewpager)
     MyViewPager advViewpager;
@@ -42,6 +43,8 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     TextView describeTv;
     private Handler handler;
     private MyRunnable myRunnable;
+    private BannerAdapter bannerAdapter;
+    private List<DailyBean.TopStoriesBean> storiesBeen;
 
     @Override
     public int getContentViewLayoutID() {
@@ -50,7 +53,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
     @Override
     protected void initView() {
-        initToolBar(toolbar, R.menu.menu);
+        //initToolBar(toolbar, R.menu.menu);
         adjustAdvLayout();
         syncDrawLayout();
     }
@@ -58,9 +61,14 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     @Override
     public void initData() {
 //        registerEventBus();
-        setResult(RESULT_OK);
-
-        mPresenter.getBannerInfo();
+        getActivity().setResult(Activity.RESULT_OK);
+        if (bannerAdapter == null) {
+            mPresenter.getBannerInfo();
+        } else {
+            advViewpager.setAdapter(bannerAdapter);
+            describeTv.setVisibility(View.VISIBLE);
+            setViewPagerDescribe(storiesBeen);
+        }
     }
 
     @Override
@@ -82,16 +90,27 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
     @Override
     public void syncDrawLayout() {
         ActionBarDrawerToggle actionBarDrawerToggle =
-                new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+                new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         actionBarDrawerToggle.syncState();
         //mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
 
     @Override
     public void initBanner(final List<DailyBean.TopStoriesBean> storiesBeen) {
-        BannerAdapter bannerAdapter = new BannerAdapter(this, storiesBeen);
+        this.storiesBeen = storiesBeen;
+        bannerAdapter = new BannerAdapter(getActivity(), storiesBeen);
 
         advViewpager.setAdapter(bannerAdapter);
+        setViewPagerDescribe(storiesBeen);
+
+        startAnimator();
+
+        myRunnable = new MyRunnable();
+        handler = new Handler();
+        handler.postDelayed(myRunnable, 2000);
+    }
+
+    private void setViewPagerDescribe(final List<DailyBean.TopStoriesBean> storiesBeen) {
         advViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -107,12 +126,6 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
             public void onPageScrollStateChanged(int state) {
             }
         });
-
-        startAnimator();
-
-        myRunnable = new MyRunnable();
-        handler = new Handler();
-        handler.postDelayed(myRunnable, 2000);
     }
 
     private void startAnimator() {
@@ -140,7 +153,7 @@ public class BannerActivity extends BaseActivity<BannerPresenter> implements Ban
 
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         if (myRunnable != null) {
             handler.removeCallbacks(myRunnable);

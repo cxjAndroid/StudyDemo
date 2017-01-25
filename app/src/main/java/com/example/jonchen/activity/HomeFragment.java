@@ -33,10 +33,10 @@ import java.util.List;
 import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
-    @BindView(R.id.btn)
+  /*  @BindView(R.id.btn)
     Button btn;
     @BindView(R.id.tv)
-    TextView tv;
+    TextView tv;*/
     @BindView(R.id.recyclerView)
     MyRecyclerView recyclerView;
     /*@BindView(R.id.slidingLayout)
@@ -49,8 +49,8 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
     FloatingActionButton floatBtn;
     @BindView(R.id.mainRL)
     CoordinatorLayout mainRL;
-    @BindView(R.id.btn1)
-    Button btn1;
+   /* @BindView(R.id.btn1)
+    Button btn1;*/
     private DailyListAdapter dailyListAdapter;
 
     @Override
@@ -76,7 +76,6 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
             LogUtils.e("HomeFragment"+"----"+"setAdapter");
             recyclerView.setAdapter(dailyListAdapter);
         }
-
 
         //mPresenter.getSlidingMenuData();
         /*btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -135,15 +134,15 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
-                IntentUtils.startActivityLeftIn(this, BannerActivity.class);
+                IntentUtils.startActivityLeftIn(this, BannerFragment.class);
                 break;
             case R.id.btn1:
-                IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
+                IntentUtils.startActivityLeftIn(this, DrawViewFragment.class);
                 EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
                 break;
             case R.id.btn2:
-                //IntentUtils.startActivityLeftIn(this, DrawViewActivity.class);
-                IntentUtils.startActivityLeftIn(this, WatchListActivity.class);
+                //IntentUtils.startActivityLeftIn(this, DrawViewFragment.class);
+                IntentUtils.startActivityLeftIn(this, WatchListFragment.class);
                 break;
             case R.id.floatBtn:
                 recyclerView.getLayoutManager().scrollToPosition(0);
@@ -156,16 +155,8 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
-            tv.setText(extras.getString("result"));
+            //tv.setText(extras.getString("result"));
+            ToastUtils.show(extras.getString("result"));
         }
     }
-
-    /*@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
 }

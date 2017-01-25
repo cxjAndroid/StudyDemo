@@ -4,6 +4,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.jonchen.adapter.WatchListAdapter;
 import com.example.jonchen.base.BaseActivity;
+import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.model.WatchInfo;
 import com.example.jonchen.mvpview.WatchListView;
 import com.example.jonchen.R;
@@ -18,12 +19,13 @@ import butterknife.BindView;
  * Created by chenxujun on 16-12-23.
  */
 
-public class WatchListActivity extends BaseActivity<WatchListPresenter> implements WatchListView {
+public class WatchListFragment extends BaseFragment<WatchListPresenter> implements WatchListView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.mRecyclerView)
     MyRecyclerView myRecyclerView;
+    private WatchListAdapter adapter;
 
     @Override
     public int getContentViewLayoutID() {
@@ -32,8 +34,7 @@ public class WatchListActivity extends BaseActivity<WatchListPresenter> implemen
 
     @Override
     protected void initView() {
-        initToolBar(toolbar);
-        showLoadingPage();
+        //initToolBar(toolbar);
     }
 
     @Override
@@ -44,13 +45,17 @@ public class WatchListActivity extends BaseActivity<WatchListPresenter> implemen
 
     @Override
     public void initData() {
-        mPresenter.getWatchList("13691993691");
+        if (adapter == null) {
+            mPresenter.getWatchList("13691993691");
+        } else {
+            myRecyclerView.setAdapter(adapter);
+        }
     }
 
     @Override
     public void RefreshWatchList(List<WatchInfo> watchInfoList) {
         showSuccessPage();
-        WatchListAdapter adapter = new WatchListAdapter(this,watchInfoList, R.layout.item_watch);
+        adapter = new WatchListAdapter(getActivity(), watchInfoList, R.layout.item_watch);
         myRecyclerView.setAdapter(adapter);
     }
 }

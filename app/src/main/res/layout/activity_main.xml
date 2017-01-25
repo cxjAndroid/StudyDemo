@@ -62,7 +62,7 @@
 
             </android.support.design.widget.CoordinatorLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/ll_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                     android:layout_below="@id/btn"
                     android:text="drawPage" />
 
-            </LinearLayout>
+            </LinearLayout>-->
         </RelativeLayout>
     <!--</android.support.v4.widget.SlidingPaneLayout>-->
 

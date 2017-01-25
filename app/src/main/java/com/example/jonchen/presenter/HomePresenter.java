@@ -2,7 +2,10 @@ package com.example.jonchen.presenter;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.jonchen.R;
+import com.example.jonchen.activity.BannerFragment;
+import com.example.jonchen.activity.DrawViewFragment;
 import com.example.jonchen.activity.HomeFragment;
+import com.example.jonchen.activity.WatchListFragment;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.fragment.SecondFragment;
 import com.example.jonchen.fragment.ThirdFragment1;
@@ -33,10 +36,10 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     public void getFragmentPage(){
         ArrayList<BaseFragment> fragmentList = new ArrayList<>();
+        fragmentList.add(new BannerFragment());
         fragmentList.add(new HomeFragment());
-        fragmentList.add(new SecondFragment());
-        fragmentList.add(new ThirdFragment1());
-        fragmentList.add(new FoursFragment2());
+        fragmentList.add(new WatchListFragment());
+        fragmentList.add(new DrawViewFragment());
         mView.initFragmentPage(fragmentList);
     }
 }

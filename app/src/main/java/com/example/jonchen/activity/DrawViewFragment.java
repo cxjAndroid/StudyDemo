@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.R;
+import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyView;
 
@@ -15,7 +16,7 @@ import butterknife.BindView;
  * Created by andychen on 2016/10/12.
  */
 
-public class DrawViewActivity extends BaseActivity {
+public class DrawViewFragment extends BaseFragment {
 
     @BindView(R.id.myView)
     MyView myView;
@@ -31,12 +32,6 @@ public class DrawViewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-       /* float myViewTranslationY = myView.getTranslationY();
-        float translationY = rlShow.getTranslationY();
-        LogUtils.e(String.valueOf(myViewTranslationY)+"----------"+String.valueOf(translationY));
-        ObjectAnimator animator = ObjectAnimator.ofFloat(rlShow, "translationY", -rlShow.getHeight(), translationY);
-        animator.setDuration(1000);
-        animator.start();*/
     }
 
     @Override
