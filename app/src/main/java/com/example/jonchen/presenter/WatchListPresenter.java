@@ -1,6 +1,6 @@
 package com.example.jonchen.presenter;
 
-import com.example.jonchen.model.WatchInfo;
+import com.example.jonchen.model.entity.WatchInfo;
 import com.example.jonchen.mvpview.WatchListView;
 import com.example.jonchen.retrofit.RetrofitMethods;
 

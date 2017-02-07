@@ -1,7 +1,7 @@
 package com.example.jonchen.retrofit;
 
 
-import com.example.jonchen.model.Result;
+import com.example.jonchen.model.entity.Result;
 import com.example.jonchen.utils.LogUtils;
 
 import okhttp3.HttpUrl;

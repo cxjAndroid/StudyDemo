@@ -3,9 +3,8 @@ package com.example.jonchen.activity;
 import android.support.v7.widget.Toolbar;
 
 import com.example.jonchen.adapter.WatchListAdapter;
-import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseFragment;
-import com.example.jonchen.model.WatchInfo;
+import com.example.jonchen.model.entity.WatchInfo;
 import com.example.jonchen.mvpview.WatchListView;
 import com.example.jonchen.R;
 import com.example.jonchen.presenter.WatchListPresenter;

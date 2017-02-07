@@ -1,18 +1,18 @@
 package com.example.jonchen.retrofit;
 
-import com.example.jonchen.model.DailyBean;
-import com.example.jonchen.model.DailyNewspaper;
-import com.example.jonchen.model.Doctor;
-import com.example.jonchen.model.Hospital;
-import com.example.jonchen.model.KmResult;
-import com.example.jonchen.model.Movie;
-import com.example.jonchen.model.RecommendDoctors;
-import com.example.jonchen.model.Result;
-import com.example.jonchen.model.ServerChatMessage;
-import com.example.jonchen.model.ShareInfo;
-import com.example.jonchen.model.UploadMessage;
-import com.example.jonchen.model.WatchInfo;
-import com.example.jonchen.model.ZhiHuResult;
+import com.example.jonchen.model.entity.DailyBean;
+import com.example.jonchen.model.entity.DailyNewspaper;
+import com.example.jonchen.model.entity.Doctor;
+import com.example.jonchen.model.entity.Hospital;
+import com.example.jonchen.model.entity.KmResult;
+import com.example.jonchen.model.entity.Movie;
+import com.example.jonchen.model.entity.RecommendDoctors;
+import com.example.jonchen.model.entity.Result;
+import com.example.jonchen.model.entity.ServerChatMessage;
+import com.example.jonchen.model.entity.ShareInfo;
+import com.example.jonchen.model.entity.UploadMessage;
+import com.example.jonchen.model.entity.WatchInfo;
+import com.example.jonchen.model.entity.ZhiHuResult;
 
 import java.util.List;
 import java.util.Map;

@@ -2,7 +2,7 @@ package com.example.jonchen.view;
 
 import android.media.MediaRecorder;
 
-import com.example.jonchen.model.ChatMessage;
+import com.example.jonchen.model.entity.ChatMessage;
 
 import java.util.List;
 

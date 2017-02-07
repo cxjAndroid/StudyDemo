@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.example.jonchen.utils.LogUtils;
+
 /**
  * @author chenxujun
  */
@@ -23,6 +25,7 @@ public class MyViewPager extends ViewPager {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent arg0) {
+		LogUtils.e("onInterceptTouchEvent");
 		if (isScrollable) {
 			return super.onInterceptTouchEvent(arg0);
 		}

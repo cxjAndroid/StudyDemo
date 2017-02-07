@@ -1,10 +1,8 @@
 package com.example.jonchen.retrofit;
 
-import android.content.Context;
 import android.view.View;
 
-import com.example.jonchen.base.BaseActivity;
-import com.example.jonchen.model.KmResult;
+import com.example.jonchen.model.entity.KmResult;
 import com.example.jonchen.mvpview.BaseView;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.LoadStatusPage;

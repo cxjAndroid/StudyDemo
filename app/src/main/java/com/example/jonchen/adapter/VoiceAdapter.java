@@ -11,7 +11,7 @@ import com.example.jonchen.base.BaseListAdapter;
 import com.example.jonchen.base.BaseViewHolder;
 import com.example.jonchen.base.Constants;
 import com.example.jonchen.database.ChatMessageDAO;
-import com.example.jonchen.model.ChatMessage;
+import com.example.jonchen.model.entity.ChatMessage;
 import com.example.jonchen.mvpview.VoiceAdapterView;
 import com.example.jonchen.R;
 import com.example.jonchen.presenter.VoiceAdapterPresenter;

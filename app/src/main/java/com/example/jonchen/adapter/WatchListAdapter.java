@@ -10,8 +10,8 @@ import com.example.jonchen.activity.VoiceActivity;
 import com.example.jonchen.base.BaseRecyclerAdapter;
 import com.example.jonchen.base.BaseRecyclerViewHolder;
 import com.example.jonchen.event.EventMessage;
-import com.example.jonchen.model.ChatMessage;
-import com.example.jonchen.model.WatchInfo;
+import com.example.jonchen.model.entity.ChatMessage;
+import com.example.jonchen.model.entity.WatchInfo;
 import com.example.jonchen.R;
 import com.example.jonchen.utils.IntentUtils;
 

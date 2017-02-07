@@ -8,21 +8,38 @@
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/mDrawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include layout="@layout/toolbar"
+            <include
                 android:id="@+id/toolbar"
-                />
+                layout="@layout/toolbar" />
 
             <com.example.jonchen.view.MyViewPager
                 android:id="@+id/advViewpager"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@id/toolbar" />
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/advViewpager"
+                android:text="test btn" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/btn"
+                android:background="@color/background_light_yellow" />
 
             <TextView
                 android:id="@+id/describeTv"

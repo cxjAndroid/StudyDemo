@@ -1,8 +1,8 @@
 package com.example.jonchen.retrofit;
 
-import com.example.jonchen.model.KmResult;
-import com.example.jonchen.model.Result;
-import com.example.jonchen.model.ZhiHuResult;
+import com.example.jonchen.model.entity.KmResult;
+import com.example.jonchen.model.entity.Result;
+import com.example.jonchen.model.entity.ZhiHuResult;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;
 import com.example.jonchen.utils.RxUtils;
 import com.google.gson.Gson;

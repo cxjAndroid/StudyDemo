@@ -1,6 +1,6 @@
 package com.example.jonchen.activity;
 
-import com.example.jonchen.model.People;
+import com.example.jonchen.model.entity.People;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;

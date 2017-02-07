@@ -10,19 +10,26 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
-import com.example.jonchen.model.DailyBean;
+import com.example.jonchen.event.EventMessage;
+import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
+import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyViewPager;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -41,6 +48,10 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     DrawerLayout mDrawerLayout;
     @BindView(R.id.describeTv)
     TextView describeTv;
+    @BindView(R.id.btn)
+    Button btnTest;
+    @BindView(R.id.imageView)
+    ImageView imageView;
     private Handler handler;
     private MyRunnable myRunnable;
     private BannerAdapter bannerAdapter;
@@ -58,9 +69,17 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         syncDrawLayout();
     }
 
+
+  /*  @Subscribe(sticky = true)
+    public void onEvent(EventMessage<List<DailyBean.TopStoriesBean>> eventMessage) {
+        List<DailyBean.TopStoriesBean> topStoriesBeanList = eventMessage.getMessage();
+        ToastUtils.show(String.valueOf( topStoriesBeanList.size()));
+    }*/
+
+
     @Override
     public void initData() {
-//        registerEventBus();
+        registerEventBus();
         getActivity().setResult(Activity.RESULT_OK);
         if (bannerAdapter == null) {
             mPresenter.getBannerInfo();
@@ -69,6 +88,38 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
             describeTv.setVisibility(View.VISIBLE);
             setViewPagerDescribe(storiesBeen);
         }
+
+        /*btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtils.e("onClick");
+            }
+        });
+
+        btnTest.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                LogUtils.e("onTouch" + event.getAction());
+                return false;
+            }
+        });
+*/
+
+
+        /**
+         * onTouch事件返回false会使View执行onTouchEvent方法，imageView默认不可以点击，
+         * 无法进入switch (action)语句中，所以会返回false，导致后续action move等动作无法执行。
+         * 可使用imageView.setClickable(true)使其进入switch (action)语句中返回true解决或直接
+         * 在onTouch中返回true跳过onTouchEvent方法。
+         */
+        //imageView.setClickable(true);
+        imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                LogUtils.e("onTouch" + event.getAction());
+                return false;
+            }
+        });
     }
 
     @Override

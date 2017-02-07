@@ -1,14 +1,8 @@
 package com.example.jonchen.adapter;
 
-import android.net.Uri;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.example.jonchen.base.BaseRecyclerAdapter;
 import com.example.jonchen.base.BaseRecyclerViewHolder;
-import com.example.jonchen.model.Doctor;
-import com.example.jonchen.R;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.example.jonchen.model.entity.Doctor;
 
 import java.util.List;
 

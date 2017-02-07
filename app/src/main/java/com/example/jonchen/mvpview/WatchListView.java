@@ -1,6 +1,6 @@
 package com.example.jonchen.mvpview;
 
-import com.example.jonchen.model.WatchInfo;
+import com.example.jonchen.model.entity.WatchInfo;
 
 import java.util.List;
 

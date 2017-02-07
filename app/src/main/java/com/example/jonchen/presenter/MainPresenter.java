@@ -2,7 +2,7 @@ package com.example.jonchen.presenter;
 
 import android.os.Environment;
 
-import com.example.jonchen.model.DailyNewspaper;
+import com.example.jonchen.model.entity.DailyNewspaper;
 import com.example.jonchen.mvpview.MainView;
 import com.example.jonchen.retrofit.ApiService;
 import com.example.jonchen.retrofit.CustomObserver;

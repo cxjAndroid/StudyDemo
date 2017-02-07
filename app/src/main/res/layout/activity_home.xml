@@ -8,15 +8,13 @@
         android:id="@+id/mViewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/white"
-        />
+        android:background="@color/white" />
 
 </LinearLayout>

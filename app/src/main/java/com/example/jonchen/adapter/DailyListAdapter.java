@@ -5,7 +5,7 @@ import android.widget.TextView;
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseRecyclerAdapter;
 import com.example.jonchen.base.BaseRecyclerViewHolder;
-import com.example.jonchen.model.DailyNewspaper;
+import com.example.jonchen.model.entity.DailyNewspaper;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.jonchen.adapter.VoiceAdapter;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.event.EventMessage;
-import com.example.jonchen.model.ChatMessage;
+import com.example.jonchen.model.entity.ChatMessage;
 import com.example.jonchen.R;
 import com.example.jonchen.presenter.VoicePresenter;
 import com.example.jonchen.swipy_refresh_layout.RefreshLayout;

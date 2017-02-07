@@ -1,4 +1,4 @@
-package com.example.jonchen.model;
+package com.example.jonchen.model.entity;
 
 import java.util.List;
 

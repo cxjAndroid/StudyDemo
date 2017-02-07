@@ -1,7 +1,6 @@
 package com.example.jonchen.mvpview;
 
-import com.example.jonchen.model.DailyBean;
-import com.example.jonchen.model.ShareInfo;
+import com.example.jonchen.model.entity.DailyBean;
 
 import java.util.List;
 

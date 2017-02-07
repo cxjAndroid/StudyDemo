@@ -98,11 +98,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         if (mPresenter != null) {
             mPresenter.detach();
         }
-        if (isBindEventBus) {
-            isBindEventBus = false;
-            EventBus.getDefault().unregister(this);
-            //Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -155,6 +150,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public void onDestroyView() {
         isViewCreated = false;
         LogUtils.e(getClass().getSimpleName() + "------" + "onDestroyView");
+        if (isBindEventBus) {
+            isBindEventBus = false;
+            EventBus.getDefault().unregister(this);
+            //Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
+        }
         super.onDestroyView();
     }
 

@@ -1,7 +1,6 @@
 package com.example.jonchen.mvpview;
 
-import com.example.jonchen.model.DailyNewspaper;
-import com.example.jonchen.model.Doctor;
+import com.example.jonchen.model.entity.DailyNewspaper;
 
 import java.util.List;
 

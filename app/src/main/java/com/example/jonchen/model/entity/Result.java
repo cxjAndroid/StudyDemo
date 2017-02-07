@@ -1,13 +1,14 @@
-package com.example.jonchen.model;
+package com.example.jonchen.model.entity;
 
 /**
  * Created by chenxujun on 2016/8/12.
  */
-public class DoctorResult<T> {
+public class Result<T> {
 
     private String ReturnMessage;
     private boolean IsSuccess;
     private T ReturnData;
+
     public String getReturnMessage() {
         return ReturnMessage;
     }
@@ -31,5 +32,4 @@ public class DoctorResult<T> {
     public void getData(T returnData) {
         ReturnData = returnData;
     }
-
 }

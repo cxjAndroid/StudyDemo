@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.jonchen.model.ChatMessage;
+import com.example.jonchen.model.entity.ChatMessage;
 
 
 /**

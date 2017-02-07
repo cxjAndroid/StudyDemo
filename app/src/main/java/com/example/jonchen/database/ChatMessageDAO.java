@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.jonchen.base.BaseApplication;
-import com.example.jonchen.model.ChatMessage;
+import com.example.jonchen.model.entity.ChatMessage;
 
 import java.util.LinkedList;
 import java.util.List;

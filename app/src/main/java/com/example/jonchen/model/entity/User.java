@@ -1,4 +1,4 @@
-package com.example.jonchen.model;
+package com.example.jonchen.model.entity;
 
 /**
  * Created by chenxujun on 2016/7/13.
