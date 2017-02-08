@@ -76,7 +76,6 @@ public class MainActivity extends BaseActivity implements HomeView {
     @Override
     public void initFragmentPage(final List<BaseFragment> fragmentList) {
         pageAdapter = new ViewPageAdapter(getSupportFragmentManager(), fragmentList);
-        mViewpager.setScrollable(false);
         mViewpager.setAdapter(pageAdapter);
         mViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

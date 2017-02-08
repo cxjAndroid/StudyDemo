@@ -2,6 +2,7 @@ package com.example.jonchen.retrofit;
 
 import android.view.View;
 
+import com.example.jonchen.model.ModelCallback;
 import com.example.jonchen.model.entity.KmResult;
 import com.example.jonchen.mvpview.BaseView;
 import com.example.jonchen.utils.ToastUtils;
@@ -20,8 +21,10 @@ public abstract class CustomObserver<T> implements Observer<T> {
     private Observable<KmResult<T>> observable;
     private Subscription subscription;
     private BaseView mView;
+    private ModelCallback<T> modelCallback;
 
     public CustomObserver() {
+
     }
 
 

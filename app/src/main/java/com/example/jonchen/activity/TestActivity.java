@@ -1,5 +1,6 @@
 package com.example.jonchen.activity;
 
+import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.People;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.utils.LogUtils;
@@ -7,6 +8,8 @@ import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
+import org.greenrobot.eventbus.EventBus;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -30,7 +33,8 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        rxDemo();
+        //rxDemo();
+        EventBus.getDefault().post(new EventMessage<>("haha"));
     }
 
     private void GsonDemo() {

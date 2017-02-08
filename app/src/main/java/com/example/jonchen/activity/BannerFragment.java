@@ -24,6 +24,7 @@ import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
+import com.example.jonchen.utils.IntentUtils;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.utils.ToastUtils;
@@ -34,6 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by chenxujun on 2016/6/1.
@@ -69,14 +71,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         syncDrawLayout();
     }
 
-
-  /*  @Subscribe(sticky = true)
-    public void onEvent(EventMessage<List<DailyBean.TopStoriesBean>> eventMessage) {
-        List<DailyBean.TopStoriesBean> topStoriesBeanList = eventMessage.getMessage();
-        ToastUtils.show(String.valueOf( topStoriesBeanList.size()));
-    }*/
-
-
     @Override
     public void initData() {
         registerEventBus();
@@ -102,8 +96,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 LogUtils.e("onTouch" + event.getAction());
                 return false;
             }
-        });
-*/
+        });*/
 
 
         /**
@@ -121,6 +114,21 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
             }
         });
     }
+
+
+    @Subscribe
+    public void onEvent(EventMessage<String> eventMessage){
+        String message = eventMessage.getMessage();
+        ToastUtils.show(message);
+    }
+
+
+    @OnClick(R.id.btn)
+    public void onClick(){
+        IntentUtils.startActivity(getActivity(),TestActivity.class);
+    }
+
+
 
     @Override
     protected void initPresenter() {

@@ -1,5 +1,6 @@
 package com.example.jonchen.retrofit;
 
+import com.example.jonchen.model.ModelCallback;
 import com.example.jonchen.model.entity.KmResult;
 import com.example.jonchen.model.entity.Result;
 import com.example.jonchen.model.entity.ZhiHuResult;
@@ -47,9 +48,8 @@ public class RetrofitMethods {
     }
 
 
-
     private Retrofit createRetrofit() {
-       return createRetrofit(KM_BASE_URL);
+        return createRetrofit(KM_BASE_URL);
     }
 
     private Retrofit createRetrofit(String url) {
@@ -67,7 +67,7 @@ public class RetrofitMethods {
     }
 
 
-    public RetrofitMethods(String url){
+    public RetrofitMethods(String url) {
         Retrofit retrofit = createRetrofit(url);
         spApiService = retrofit.create(ApiService.class);
     }
@@ -181,7 +181,7 @@ public class RetrofitMethods {
                 .map(new Func1<ZhiHuResult<T>, T>() {
                     @Override
                     public T call(ZhiHuResult<T> zhiHuResult) {
-                        if (zhiHuResult==null) {
+                        if (zhiHuResult == null) {
                             throw new ApiException(110, "error zh");
                         }
                         return zhiHuResult.getStories();
@@ -246,6 +246,21 @@ public class RetrofitMethods {
                 .subscribe(observer);
         RxUtils.get().addList(subscription);
         return subscription;
+    }
+
+    public static <T> Subscription request(final Observable<ResponseBody> observable, final ModelCallback<T> listener) {
+        return request(observable, new CustomObserver<T>() {
+            @Override
+            public void doOnNext(T t) {
+                listener.onSuccess(t);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                listener.onError();
+            }
+        });
     }
 
 
