@@ -109,7 +109,7 @@ class CircleImageView extends ImageView {
     }
 
     /**
-     * Update the background color of the circle image view.
+     * Update the background color of the circle image mFragmentView.
      */
    /* public void setBackgroundColor(@ColorInt int colorRes) {
         if (getBackground() instanceof ShapeDrawable) {

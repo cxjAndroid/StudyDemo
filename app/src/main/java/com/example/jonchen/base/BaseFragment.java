@@ -31,7 +31,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     private boolean isBindEventBus;
     public T mPresenter;
     private LoadStatusPage statusPage;
-    private View view;
+    protected View mFragmentView;
     private boolean isViewCreated;
 
     @Override
@@ -45,14 +45,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LogUtils.e(getClass().getSimpleName() + "------" + "onCreateView");
         int contentViewLayoutID = getContentViewLayoutID();
-        view = inflater.inflate(contentViewLayoutID, null);
+        mFragmentView = inflater.inflate(contentViewLayoutID, null);
         if (isNeedBindButterKnife) {
-            ButterKnife.bind(this, view);
+            ButterKnife.bind(this, mFragmentView);
         }
         initView();
         initPresenter();
         isViewCreated = true;
-        return view;
+        return mFragmentView;
     }
 
     public abstract int getContentViewLayoutID();
@@ -109,7 +109,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             FrameLayout.LayoutParams params =
                     new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, MetricsUtils.getStatusPageHeight(getActivity()));
             params.gravity = Gravity.BOTTOM;
-            statusPage.setGravity(Gravity.BOTTOM);
+            //statusPage.setGravity(Gravity.BOTTOM);
             getActivity().addContentView(statusPage, params);
         }
     }

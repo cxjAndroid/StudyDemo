@@ -1,13 +1,12 @@
 package com.example.jonchen.activity;
 
+import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.People;
-import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,7 +27,6 @@ public class TestActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
     }
 
     @Override
@@ -57,6 +55,7 @@ public class TestActivity extends BaseActivity {
         People convertPeople = gson.fromJson(s, People.class);
 
         LogUtils.e(s);
+
         //new GsonBuilder().create().serializeNulls()
     }
 
@@ -87,7 +86,7 @@ public class TestActivity extends BaseActivity {
         });
 
 
-        Observable.just("onNextJust1","onNextJust2").subscribe(new Action1<String>() {
+        Observable.just("onNextJust1", "onNextJust2").subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
                 LogUtils.e(s);
@@ -144,7 +143,7 @@ public class TestActivity extends BaseActivity {
 
 
 
-    /*    subscribe = Observable.just("1", "2", "@")
+    /*  subscribe = Observable.just("1", "2", "@")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
@@ -157,7 +156,6 @@ public class TestActivity extends BaseActivity {
                     public void onError(Throwable e) {
 
                     }
-
                     @Override
                     public void onNext(String s) {
                         LogUtils.e(s);
@@ -192,7 +190,7 @@ public class TestActivity extends BaseActivity {
                     public Drawable call(Integer resId) {
                         return new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), resId));
                     }
-                }).subscribe(new Action1<Drawable>() {
+                }).subscribe(new Action17<Drawable>() {
                     @Override
                     public void call(Drawable drawable) {
                         iv.setImageDrawable(drawable);

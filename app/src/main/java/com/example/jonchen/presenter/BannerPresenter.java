@@ -1,7 +1,6 @@
 package com.example.jonchen.presenter;
 
 import com.example.jonchen.model.BannerModel;
-import com.example.jonchen.model.ModelCallback;
 import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.model.impl.BannerModelImpl;
 import com.example.jonchen.mvpview.BannerView;

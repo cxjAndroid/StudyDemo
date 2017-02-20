@@ -1,4 +1,4 @@
-package com.example.jonchen.activity;
+package com.example.jonchen.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
+import com.example.jonchen.activity.TestActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;

@@ -1,4 +1,4 @@
-package com.example.jonchen.activity;
+package com.example.jonchen.fragment;
 
 import android.support.v7.widget.Toolbar;
 
@@ -44,11 +44,8 @@ public class WatchListFragment extends BaseFragment<WatchListPresenter> implemen
 
     @Override
     public void initData() {
-        if (adapter == null) {
-            mPresenter.getWatchList("13691993691");
-        } else {
-            myRecyclerView.setAdapter(adapter);
-        }
+        if (adapter == null) mPresenter.getWatchList("13691993691");
+        else myRecyclerView.setAdapter(adapter);
     }
 
     @Override

@@ -118,7 +118,7 @@
 
 # We want to keep methods in Activity that could be used in the XML attribute onClick
 #-keepclassmembers class * extends android.app.Activity {
-#   public void *(android.view.View);
+#   public void *(android.mFragmentView.View);
 #}
 
 # For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations

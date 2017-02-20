@@ -186,7 +186,7 @@ class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     /**
-     * Update the background color of the circle image view.
+     * Update the background color of the circle image mFragmentView.
      */
     public void setBackgroundColor(int color) {
         mRing.setBackgroundColor(color);

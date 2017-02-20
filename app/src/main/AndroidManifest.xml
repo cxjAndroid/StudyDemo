@@ -140,7 +140,7 @@
         <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
         <!--+++++++++++++++++++++++++++++++++++++++++++++JPush end+++++++++++++++++++++++++++++++++++++++++-->
 
-        <activity android:name="com.example.jonchen.activity.HomeFragment">
+        <activity android:name="com.example.jonchen.fragment.ZhFragment">
         <!--    <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -151,14 +151,14 @@
         <activity android:name="com.example.jonchen.activity.TestActivity">
         </activity>
         <activity
-            android:name="com.example.jonchen.activity.BannerFragment"
+            android:name="com.example.jonchen.fragment.BannerFragment"
             android:theme="@style/NoActionBarTheme" />
         <activity android:name="com.example.jonchen.activity.ThirdActivity" />
         <activity android:name="com.example.jonchen.activity.DesignActivity">
         </activity>
-        <activity android:name="com.example.jonchen.activity.DrawViewFragment" />
+        <activity android:name="com.example.jonchen.fragment.DrawViewFragment" />
         <activity android:name="com.example.jonchen.activity.VoiceActivity" />
-        <activity android:name="com.example.jonchen.activity.WatchListFragment" />
+        <activity android:name="com.example.jonchen.fragment.WatchListFragment" />
         <activity android:name="com.example.jonchen.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

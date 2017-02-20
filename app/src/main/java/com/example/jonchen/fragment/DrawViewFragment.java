@@ -1,4 +1,4 @@
-package com.example.jonchen.activity;
+package com.example.jonchen.fragment;
 
 import android.view.MotionEvent;
 import android.view.View;

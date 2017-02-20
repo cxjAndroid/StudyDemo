@@ -1,4 +1,4 @@
-package com.example.jonchen.activity;
+package com.example.jonchen.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomeFragment extends BaseFragment<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
+public class ZhFragment extends BaseFragment<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
   /*  @BindView(R.id.btn)
     Button btn;
     @BindView(R.id.tv)
@@ -68,7 +68,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MainVie
         if (dailyListAdapter == null) {
             mPresenter.getDailyInfo();
         } else {
-            LogUtils.e("HomeFragment"+"----"+"setAdapter");
+            LogUtils.e("ZhFragment"+"----"+"setAdapter");
             recyclerView.setAdapter(dailyListAdapter);
         }
 

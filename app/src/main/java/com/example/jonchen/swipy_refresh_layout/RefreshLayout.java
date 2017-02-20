@@ -38,8 +38,8 @@ import com.example.jonchen.R;
 
 /**
  * The SwipeRefreshLayout should be used whenever the user can refresh the
- * contents of a view via a vertical swipe gesture. The activity that
- * instantiates this view should add an OnRefreshListener to be notified
+ * contents of a mFragmentView via a vertical swipe gesture. The activity that
+ * instantiates this mFragmentView should add an OnRefreshListener to be notified
  * whenever the swipe to refresh gesture is completed. The SwipeRefreshLayout
  * will notify the listener each and every time the gesture is completed again;
  * the listener is responsible for correctly determining when to actually
@@ -47,10 +47,10 @@ import com.example.jonchen.R;
  * not be a refresh, it must call setRefreshing(false) to cancel any visual
  * indication of a refresh. If an activity wishes to show just the progress
  * animation, it should call setRefreshing(true). To disable the gesture and
- * progress animation, call setEnabled(false) on the view.
+ * progress animation, call setEnabled(false) on the mFragmentView.
  * <p>
- * This layout should be made the parent of the view that will be refreshed as a
- * result of the gesture and can only support one direct child. This view will
+ * This layout should be made the parent of the mFragmentView that will be refreshed as a
+ * result of the gesture and can only support one direct child. This mFragmentView will
  * also be made the target of the gesture and will be forced to match both the
  * width and the height supplied in this layout. The SwipeRefreshLayout does not
  * provide accessibility events; instead, a menu item must be provided to allow
@@ -89,7 +89,7 @@ public class RefreshLayout extends ViewGroup {
 
     // Default background for the progress spinner
     private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
-    // Default offset in dips from the top of the view to where the progress spinner should stop
+    // Default offset in dips from the top of the mFragmentView to where the progress spinner should stop
     private static final int DEFAULT_CIRCLE_TARGET = 64;
 
     private View mTarget; // the target of the gesture
@@ -178,7 +178,7 @@ public class RefreshLayout extends ViewGroup {
         @Override
         public void onAnimationEnd(Animation animation) {
             if (mRefreshing) {
-                // Make sure the progress view is fully visible
+                // Make sure the progress mFragmentView is fully visible
                 mProgress.setAlpha(MAX_ALPHA);
                 mProgress.start();
                 if (mNotify) {
@@ -192,7 +192,7 @@ public class RefreshLayout extends ViewGroup {
                 setColorViewAlpha(MAX_ALPHA);
                 // Return the circle to its start position
                 if (mScale) {
-                    setAnimationProgress(0 /* animation complete and view is hidden */);
+                    setAnimationProgress(0 /* animation complete and mFragmentView is hidden */);
                 } else {
                     setTargetOffsetTopAndBottom(mOriginalOffsetTop - mCurrentTargetOffsetTop,
                             true /* requires update */);
@@ -213,11 +213,11 @@ public class RefreshLayout extends ViewGroup {
      * location, but can be adjusted in either direction based on whether or not
      * there is a toolbar or actionbar present.
      *
-     * @param scale Set to true if there is no view at a higher z-order than
+     * @param scale Set to true if there is no mFragmentView at a higher z-order than
      *            where the progress spinner is set to appear.
-     * @param start The offset in pixels from the top of this view at which the
+     * @param start The offset in pixels from the top of this mFragmentView at which the
      *            progress spinner should appear.
-     * @param end The offset in pixels from the top of this view at which the
+     * @param end The offset in pixels from the top of this mFragmentView at which the
      *            progress spinner should come to rest after a successful swipe
      *            gesture.
      */
@@ -237,9 +237,9 @@ public class RefreshLayout extends ViewGroup {
      * can be adjusted in either direction based on whether or not there is a
      * toolbar or actionbar present.
      *
-     * @param scale Set to true if there is no view at a higher z-order than
+     * @param scale Set to true if there is no mFragmentView at a higher z-order than
      *            where the progress spinner is set to appear.
-     * @param end The offset in pixels from the top of this view at which the
+     * @param end The offset in pixels from the top of this mFragmentView at which the
      *            progress spinner should come to rest after a successful swipe
      *            gesture.
      */
@@ -263,7 +263,7 @@ public class RefreshLayout extends ViewGroup {
         } else {
             mCircleHeight = mCircleWidth = (int) (CIRCLE_DIAMETER * metrics.density);
         }
-        // force the bounds of the progress circle inside the circle view to
+        // force the bounds of the progress circle inside the circle mFragmentView to
         // update by setting it to null before updating its size and then
         // re-setting it
         mCircleView.setImageDrawable(null);
@@ -370,7 +370,7 @@ public class RefreshLayout extends ViewGroup {
      * Notify the widget that refresh state has changed. Do not call this when
      * refresh is triggered by a swipe gesture.
      *
-     * @param refreshing Whether or not the view should show refresh progress.
+     * @param refreshing Whether or not the mFragmentView should show refresh progress.
      */
     public void setRefreshing(boolean refreshing) {
         if (refreshing && mRefreshing != refreshing) {
@@ -637,8 +637,8 @@ public class RefreshLayout extends ViewGroup {
     }
 
     /**
-     * @return Whether it is possible for the child view of this layout to
-     * scroll up. Override this if the child view is a custom view.
+     * @return Whether it is possible for the child mFragmentView of this layout to
+     * scroll up. Override this if the child mFragmentView is a custom mFragmentView.
      */
     public boolean canChildScrollUp() {
         if (android.os.Build.VERSION.SDK_INT < 14) {

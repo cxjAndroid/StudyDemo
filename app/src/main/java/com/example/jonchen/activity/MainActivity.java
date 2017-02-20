@@ -14,6 +14,7 @@ import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
+import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.view.MyViewPager;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity implements HomeView {
         navigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                mViewpager.setCurrentItem(position,false);
+                mViewpager.setCurrentItem(position, false);
             }
 
             @Override
@@ -115,7 +116,7 @@ public class MainActivity extends BaseActivity implements HomeView {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            super.destroyItem(container,position,object);
+            super.destroyItem(container, position, object);
         }
     }
 

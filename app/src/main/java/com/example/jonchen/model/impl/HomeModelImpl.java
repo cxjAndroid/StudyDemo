@@ -2,10 +2,10 @@ package com.example.jonchen.model.impl;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.jonchen.R;
-import com.example.jonchen.activity.BannerFragment;
-import com.example.jonchen.activity.DrawViewFragment;
-import com.example.jonchen.activity.HomeFragment;
-import com.example.jonchen.activity.WatchListFragment;
+import com.example.jonchen.fragment.BannerFragment;
+import com.example.jonchen.fragment.DrawViewFragment;
+import com.example.jonchen.fragment.ZhFragment;
+import com.example.jonchen.fragment.WatchListFragment;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.model.HomeModel;
 
@@ -31,7 +31,7 @@ public class HomeModelImpl implements HomeModel {
     public ArrayList<BaseFragment> initFragmentPage() {
         ArrayList<BaseFragment> fragmentList = new ArrayList<>();
         fragmentList.add(new BannerFragment());
-        fragmentList.add(new HomeFragment());
+        fragmentList.add(new ZhFragment());
         fragmentList.add(new WatchListFragment());
         fragmentList.add(new DrawViewFragment());
         return fragmentList;
