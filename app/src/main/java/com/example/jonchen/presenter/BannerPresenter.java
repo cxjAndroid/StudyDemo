@@ -1,8 +1,6 @@
 package com.example.jonchen.presenter;
 
-import com.example.jonchen.model.BannerModel;
 import com.example.jonchen.model.entity.DailyBean;
-import com.example.jonchen.model.impl.BannerModelImpl;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.retrofit.CustomObserver;
 import com.example.jonchen.retrofit.RetrofitMethods;
@@ -14,11 +12,11 @@ import java.util.List;
  */
 public class BannerPresenter extends BasePresenter<BannerView> {
 
-    private BannerModel bannerModel;
+    //private BannerModel bannerModel;
 
     public BannerPresenter(BannerView mView) {
         super(mView);
-        bannerModel = new BannerModelImpl();
+        //bannerModel = new BannerModelImpl();
     }
 
     public void getBannerInfo() {

@@ -116,7 +116,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         });
     }
 
-
     @Subscribe
     public void onEvent(EventMessage<String> eventMessage){
         String message = eventMessage.getMessage();

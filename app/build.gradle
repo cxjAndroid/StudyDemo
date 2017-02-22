@@ -105,6 +105,7 @@ dependencies {
     compile project(':libzxing')
     compile project(':library')
     compile project(':utils-v4')
+    compile project(':imagepicker')
     //fresco
     compile 'com.facebook.fresco:fresco:0.13.0'
     //support
