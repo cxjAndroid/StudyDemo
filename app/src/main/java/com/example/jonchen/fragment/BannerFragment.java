@@ -10,25 +10,28 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
-import com.example.jonchen.activity.TestActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
-import com.example.jonchen.utils.IntentUtils;
+import com.example.jonchen.utils.DpUtils;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.utils.ToastUtils;
+import com.example.jonchen.view.LoadStatusPage;
 import com.example.jonchen.view.MyViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -51,10 +54,16 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     DrawerLayout mDrawerLayout;
     @BindView(R.id.describeTv)
     TextView describeTv;
-    @BindView(R.id.btn)
+    @BindView(R.id.btnTest)
     Button btnTest;
+    @BindView(R.id.btnDemo)
+    Button btnDemo;
     @BindView(R.id.imageView)
     ImageView imageView;
+    /*  @BindView(R.id.loadStatusPage)
+      LoadStatusPage loadStatusPage;*/
+    @BindView(R.id.rl_content)
+    RelativeLayout rl_content;
     private Handler handler;
     private MyRunnable myRunnable;
     private BannerAdapter bannerAdapter;
@@ -62,7 +71,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
     @Override
     public int getContentViewLayoutID() {
-        return R.layout.activity_banner;
+        return R.layout.fragment_banner;
     }
 
     @Override
@@ -77,6 +86,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         registerEventBus();
         getActivity().setResult(Activity.RESULT_OK);
         if (bannerAdapter == null) {
+            //loadStatusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
             mPresenter.getBannerInfo();
         } else {
             advViewpager.setAdapter(bannerAdapter);
@@ -116,18 +126,18 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         });
     }
 
+
     @Subscribe
-    public void onEvent(EventMessage<String> eventMessage){
+    public void onEvent(EventMessage<String> eventMessage) {
         String message = eventMessage.getMessage();
         ToastUtils.show(message);
     }
 
 
-    @OnClick(R.id.btn)
-    public void onClick(){
-        IntentUtils.startActivity(getActivity(),TestActivity.class);
+    @OnClick(R.id.btnTest)
+    public void onClick() {
+        // IntentUtils.startActivity(getActivity(), TestActivity.class);
     }
-
 
 
     @Override

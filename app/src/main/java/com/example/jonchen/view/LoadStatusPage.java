@@ -30,7 +30,7 @@ import com.example.jonchen.utils.StringUtils;
 public class LoadStatusPage extends RelativeLayout implements
         View.OnClickListener {
 
-    public static final int NETWORK_ERROR = 1; // 网络错误
+    public static final int NETWORK_ERROR = 1; // 网络错误s
     public static final int NETWORK_LOADING = 2; // 加载中
     public static final int NO_DATA = 3; // 没有数据
     public static final int HIDE_LAYOUT = 4; // 隐藏
@@ -58,14 +58,14 @@ public class LoadStatusPage extends RelativeLayout implements
 
     private void init() {
         View view = View
-                .inflate(getContext(), R.layout.view_error_layout, null);
+                .inflate(getContext(), R.layout.view_status_layout, null);
         img = (ImageView) view.findViewById(R.id.img_error_layout);
         tv = (TextView) view.findViewById(R.id.tv_error_layout);
         animProgress = (ProgressBar) view.findViewById(R.id.animProgress);
 
-        setBackgroundColor(-1);
+        //setBackgroundColor(-1);
         setOnClickListener(this);
-        setStatusType(NETWORK_LOADING);
+        //setStatusType(NETWORK_LOADING);
 
         img.setOnClickListener(new OnClickListener() {
             @Override

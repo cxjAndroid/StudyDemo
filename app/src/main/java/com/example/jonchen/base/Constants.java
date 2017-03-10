@@ -40,7 +40,6 @@ public class Constants {
      * 布局类型
      */
     public interface LayoutType {
-
         /**
          * 左
          */
@@ -56,4 +55,7 @@ public class Constants {
          */
         int CENTER = 2;
     }
+
+
+
 }

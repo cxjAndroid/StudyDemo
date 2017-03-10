@@ -92,14 +92,14 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     public void getDailyInfo() {
-        mView.showLoadingPage();
-        RetrofitMethods retrofitMethods = new RetrofitMethods(RetrofitMethods.ZH_BASE_URL);
+        //mView.showLoadingPage();
+     /*   RetrofitMethods retrofitMethods = new RetrofitMethods(RetrofitMethods.ZH_BASE_URL);
         retrofitMethods.spCommonRequest(RetrofitMethods.getSpApiService().getZhiHuNews(), new CustomObserver<List<DailyNewspaper>>(mView) {
             @Override
             public void doOnNext(List<DailyNewspaper> dailyNewspapers) {
                 mView.refreshPage(dailyNewspapers);
             }
-        });
+        });*/
 
 
        /* HashMap<String, Object> params = new HashMap<>();

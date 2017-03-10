@@ -30,4 +30,5 @@
     <string name="call_mode">通话模式</string>
     <string name="monitor">实时监听</string>
     <string name="recording_monitor">录音监控</string>
+    <string name="format">"my name is %s"</string>
 </resources>

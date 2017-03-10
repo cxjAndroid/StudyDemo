@@ -165,6 +165,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
+    public void showLoadingPage(int loadingLayoutId) {
+
+    }
+
+    @Override
     public void showErrorPage(int type) {
         if (statusPage != null) statusPage.setStatusType(type);
     }

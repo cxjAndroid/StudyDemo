@@ -29,7 +29,7 @@ import butterknife.BindView;
 
 public class ZhFragment extends BaseFragment<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
   /*  @BindView(R.id.btn)
-    Button btn;
+    Button btn;/
     @BindView(R.id.tv)
     TextView tv;*/
     @BindView(R.id.recyclerView)

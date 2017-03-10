@@ -41,6 +41,13 @@ public class MetricsUtils {
         int[] pixels = getPixels();
         int statusBarHeight = getStatusBarHeight();
         int barHeight = getNavigationBarHeight();
+        int actionBarHeight = getActionBarHeight(context);
+
+        loadingPageHeight = pixels[1] - statusBarHeight - barHeight - actionBarHeight;
+        return loadingPageHeight;
+    }
+
+    public static int getActionBarHeight(Context context) {
         int actionBarHeight = 0;
         TypedValue tv = new TypedValue();
         if (context.getTheme().resolveAttribute(R.attr.actionBarSize, tv, true)) {
@@ -49,9 +56,7 @@ public class MetricsUtils {
             actionBarHeight = (int) a.getDimension(0, -1);
             a.recycle();
         }
-
-        loadingPageHeight = pixels[1] - statusBarHeight - barHeight - actionBarHeight;
-        return loadingPageHeight;
+        return actionBarHeight;
     }
 
     public static void getDensity() {

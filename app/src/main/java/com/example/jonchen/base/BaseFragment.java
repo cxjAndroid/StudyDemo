@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
+import com.example.jonchen.R;
 import com.example.jonchen.mvpview.BaseView;
 import com.example.jonchen.presenter.BasePresenter;
 import com.example.jonchen.swipy_refresh_layout.RefreshLayout;
 import com.example.jonchen.swipy_refresh_layout.RefreshLayoutDirection;
+import com.example.jonchen.utils.DpUtils;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.utils.RxUtils;
@@ -68,7 +71,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         LogUtils.e(getClass().getSimpleName() + "------" + "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
         //if (getUserVisibleHint()) {
-            initData();
+        initData();
         //}
     }
 
@@ -106,13 +109,27 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             statusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
         } else {
             statusPage = new LoadStatusPage(getActivity());
+            statusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
             FrameLayout.LayoutParams params =
-                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, MetricsUtils.getStatusPageHeight(getActivity()));
-            params.gravity = Gravity.BOTTOM;
-            //statusPage.setGravity(Gravity.BOTTOM);
+                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            params.setMargins(0, MetricsUtils.getActionBarHeight(getActivity()), 0, DpUtils.dip2px(56));
             getActivity().addContentView(statusPage, params);
         }
     }
+
+    @Override
+    public void showLoadingPage(int loadingLayoutId) {
+
+        statusPage = new LoadStatusPage(getActivity());
+        statusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
+        ViewGroup loadingView = (ViewGroup) mFragmentView.findViewById(loadingLayoutId);
+        RelativeLayout.LayoutParams params =
+                new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        //params.gravity = Gravity.BOTTOM;
+        statusPage.setPadding(0, MetricsUtils.getActionBarHeight(getActivity()), 0, 0);
+        loadingView.addView(statusPage, params);
+    }
+
 
     @Override
     public void showErrorPage(int type) {

@@ -19,7 +19,7 @@ public class WatchListPresenter extends BasePresenter<WatchListView> {
     }
 
     public void getWatchList(String account) {
-        mView.showLoadingPage();
+        //mView.showLoadingPage();
         RetrofitMethods.commonRequest(getApiService().getWatchList(account),
                 new Observer<List<WatchInfo>>() {
                     @Override

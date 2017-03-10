@@ -1,5 +1,6 @@
 package com.example.jonchen.presenter;
 
+import com.example.jonchen.R;
 import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.retrofit.CustomObserver;
@@ -20,7 +21,7 @@ public class BannerPresenter extends BasePresenter<BannerView> {
     }
 
     public void getBannerInfo() {
-        mView.showLoadingPage();
+        mView.showLoadingPage(R.id.rl_content);
       /*  bannerModel.loadBannerInfo(new ModelCallback<DailyBean>() {
             @Override
             public void onSuccess(DailyBean result) {
