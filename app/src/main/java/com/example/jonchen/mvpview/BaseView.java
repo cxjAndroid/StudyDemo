@@ -16,7 +16,7 @@ public interface BaseView {
     /**
      * 显示正在加载页面
      */
-    void showLoadingPage(int loadingLayoutId);
+    void showLoadingPage(int rootLayoutId);
     /**
      * 显示错误页面
      */

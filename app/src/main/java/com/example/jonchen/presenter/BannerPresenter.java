@@ -1,12 +1,7 @@
 package com.example.jonchen.presenter;
 
 import com.example.jonchen.R;
-import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
-import com.example.jonchen.retrofit.CustomObserver;
-import com.example.jonchen.retrofit.RetrofitMethods;
-
-import java.util.List;
 
 /**
  * Created by chenxujun on 16-9-5.
@@ -21,7 +16,7 @@ public class BannerPresenter extends BasePresenter<BannerView> {
     }
 
     public void getBannerInfo() {
-        mView.showLoadingPage(R.id.rl_content);
+        //mView.showLoadingPage(R.id.contentRl);
       /*  bannerModel.loadBannerInfo(new ModelCallback<DailyBean>() {
             @Override
             public void onSuccess(DailyBean result) {
@@ -30,14 +25,14 @@ public class BannerPresenter extends BasePresenter<BannerView> {
                 mView.showSuccessPage();
             }
         });*/
-        new RetrofitMethods(RetrofitMethods.ZH_BASE_URL)
+      /*  new RetrofitMethods(RetrofitMethods.ZH_BASE_URL)
                 .request(getSpApiService().rxGetZhiHuNews(), new CustomObserver<DailyBean>(mView) {
                     @Override
                     public void doOnNext(DailyBean dailyBean) {
                         List<DailyBean.TopStoriesBean> topStories = dailyBean.getTop_stories();
                         mView.initBanner(topStories);
                     }
-                });
+                });*/
     }
 
 }

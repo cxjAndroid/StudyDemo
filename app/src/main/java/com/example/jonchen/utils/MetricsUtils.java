@@ -6,7 +6,9 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewTreeObserver;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseApplication;
@@ -59,11 +61,12 @@ public class MetricsUtils {
         return actionBarHeight;
     }
 
-    public static void getDensity() {
+    public static float getDensity() {
         float xdpi = BaseApplication.getApplication().getResources().getDisplayMetrics().xdpi;
         float ydpi = BaseApplication.getApplication().getResources().getDisplayMetrics().ydpi;
         float density = BaseApplication.getApplication().getResources().getDisplayMetrics().density;
         float densityDpi = BaseApplication.getApplication().getResources().getDisplayMetrics().densityDpi;
+        return density;
     }
 
 
@@ -156,5 +159,20 @@ public class MetricsUtils {
             }
         }
         return result;
+    }
+
+
+    public static void measureView(final View view,final OnLayoutListener onLayoutListener){
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                onLayoutListener.onGlobalLayout();
+            }
+        });
+    }
+
+    public interface OnLayoutListener{
+        void onGlobalLayout();
     }
 }

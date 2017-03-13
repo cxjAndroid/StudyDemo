@@ -27,4 +27,10 @@ public class DpUtils {
         return (int) px;
     }
 
+    /** px转换dip */
+    public static int px2dip(int px) {
+        final float scale = BaseApplication.getApplication().getResources().getDisplayMetrics().density;
+        return (int) (px / scale + 0.5f);
+    }
+
 }

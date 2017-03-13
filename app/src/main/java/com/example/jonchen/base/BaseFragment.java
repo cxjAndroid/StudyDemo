@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     private LoadStatusPage statusPage;
     protected View mFragmentView;
     private boolean isViewCreated;
-
+    private BaseActivity baseActivity;
+    protected int menuLayout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +55,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         if (isNeedBindButterKnife) {
             ButterKnife.bind(this, mFragmentView);
         }
-        initView();
         initPresenter();
         isViewCreated = true;
+        baseActivity = (BaseActivity) getActivity();
         return mFragmentView;
     }
 
@@ -66,11 +69,20 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
     }
 
+    public int initToolBar(final Toolbar toolbar, int menuLayout) {
+        setHasOptionsMenu(true);
+        if (toolbar != null) baseActivity.setSupportActionBar(toolbar);
+        this.menuLayout = menuLayout;
+        return menuLayout;
+    }
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         LogUtils.e(getClass().getSimpleName() + "------" + "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
         //if (getUserVisibleHint()) {
+        initView();
         initData();
         //}
     }
@@ -118,11 +130,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     }
 
     @Override
-    public void showLoadingPage(int loadingLayoutId) {
+    public void showLoadingPage(int rootLayoutId) {
 
         statusPage = new LoadStatusPage(getActivity());
         statusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
-        ViewGroup loadingView = (ViewGroup) mFragmentView.findViewById(loadingLayoutId);
+        ViewGroup loadingView = (ViewGroup) mFragmentView.findViewById(rootLayoutId);
         RelativeLayout.LayoutParams params =
                 new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         //params.gravity = Gravity.BOTTOM;

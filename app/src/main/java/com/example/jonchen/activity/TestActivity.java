@@ -1,5 +1,11 @@
 package com.example.jonchen.activity;
 
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+
+import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.People;
@@ -10,6 +16,7 @@ import com.google.gson.GsonBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 
+import butterknife.BindView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -18,11 +25,16 @@ import rx.functions.Action1;
 /**
  * Created by chenxujun on 16-9-9.
  */
-public class TestActivity extends BaseActivity {
+public class TestActivity extends BaseActivity implements View.OnTouchListener, View.OnClickListener {
+
+    @BindView(R.id.contentRL)
+    RelativeLayout contentRL;
+    @BindView(R.id.btnTest)
+    Button btnTest;
 
     @Override
     public int getContentViewLayoutID() {
-        return 0;
+        return R.layout.activity_intercept;
     }
 
     @Override
@@ -33,6 +45,25 @@ public class TestActivity extends BaseActivity {
     public void initData() {
         //rxDemo();
         EventBus.getDefault().post(new EventMessage<>("haha"));
+
+        btnTest.setOnTouchListener(this);
+        contentRL.setOnTouchListener(this);
+        contentRL.setOnClickListener(this);
+        btnTest.setOnClickListener(this);
+    }
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        LogUtils.e("onTouch   " + "action:"+event.getAction()+"----"+v.getClass().getSimpleName());
+
+        return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        LogUtils.e("onClick   " + v.getClass().getSimpleName());
     }
 
     private void GsonDemo() {

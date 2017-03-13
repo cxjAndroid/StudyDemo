@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.jonchen.R;
 import com.example.jonchen.adapter.DailyListAdapter;
 import com.example.jonchen.adapter.MenuAdapter;
+import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.model.entity.DailyNewspaper;
 import com.example.jonchen.mvpview.MainView;
@@ -55,7 +59,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
 
     @Override
     protected void initView() {
-        //initToolBar(toolbar, R.menu.menu);
+        initToolBar(toolbar, R.menu.menu);
         AnimatorUtil.scaleHide(floatBtn, 0, null);
     }
 
@@ -72,22 +76,28 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
             recyclerView.setAdapter(dailyListAdapter);
         }
 
+
         //mPresenter.getSlidingMenuData();
-        /*btn.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                btn.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                LogUtils.e(String.valueOf(btn.getLeft()));
-                LogUtils.e(String.valueOf(btn.getTop()));
-                LogUtils.e(String.valueOf(btn.getRight()));
-                LogUtils.e(String.valueOf(btn.getBottom()));
-            }
-        });*/
     }
 
     @Override
     protected void initPresenter() {
         mPresenter = new MainPresenter(this);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity.getSupportActionBar() != null) {
+            if (menuLayout != 0) {
+                activity.getMenuInflater().inflate(menuLayout, menu);
+            } else {
+                activity.getSupportActionBar().setHomeButtonEnabled(true);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        }
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

@@ -10,17 +10,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
+import com.example.jonchen.activity.TestActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
@@ -28,10 +27,10 @@ import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
 import com.example.jonchen.utils.DpUtils;
+import com.example.jonchen.utils.IntentUtils;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.utils.ToastUtils;
-import com.example.jonchen.view.LoadStatusPage;
 import com.example.jonchen.view.MyViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -44,7 +43,7 @@ import butterknife.OnClick;
 /**
  * Created by chenxujun on 2016/6/1.
  */
-public class BannerFragment extends BaseFragment<BannerPresenter> implements BannerView {
+public class BannerFragment extends BaseFragment<BannerPresenter> implements BannerView{
 
     @BindView(R.id.advViewpager)
     MyViewPager advViewpager;
@@ -62,12 +61,16 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     ImageView imageView;
     /*  @BindView(R.id.loadStatusPage)
       LoadStatusPage loadStatusPage;*/
-    @BindView(R.id.rl_content)
-    RelativeLayout rl_content;
+    @BindView(R.id.contentRl)
+    RelativeLayout contentRl;
     private Handler handler;
     private MyRunnable myRunnable;
     private BannerAdapter bannerAdapter;
     private List<DailyBean.TopStoriesBean> storiesBeen;
+    private int startX;
+    private int startY;
+    private int moveX;
+    private int moveY;
 
     @Override
     public int getContentViewLayoutID() {
@@ -86,6 +89,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         registerEventBus();
         getActivity().setResult(Activity.RESULT_OK);
         if (bannerAdapter == null) {
+
             //loadStatusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
             mPresenter.getBannerInfo();
         } else {
@@ -124,6 +128,18 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 return false;
             }
         });
+
+        MetricsUtils.measureView(imageView, new MetricsUtils.OnLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                LogUtils.e(String.valueOf(imageView.getTop()) + "--------");
+                LogUtils.e(String.valueOf(imageView.getX()) + "--------");
+                LogUtils.e(String.valueOf(imageView.getY()) + "--------");
+                LogUtils.e(String.valueOf(imageView.getTranslationX()) + "--------");
+                LogUtils.e(String.valueOf(imageView.getTranslationY()) + "--------");
+                LogUtils.e(String.valueOf(DpUtils.px2dip(imageView.getRight())) + "--------");
+            }
+        });
     }
 
 
@@ -136,7 +152,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
     @OnClick(R.id.btnTest)
     public void onClick() {
-        // IntentUtils.startActivity(getActivity(), TestActivity.class);
+         IntentUtils.startActivity(getActivity(), TestActivity.class);
     }
 
 
