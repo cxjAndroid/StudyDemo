@@ -38,8 +38,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     private LoadStatusPage statusPage;
     protected View mFragmentView;
     private boolean isViewCreated;
-    private BaseActivity baseActivity;
-    protected int menuLayout;
+    protected BaseActivity baseActivity;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +70,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
     public int initToolBar(final Toolbar toolbar, int menuLayout) {
         setHasOptionsMenu(true);
+        baseActivity.menuLayout = menuLayout;
         if (toolbar != null) baseActivity.setSupportActionBar(toolbar);
-        this.menuLayout = menuLayout;
         return menuLayout;
     }
 

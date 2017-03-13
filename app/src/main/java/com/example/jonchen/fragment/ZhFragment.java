@@ -1,15 +1,26 @@
 package com.example.jonchen.fragment;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.jonchen.R;
 import com.example.jonchen.adapter.DailyListAdapter;
@@ -51,7 +62,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
    /* @BindView(R.id.btn1)
     Button btn1;*/
     private DailyListAdapter dailyListAdapter;
-
+    private final int CAMERA_REQUEST_CODE = 1;
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_main;
@@ -75,9 +86,6 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
             LogUtils.e("ZhFragment"+"----"+"setAdapter");
             recyclerView.setAdapter(dailyListAdapter);
         }
-
-
-        //mPresenter.getSlidingMenuData();
     }
 
     @Override
@@ -88,23 +96,70 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity.getSupportActionBar() != null) {
-            if (menuLayout != 0) {
-                activity.getMenuInflater().inflate(menuLayout, menu);
+        if (baseActivity.getSupportActionBar() != null) {
+            if (baseActivity.menuLayout != 0) {
+                menu.clear();
+                baseActivity.getMenuInflater().inflate(baseActivity.menuLayout, menu);
             } else {
-                activity.getSupportActionBar().setHomeButtonEnabled(true);
-                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                baseActivity.getSupportActionBar().setHomeButtonEnabled(true);
+                baseActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
         }
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    private void requestPermission(){
+
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+               /* if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage("申请相机权限")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    requestPermissions(new String[]{
+                                            Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+                                }
+                            }).show();
+                } else {*/
+                    //申请相机权限
+                    requestPermissions(
+                            new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+                //}
+            }else{
+                IntentUtils.startActivityLeftIn(getActivity(), CaptureActivity.class, 0);
+            }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                IntentUtils.startActivityLeftIn(getActivity(), CaptureActivity.class, 0);
+            } else {
+                //用户勾选了不再询问
+                //提示用户手动打开权限
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
+                    ToastUtils.show("权限已被禁止！");
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_capture:
-                IntentUtils.startActivityLeftIn(getActivity(), CaptureActivity.class, 0);
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+                    requestPermission();
+                }else{
+                    IntentUtils.startActivityLeftIn(getActivity(), CaptureActivity.class, 0);
+                }
                 break;
             case R.id.action_about_us:
                 ToastUtils.show("action_about_us");
