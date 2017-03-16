@@ -32,6 +32,10 @@ public class MainActivity extends BaseActivity implements HomeView {
     MyViewPager mViewpager;
     private ViewPageAdapter pageAdapter;
 
+
+
+
+
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_home;
@@ -39,6 +43,7 @@ public class MainActivity extends BaseActivity implements HomeView {
 
     @Override
     protected void initView() {
+
     }
 
     @Override
@@ -73,6 +78,7 @@ public class MainActivity extends BaseActivity implements HomeView {
 
             }
         });
+
     }
 
     @Override

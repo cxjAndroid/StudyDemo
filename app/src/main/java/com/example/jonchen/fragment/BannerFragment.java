@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
-import com.example.jonchen.activity.TestActivity;
+import com.example.jonchen.activity.DataBindingActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
@@ -86,6 +86,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
     @Override
     public void initData() {
+
         registerEventBus();
         getActivity().setResult(Activity.RESULT_OK);
         if (bannerAdapter == null) {
@@ -152,7 +153,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
     @OnClick(R.id.btnTest)
     public void onClick() {
-         IntentUtils.startActivity(getActivity(), TestActivity.class);
+         IntentUtils.startActivity(getActivity(), DataBindingActivity.class);
     }
 
 

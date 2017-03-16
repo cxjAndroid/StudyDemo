@@ -144,7 +144,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
                 //用户勾选了不再询问
                 //提示用户手动打开权限
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
-                    ToastUtils.show("权限已被禁止！");
+                    ToastUtils.show(getString(R.string.permission_refuse));
                 }
             }
         }

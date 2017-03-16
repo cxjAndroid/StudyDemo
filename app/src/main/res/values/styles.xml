@@ -7,7 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@drawable/divide</item>
+        <item name="android:textAllCaps">false</item>
     </style>
+
 
 
     <!-- 加载滚动条样式 -->

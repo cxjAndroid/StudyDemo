@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.example.jonchen.model.entity.Person" />
+
+        <import type="java.util.List" />
+
+        <import type="com.example.jonchen.binding.EventHandler" />
+
+        <import type="java.util.Map" />
+
+        <variable
+            name="person"
+            type="Person" />
+
+        <variable
+            name="handler"
+            type="EventHandler" />
+
+        <variable
+            name="personList"
+            type="List&lt;Person>" />
+
+        <variable
+            name="num"
+            type="int" />
+
+        <variable
+            name="personMap"
+            type="Map&lt;String,String>" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/contentRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onTouch="@{handler::onTouch}"
+            android:text="@{`this is ` + person.name}" />
+
+        <Button
+            android:id="@+id/btnAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{handler::onClick}"
+            android:text="@{String.valueOf(person.age)}" />
+
+        <Button
+            android:id="@+id/btnTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/format(person.name)}" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{personList[num].name}" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{personMap[`2`]}" />
+    </LinearLayout>
+</layout>
