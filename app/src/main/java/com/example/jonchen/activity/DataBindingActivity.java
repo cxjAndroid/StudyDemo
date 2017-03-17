@@ -1,10 +1,6 @@
 package com.example.jonchen.activity;
 
 import android.databinding.DataBindingUtil;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
@@ -15,7 +11,6 @@ import com.example.jonchen.model.entity.People;
 import com.example.jonchen.model.entity.Person;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.NullStringToEmptyAdapterFactory;
-import com.example.jonchen.utils.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,7 +19,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import butterknife.BindView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;

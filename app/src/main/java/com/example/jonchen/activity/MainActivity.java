@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 
@@ -31,10 +32,7 @@ public class MainActivity extends BaseActivity implements HomeView {
     @BindView(R.id.mViewpager)
     MyViewPager mViewpager;
     private ViewPageAdapter pageAdapter;
-
-
-
-
+    
 
     @Override
     public int getContentViewLayoutID() {

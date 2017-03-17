@@ -37,6 +37,7 @@ android {
                 JPUSH_APPKEY : "8e7185a6b38f7215b321e753", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
+
     }
 
     signingConfigs {
@@ -64,10 +65,10 @@ android {
         }
     }
 
-    compileOptions {
+  /*  compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
+    }*/
 
 }
 
