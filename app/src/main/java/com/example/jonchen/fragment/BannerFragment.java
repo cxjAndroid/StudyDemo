@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jonchen.R;
+import com.example.jonchen.activity.ActionActivity;
 import com.example.jonchen.activity.DataBindingActivity;
 import com.example.jonchen.activity.StudyDaggerActivity;
 import com.example.jonchen.adapter.BannerAdapter;
@@ -156,7 +157,8 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     public void onClick(View v) {
          switch (v.getId()){
              case R.id.btnTest:
-                 IntentUtils.startActivity(getActivity(), DataBindingActivity.class);
+                 //IntentUtils.startActivity(getActivity(), DataBindingActivity.class);
+                 IntentUtils.startActivity(getActivity(), ActionActivity.class);
                  break;
              case R.id.btnDemo:
                  IntentUtils.startActivity(getActivity(), StudyDaggerActivity.class);

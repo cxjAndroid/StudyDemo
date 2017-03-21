@@ -154,6 +154,7 @@
         </activity>
         <activity android:name="com.example.jonchen.activity.VoiceActivity" />
         <activity android:name=".activity.StudyDaggerActivity"/>
+        <activity android:name=".activity.ActionActivity"/>
 
 
         <meta-data

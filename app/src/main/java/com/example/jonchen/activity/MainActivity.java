@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 
@@ -13,11 +12,22 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseFragment;
+import com.example.jonchen.base.MyAnnotation;
+import com.example.jonchen.base.MyEnum;
+import com.example.jonchen.model.entity.Jack;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
 import com.example.jonchen.utils.LogUtils;
+import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyViewPager;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,7 +42,6 @@ public class MainActivity extends BaseActivity implements HomeView {
     @BindView(R.id.mViewpager)
     MyViewPager mViewpager;
     private ViewPageAdapter pageAdapter;
-    
 
     @Override
     public int getContentViewLayoutID() {
@@ -40,8 +49,99 @@ public class MainActivity extends BaseActivity implements HomeView {
     }
 
     @Override
+    @MyAnnotation(value = "test", value2 = MyEnum.Sunday)
     protected void initView() {
 
+      /*  Class<?> clazz = Proxy.getProxyClass(Collection.class.getClassLoader(), Collection.class);
+        Constructor<?>[] constructors = clazz.getConstructors();
+        for (Constructor constructor : constructors) {
+            LogUtils.e(constructor.getName());
+            Class[] parameterTypes = constructor.getParameterTypes();
+            for (Class param : parameterTypes) {
+                LogUtils.e(param.getName());
+            }
+        }
+
+        Method[] methods = clazz.getMethods();
+
+        try {
+            Constructor constructor = clazz.getConstructor(InvocationHandler.class);
+            Collection collection = (Collection) constructor.newInstance(new MyInvocationHandler());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+*/
+
+        ArrayList<String> list = new ArrayList<>();
+        @SuppressWarnings("unchecked")
+        final Collection<String> proxy = (Collection<String>) getProxy(list);
+        proxy.add("1");
+        proxy.add("1");
+        proxy.add("1");
+        proxy.add("1");
+        proxy.size();
+
+/*
+        Class<Jack> jackClass = Jack.class;
+        try {
+            Method sayWhat = jackClass.getMethod("sayWhat", (Class<?>[]) null);
+            sayWhat.invoke(jackClass.newInstance(), (Object[]) null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+
+        try {
+            Method initView = MainActivity.class.getMethod("initView", (Class<?>[]) null);
+            if (initView.isAnnotationPresent(MyAnnotation.class)) {
+                MyAnnotation annotation = initView.getAnnotation(MyAnnotation.class);
+                String value = annotation.value();
+                MyEnum myEnum = annotation.value2();
+            }
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public Class[] getAllInterfaces(Class clazz, List<Class> interfacesList) {
+        Class<?>[] interfaces = clazz.getInterfaces();
+        /*for (Class inter : interfaces) {
+            interfacesList.add(inter);
+        }*/
+        Collections.addAll(interfacesList, interfaces);
+
+        Class superclass = clazz.getSuperclass();
+        if (superclass != null) {
+            getAllInterfaces(superclass, interfacesList);
+        }
+        return interfacesList.toArray(new Class[interfacesList.size()]);
+    }
+
+
+    private Object getProxy(final Object target) {
+        ArrayList<Class> arrayList = new ArrayList<>();
+        Class[] interfaces = getAllInterfaces(target.getClass(), arrayList);
+        Class[] classes = {Collection.class};
+        return Proxy.newProxyInstance(target.getClass().getClassLoader()
+                , interfaces
+                , new InvocationHandler() {
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Exception {
+                        return method.invoke(target, args);
+                    }
+                });
+    }
+
+    class MyInvocationHandler implements InvocationHandler {
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            return null;
+        }
     }
 
     @Override
