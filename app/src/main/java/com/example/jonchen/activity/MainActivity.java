@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -14,17 +16,13 @@ import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.base.MyAnnotation;
 import com.example.jonchen.base.MyEnum;
-import com.example.jonchen.model.entity.Jack;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
-import com.example.jonchen.utils.LogUtils;
-import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyViewPager;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -96,7 +94,7 @@ public class MainActivity extends BaseActivity implements HomeView {
             if (initView.isAnnotationPresent(MyAnnotation.class)) {
                 MyAnnotation annotation = initView.getAnnotation(MyAnnotation.class);
                 String value = annotation.value();
-                MyEnum myEnum = annotation.value2();
+                String myEnum = annotation.value2().name();
             }
 
         } catch (NoSuchMethodException e) {
@@ -146,7 +144,7 @@ public class MainActivity extends BaseActivity implements HomeView {
 
     @Override
     public void initData() {
-        mViewpager.setScrollable(false);
+        //mViewpager.setScrollable(false);
         HomePresenter homePresenter = new HomePresenter(this);
         homePresenter.getBottomNavigationData();
         homePresenter.getFragmentPage();

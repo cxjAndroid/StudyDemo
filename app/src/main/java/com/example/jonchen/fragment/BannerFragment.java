@@ -89,6 +89,8 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     @Override
     public void initData() {
 
+        
+
         registerEventBus();
         getActivity().setResult(Activity.RESULT_OK);
         if (bannerAdapter == null) {
@@ -121,7 +123,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
          * onTouch事件返回false会使View执行onTouchEvent方法，imageView默认不可以点击，
          * 无法进入switch (action)语句中，所以会返回false，导致后续action move等动作无法执行。
          * 可使用imageView.setClickable(true)使其进入switch (action)语句中返回true解决或直接
-         * 在onTouch中返回true跳过onTouchEvent方法。
+         * 在onTouch中返回true不執行onTouchEvent方法。
          */
         //imageView.setClickable(true);
         imageView.setOnTouchListener(new View.OnTouchListener() {
@@ -132,14 +134,21 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
             }
         });
 
+
+
+
+
         MetricsUtils.measureView(imageView, new MetricsUtils.OnLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                LogUtils.e(String.valueOf(imageView.getTop()) + "--------");
-                LogUtils.e(String.valueOf(imageView.getX()) + "--------");
-                LogUtils.e(String.valueOf(imageView.getY()) + "--------");
-                LogUtils.e(String.valueOf(imageView.getTranslationX()) + "--------");
-                LogUtils.e(String.valueOf(imageView.getTranslationY()) + "--------");
+                LogUtils.e(String.valueOf(imageView.getTop()) + "top--------");
+                LogUtils.e(String.valueOf(imageView.getLeft()) + "left--------");
+                LogUtils.e(String.valueOf(imageView.getRight()) + "right--------");
+                LogUtils.e(String.valueOf(imageView.getBottom()) + "bottom--------");
+                LogUtils.e(String.valueOf(imageView.getX()) + "X--------");
+                LogUtils.e(String.valueOf(imageView.getY()) + "Y--------");
+                LogUtils.e(String.valueOf(imageView.getTranslationX()) + "translationX--------");
+                LogUtils.e(String.valueOf(imageView.getTranslationY()) + "translationY--------");
                 LogUtils.e(String.valueOf(DpUtils.px2dip(imageView.getRight())) + "--------");
             }
         });

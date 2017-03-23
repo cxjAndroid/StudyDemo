@@ -1,6 +1,8 @@
 package com.example.jonchen.activity;
 
 import android.databinding.DataBindingUtil;
+import android.os.Handler;
+import android.os.Message;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
@@ -33,6 +35,8 @@ public class DataBindingActivity extends BaseActivity{
     RelativeLayout contentRL;
     @BindView(R.id.btnTest)
     Button btnTest;*/
+
+
 
     @Override
     public int getContentViewLayoutID() {

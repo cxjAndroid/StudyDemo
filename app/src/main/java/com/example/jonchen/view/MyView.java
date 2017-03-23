@@ -93,6 +93,7 @@ public class MyView extends View {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(10);
+        canvas.translate(100f,0);
         canvas.drawCircle(50, 100, 50, paint);
 
         paint.reset();
@@ -124,5 +125,7 @@ public class MyView extends View {
         canvas.drawText("jEh", 700, 250, paint);*/
         paint.setStyle(Paint.Style.FILL);
         canvas.drawCircle(stopX,startY,50,paint);
+
+
     }
 }

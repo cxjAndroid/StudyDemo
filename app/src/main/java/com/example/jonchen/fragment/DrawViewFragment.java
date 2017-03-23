@@ -1,5 +1,7 @@
 package com.example.jonchen.fragment;
 
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -36,6 +38,8 @@ public class DrawViewFragment extends BaseFragment {
 
     @Override
     public void initData() {
+
+
         myView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
