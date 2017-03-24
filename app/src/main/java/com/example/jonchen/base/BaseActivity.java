@@ -37,7 +37,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public boolean isBindEventBus;
     private Call<?> call;
     private LoadStatusPage statusPage;
-    public T mPresenter;
+    protected T mPresenter;
     public boolean isNeedBindButterKnife = true;
     public int menuLayout;
 
@@ -61,9 +61,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return RetrofitMethods.getApiService();
     }
 
-    public ApiService getSpApiService(){
-        return RetrofitMethods.getSpApiService();
-    }
+
     //private Object subscriber;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

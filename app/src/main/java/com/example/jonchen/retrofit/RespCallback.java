@@ -16,7 +16,7 @@ import retrofit2.Response;
 /**
  * Created by chenxujun on 2016/7/14.
  */
-public abstract class RespCallback implements Callback<ResponseBody> {
+public abstract class RespCallback<T> implements Callback<T> {
 
     private ResponseBody responseBody;
     private String returnData;
@@ -24,12 +24,14 @@ public abstract class RespCallback implements Callback<ResponseBody> {
     private boolean isSuccess;
 
     @Override
-    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+    public void onResponse(Call<T> call, Response<T> response) {
 
         JSONObject jsonObject = null;
         int resultCode = -1;
         try {
-            HttpUrl url = response.raw().request().url();
+
+            T body = response.body();
+           /* HttpUrl url = response.raw().request().url();
             LogUtils.e(url.toString());
 
             responseBody = response.body();
@@ -39,7 +41,7 @@ public abstract class RespCallback implements Callback<ResponseBody> {
 
             JSONObject object = new JSONObject(responseString);
             isSuccess = object.optBoolean("IsSuccess");
-            returnData = object.optString("ReturnData");
+            returnData = object.optString("ReturnData");*/
 
            /* Gson gson = new Gson();
             Doctor[] doctors = gson.fromJson(returnData, Doctor[].class);
@@ -78,7 +80,7 @@ public abstract class RespCallback implements Callback<ResponseBody> {
 
 
     @Override
-    public void onFailure(Call<ResponseBody> call, Throwable t) {
+    public void onFailure(Call<T> call, Throwable t) {
         onFail(t);
     }
 

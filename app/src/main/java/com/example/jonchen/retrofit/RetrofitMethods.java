@@ -40,7 +40,6 @@ public class RetrofitMethods {
     public static final String JKY_URL = "http://218.17.23.74:8089/jkyh_app/";
 
     private static ApiService apiService;
-    private static ApiService spApiService;
     private static RetrofitMethods retrofitMethods = null;
 
 
@@ -69,13 +68,7 @@ public class RetrofitMethods {
     }
 
 
-    public RetrofitMethods(String url) {
-        Retrofit retrofit = createRetrofit(url);
-        spApiService = retrofit.create(ApiService.class);
-    }
-
-
-    public static RetrofitMethods getInstance() {
+    private static RetrofitMethods getInstance() {
         if (retrofitMethods == null) {
             synchronized (RetrofitMethods.class) {
                 if (retrofitMethods == null) {
@@ -92,9 +85,6 @@ public class RetrofitMethods {
         return apiService;
     }
 
-    public static ApiService getSpApiService() {
-        return spApiService;
-    }
 
 
     public static <T> Subscription hkCommonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
@@ -198,7 +188,7 @@ public class RetrofitMethods {
         if (observer instanceof CustomObserver) {
             ((CustomObserver) observer).setObservable(observable);
         }
-        Subscription subscription = observable.subscribeOn(Schedulers.newThread())
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
         RxUtils.get().addList(subscription);
@@ -223,7 +213,7 @@ public class RetrofitMethods {
         return subscription;
     }
 
-    public static <T> Subscription request(final Observable<ResponseBody> observable, final Observer<T> observer) {
+ /*   public static <T> Subscription request(final Observable<ResponseBody> observable, final Observer<T> observer) {
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<ResponseBody, T>() {
@@ -238,6 +228,7 @@ public class RetrofitMethods {
 
                             Type genType = observer.getClass().getGenericSuperclass();
                             Class<T> tClass = (Class<T>) ((ParameterizedType) genType).getActualTypeArguments()[0];
+
                             return gson.fromJson(res, tClass);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -263,7 +254,7 @@ public class RetrofitMethods {
                 listener.onError();
             }
         });
-    }
+    }*/
 
 
     public static Subscription originRequest(final Observable<ResponseBody> observable,
@@ -289,10 +280,11 @@ public class RetrofitMethods {
     }
 
 
-    public static Call<ResponseBody> originRequest(Call<ResponseBody> call, RespCallback callBack) {
+    public static <T> Call<T> originRequest(Call<T> call, RespCallback<T> callBack) {
         call.enqueue(callBack);
         return call;
     }
+
 
 
    /* public static <T> Call<Result<T>> commonRequest(Call<Result<T>> call, BeanRespCallBack<T> callBack) {

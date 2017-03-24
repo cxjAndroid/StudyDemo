@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity implements HomeView {
 
     @Override
     public void initData() {
-        //mViewpager.setScrollable(false);
+        mViewpager.setScrollable(true);
         HomePresenter homePresenter = new HomePresenter(this);
         homePresenter.getBottomNavigationData();
         homePresenter.getFragmentPage();

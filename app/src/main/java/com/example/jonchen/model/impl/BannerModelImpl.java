@@ -6,6 +6,10 @@ import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.retrofit.CustomObserver;
 import com.example.jonchen.retrofit.RetrofitMethods;
 
+import java.util.List;
+
+import static com.example.jonchen.retrofit.RetrofitMethods.getApiService;
+
 /**
  * Created by andychen on 2017/2/7.
  */
@@ -13,9 +17,9 @@ import com.example.jonchen.retrofit.RetrofitMethods;
 public class BannerModelImpl implements BannerModel {
     @Override
     public void loadBannerInfo(final ModelCallback<DailyBean> listener) {
-        new RetrofitMethods(RetrofitMethods.ZH_BASE_URL)
-                .request(RetrofitMethods.getSpApiService().rxGetZhiHuNews(),
-                        new CustomObserver<DailyBean>() {
+
+        RetrofitMethods.modelCommonRequest(getApiService().rxModelGetZhiHuNews()
+                , new CustomObserver<DailyBean>() {
                     @Override
                     public void doOnNext(DailyBean dailyBean) {
                         listener.onSuccess(dailyBean);

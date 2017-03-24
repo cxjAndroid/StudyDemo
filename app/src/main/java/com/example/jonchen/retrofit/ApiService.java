@@ -109,8 +109,17 @@ public interface ApiService {
             , @Path("imei") String imei
             , @Path("timestamp") long timestamp);
 
+
     @GET("news/latest")
     Observable<ResponseBody> rxGetZhiHuNews();
+
+
+
+    @GET("http://news-at.zhihu.com/api/4/news/latest")
+    Observable<DailyBean> rxModelGetZhiHuNews();
+
+    @GET("news/latest")
+    Call<DailyBean> getDaily();
 
     @GET("news/latest")
     Observable<ZhiHuResult<List<DailyNewspaper>>> getZhiHuNews();

@@ -34,7 +34,4 @@ public class BasePresenter<T> {
         return RetrofitMethods.getApiService();
     }
 
-    public ApiService getSpApiService(){
-        return RetrofitMethods.getSpApiService();
-    }
 }
