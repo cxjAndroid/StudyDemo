@@ -1,12 +1,19 @@
 package com.example.jonchen.retrofit;
 
+import com.example.jonchen.utils.LogUtils;
+
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -42,9 +49,28 @@ public class OkHttpUtils {
                                             .addHeader("LocationCityID", "2157")
                                             .addHeader("PhoneUuId", "111")*/
                                             .build();
-                                    //Headers headers = request.headers();
 
-                                    return chain.proceed(request);
+                                   /* Headers requestHeads = request.headers();
+                                    Set<String> requestHeadNames = requestHeads.names();
+                                    for(String name : requestHeadNames){
+                                        List<String> values = requestHeads.values(name);
+                                        for(String value : values){
+                                        }
+                                    }*/
+
+
+                                    Response response = chain.proceed(request);
+                                    int code = response.code();
+                                    LogUtils.e(request.url().toString()+"------responseCode:"+code);
+                                   /* Headers headers = response.headers();
+                                    Set<String> responseHeadNames = headers.names();
+                                    for(String name : responseHeadNames){
+                                        List<String> values = headers.values(name);
+                                        for(String value : values){
+                                        }
+                                    }*/
+
+                                    return response;
                                 }
                             }).build();
                 }

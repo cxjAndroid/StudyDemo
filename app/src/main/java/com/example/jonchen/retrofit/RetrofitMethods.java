@@ -14,6 +14,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
+import okhttp3.internal.DiskLruCache;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -46,6 +47,7 @@ public class RetrofitMethods {
     private RetrofitMethods() {
         Retrofit retrofit = createRetrofit();
         apiService = retrofit.create(ApiService.class);
+
     }
 
 
@@ -83,47 +85,6 @@ public class RetrofitMethods {
     public static ApiService getApiService() {
         getInstance();
         return apiService;
-    }
-
-
-
-    public static <T> Subscription hkCommonRequest(final Observable<Result<T>> observable, final Subscriber<T> subscriber) {
-        Subscription subscription = observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<Result<T>, T>() {
-                    @Override
-                    public T call(Result<T> tResult) {
-                        if (!tResult.isSuccess()) {
-                            throw new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
-                        }
-                        return tResult.getData();
-                    }
-                })
-                .subscribe(subscriber);
-        RxUtils.get().addList(subscription);
-        return subscription;
-
-    }
-
-    public static <T> Subscription hkCommonRequest(final Observable<Result<T>> observable, final Observer<T> observer) {
-        if (observer instanceof CustomObserver) {
-            ((CustomObserver) observer).setObservable(observable);
-        }
-        Subscription subscription = observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<Result<T>, T>() {
-                    @Override
-                    public T call(Result<T> tResult) {
-                        if (!tResult.isSuccess()) {
-                            throw new ApiException(ApiException.NO_SUCCESS, tResult.getReturnMessage());
-                        }
-                        return tResult.getData();
-                    }
-                })
-                .subscribe(observer);
-        RxUtils.get().addList(subscription);
-        return subscription;
-
     }
 
     public static <T> Subscription commonRequest(final Observable<KmResult<T>> observable, final Subscriber<T> subscriber) {
@@ -164,25 +125,6 @@ public class RetrofitMethods {
         return subscription;
     }
 
-    public static <T> Subscription spCommonRequest(final Observable<ZhiHuResult<T>> observable, final Observer<T> observer) {
-        if (observer instanceof CustomObserver) {
-            ((CustomObserver) observer).setObservable(observable);
-        }
-        Subscription subscription = observable.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<ZhiHuResult<T>, T>() {
-                    @Override
-                    public T call(ZhiHuResult<T> zhiHuResult) {
-                        if (zhiHuResult == null) {
-                            throw new ApiException(110, "error zh");
-                        }
-                        return zhiHuResult.getStories();
-                    }
-                })
-                .subscribe(observer);
-        RxUtils.get().addList(subscription);
-        return subscription;
-    }
 
     public static <T> Subscription modelCommonRequest(final Observable<T> observable, final Observer<T> observer) {
         if (observer instanceof CustomObserver) {
@@ -202,7 +144,6 @@ public class RetrofitMethods {
                 .subscribe(subscriber);
         RxUtils.get().addList(subscription);
         return subscription;
-
     }
 
     public static Subscription originRequest(final Observable<ResponseBody> observable, final Observer<ResponseBody> observer) {

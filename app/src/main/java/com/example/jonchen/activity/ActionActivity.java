@@ -38,6 +38,8 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         mBtn.setOnTouchListener(this);
         mLayout.setOnClickListener(this);
         mBtn.setOnClickListener(this);
+
+      
     }
 
 

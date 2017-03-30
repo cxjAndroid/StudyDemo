@@ -1,12 +1,12 @@
 package com.example.jonchen.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -18,6 +18,7 @@ import com.example.jonchen.base.MyAnnotation;
 import com.example.jonchen.base.MyEnum;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
+import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.view.MyViewPager;
 
 import java.lang.reflect.InvocationHandler;
@@ -29,6 +30,10 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by andychen on 2017/1/22.
@@ -49,6 +54,79 @@ public class MainActivity extends BaseActivity implements HomeView {
     @Override
     @MyAnnotation(value = "test", value2 = MyEnum.Sunday)
     protected void initView() {
+
+
+      /*  Subscriber<String> subscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                LogUtils.e(s);
+            }
+        };
+
+
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext("1111");
+                subscriber.onNext("22");
+                subscriber.onNext("333");
+                subscriber.onNext("444");
+            }
+        }).subscribe(subscriber);*/
+
+
+
+      Observable.create(new Observable.OnSubscribe<Integer>() {
+          @Override
+          public void call(Subscriber<? super Integer> subscriber) {
+              subscriber.onNext(R.mipmap.ic_launcher);
+          }
+      }).map(new Func1<Integer, Bitmap>() {
+          @Override
+          public Bitmap call(Integer integer) {
+              return BitmapFactory.decodeResource(getResources(),integer);
+          }
+      }).subscribe(new Subscriber<Bitmap>() {
+          @Override
+          public void onCompleted() {
+
+          }
+
+          @Override
+          public void onError(Throwable e) {
+
+          }
+
+          @Override
+          public void onNext(Bitmap bitmap) {
+
+          }
+      });
+
+
+        Observable.just("one","two","three").subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                LogUtils.e(s);
+            }
+        });
+
+
+
+
+
+
+
 
       /*  Class<?> clazz = Proxy.getProxyClass(Collection.class.getClassLoader(), Collection.class);
         Constructor<?>[] constructors = clazz.getConstructors();

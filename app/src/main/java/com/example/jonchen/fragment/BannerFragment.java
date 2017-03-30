@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
-import com.example.jonchen.activity.DataBindingActivity;
 import com.example.jonchen.activity.StudyDaggerActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
@@ -88,9 +87,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
     @Override
     public void initData() {
-
-        
-
         registerEventBus();
         getActivity().setResult(Activity.RESULT_OK);
         if (bannerAdapter == null) {
@@ -103,6 +99,9 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
             setViewPagerDescribe(storiesBeen);
         }
 
+
+        ObjectAnimator translationX = ObjectAnimator.ofFloat(btnTest, "translationX", 0, 200f);
+        translationX.setDuration(2000).start();
         /*btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,9 +132,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 return false;
             }
         });
-
-
-
 
 
         MetricsUtils.measureView(imageView, new MetricsUtils.OnLayoutListener() {

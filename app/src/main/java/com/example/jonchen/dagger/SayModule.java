@@ -1,6 +1,7 @@
 package com.example.jonchen.dagger;
 
 import com.example.jonchen.model.entity.Jack;
+import com.example.jonchen.model.entity.Jon;
 import com.example.jonchen.model.entity.Rose;
 
 import javax.inject.Singleton;
@@ -17,6 +18,21 @@ import dagger.Provides;
 public class SayModule {
 
     @Provides
+    @JackSay
+    public Say provideSay() {
+        return new Jack();
+    }
+
+
+    @Provides
+    @JonSay
+    @Singleton
+    public Say provideSay2() {
+        return new Jon();
+    }
+
+
+    /*@Provides
     @RoseSay
     public Say provideSay() {
         return new Rose();
@@ -26,5 +42,5 @@ public class SayModule {
     @ActivityScope
     public Jack provideJackSay() {
         return new Jack();
-    }
+    }*/
 }

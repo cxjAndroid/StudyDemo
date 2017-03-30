@@ -7,7 +7,8 @@ import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.dagger.DaggerSayComponent;
 import com.example.jonchen.dagger.DaggerStudyComponent;
 import com.example.jonchen.dagger.JackSay;
-import com.example.jonchen.model.entity.Jack;
+import com.example.jonchen.dagger.JonSay;
+import com.example.jonchen.dagger.Say;
 
 import javax.inject.Inject;
 
@@ -19,16 +20,32 @@ import butterknife.BindView;
 
 public class StudyDaggerActivity extends BaseActivity {
 
-    @Inject
+  /*  @Inject
     @JackSay
     Jack jackSay;
 
     @Inject
     @JackSay
-    Jack jackSay2;
+    Jack jackSay2;*/
+
+  /*  @Inject
+    Rose rose;*/
+
+    @Inject
+    @JackSay
+    Say jackSay;
 
     @BindView(R.id.showText)
     TextView showText;
+
+    @Inject
+    @JonSay
+    Say jon;
+
+
+    @Inject
+    @JonSay
+    Say jon2;
 
 
     @Override
@@ -43,14 +60,28 @@ public class StudyDaggerActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        DaggerStudyComponent
+
+
+        //DaggerStudyComponent.create().Inject(this);
+      /*  DaggerStudyComponent.builder().sayComponent(new DaggerSayComponent.create())
+                .build().Inject(this);*/
+
+
+        DaggerStudyComponent.builder().sayComponent(DaggerSayComponent.create()).build().Inject(this);
+
+
+        jon.sayWhat();
+        showText.setText(jon+"----"+jon2);
+        //jackSay.sayWhat();
+
+       /* DaggerStudyComponent
                 .builder()
                 .sayComponent(DaggerSayComponent.create())
                 .build()
                 .Inject(this);
         //whoSay.sayWhat();
-        //jackSay.sayWhat();
-        showText.setText(jackSay+"----"+jackSay2);
+        //jackSay.sayWhat();*/
+
 
     }
 }
