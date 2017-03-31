@@ -163,10 +163,10 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
          switch (v.getId()){
              case R.id.btnTest:
                  //IntentUtils.startActivity(getActivity(), DataBindingActivity.class);
-                 IntentUtils.startActivity(getActivity(), ActionActivity.class);
+                 IntentUtils.startActivity(baseActivity, ActionActivity.class);
                  break;
              case R.id.btnDemo:
-                 IntentUtils.startActivity(getActivity(), StudyDaggerActivity.class);
+                 IntentUtils.startActivity(baseActivity, StudyDaggerActivity.class);
                  break;
          }
 

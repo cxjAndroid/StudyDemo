@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jonchen.activity.VoiceActivity;
+import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseRecyclerAdapter;
 import com.example.jonchen.base.BaseRecyclerViewHolder;
 import com.example.jonchen.event.EventMessage;
@@ -49,7 +50,7 @@ public class WatchListAdapter extends BaseRecyclerAdapter<WatchInfo> implements 
     @Override
     public void onClick(View v) {
         WatchInfo watchInfo = (WatchInfo) v.getTag();
-        IntentUtils.startActivityLeftIn((Activity) context, VoiceActivity.class);
+        IntentUtils.startActivity((BaseActivity) context, VoiceActivity.class);
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setWatchId(watchInfo.getImei());
         chatMessage.setUserId("13691993691");

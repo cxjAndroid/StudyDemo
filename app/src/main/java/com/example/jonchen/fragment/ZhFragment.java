@@ -129,7 +129,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
                             new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
                 //}
             }else{
-                IntentUtils.startActivityLeftIn(getActivity(), CaptureActivity.class, 0);
+                IntentUtils.startActivityForResult(baseActivity, CaptureActivity.class, 0);
             }
     }
 
@@ -139,7 +139,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
 
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                IntentUtils.startActivityLeftIn(getActivity(), CaptureActivity.class, 0);
+                IntentUtils.startActivityForResult(baseActivity, CaptureActivity.class, 0);
             } else {
                 //用户勾选了不再询问
                 //提示用户手动打开权限
@@ -158,7 +158,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
                 if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
                     requestPermission();
                 }else{
-                    IntentUtils.startActivityLeftIn(getActivity(), CaptureActivity.class, 0);
+                    IntentUtils.startActivityForResult(baseActivity, CaptureActivity.class, 0);
                 }
                 break;
             case R.id.action_about_us:
@@ -194,15 +194,15 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
     void click(View v) {
         switch (v.getId()) {
             case R.id.btn:
-                IntentUtils.startActivityLeftIn(this, BannerFragment.class);
+                IntentUtils.startActivity(this, BannerFragment.class);
                 break;
             case R.id.btn1:
-                IntentUtils.startActivityLeftIn(this, DrawViewFragment.class);
+                IntentUtils.startActivity(this, DrawViewFragment.class);
                 EventBus.getDefault().postSticky(new EventMessage<>("from mainPage"));
                 break;
             case R.id.btn2:
-                //IntentUtils.startActivityLeftIn(this, DrawViewFragment.class);
-                IntentUtils.startActivityLeftIn(this, WatchListFragment.class);
+                //IntentUtils.startActivity(this, DrawViewFragment.class);
+                IntentUtils.startActivity(this, WatchListFragment.class);
                 break;
             case R.id.floatBtn:
                 recyclerView.getLayoutManager().scrollToPosition(0);
