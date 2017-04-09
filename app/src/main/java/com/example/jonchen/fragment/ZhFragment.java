@@ -27,6 +27,7 @@ import com.example.jonchen.adapter.DailyListAdapter;
 import com.example.jonchen.adapter.MenuAdapter;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseFragment;
+import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.model.entity.DailyNewspaper;
 import com.example.jonchen.mvpview.MainView;
 import com.example.jonchen.presenter.MainPresenter;
@@ -180,13 +181,13 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
 
     @Override
     public void menuItemOnClick(String s) {
-       /* mPresenter.getDailyInfo();
-        slidingPaneLayout.closePane();*/
+        mPresenter.getDailyInfo();
+        //slidingPaneLayout.closePane();
     }
 
     @Override
-    public void refreshPage(List<DailyNewspaper> dailyNewspapers) {
-        dailyListAdapter = new DailyListAdapter(dailyNewspapers, R.layout.item_daily);
+    public void refreshPage(List<DailyBean.StoriesBean> storiesBeen) {
+        dailyListAdapter = new DailyListAdapter(storiesBeen, R.layout.item_daily);
         recyclerView.setAdapter(dailyListAdapter);
     }
 

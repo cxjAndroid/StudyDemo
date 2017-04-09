@@ -27,6 +27,7 @@ import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,47 +86,40 @@ public class MainActivity extends BaseActivity implements HomeView {
         }).subscribe(subscriber);*/
 
 
+        Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                subscriber.onNext(R.mipmap.ic_launcher);
+            }
+        }).map(new Func1<Integer, Bitmap>() {
+            @Override
+            public Bitmap call(Integer integer) {
+                return BitmapFactory.decodeResource(getResources(), integer);
+            }
+        }).subscribe(new Subscriber<Bitmap>() {
+            @Override
+            public void onCompleted() {
 
-      Observable.create(new Observable.OnSubscribe<Integer>() {
-          @Override
-          public void call(Subscriber<? super Integer> subscriber) {
-              subscriber.onNext(R.mipmap.ic_launcher);
-          }
-      }).map(new Func1<Integer, Bitmap>() {
-          @Override
-          public Bitmap call(Integer integer) {
-              return BitmapFactory.decodeResource(getResources(),integer);
-          }
-      }).subscribe(new Subscriber<Bitmap>() {
-          @Override
-          public void onCompleted() {
+            }
 
-          }
+            @Override
+            public void onError(Throwable e) {
 
-          @Override
-          public void onError(Throwable e) {
+            }
 
-          }
+            @Override
+            public void onNext(Bitmap bitmap) {
 
-          @Override
-          public void onNext(Bitmap bitmap) {
-
-          }
-      });
+            }
+        });
 
 
-        Observable.just("one","two","three").subscribe(new Action1<String>() {
+        Observable.just("one", "two", "three").subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
                 LogUtils.e(s);
             }
         });
-
-
-
-
-
-
 
 
       /*  Class<?> clazz = Proxy.getProxyClass(Collection.class.getClassLoader(), Collection.class);
@@ -147,6 +141,17 @@ public class MainActivity extends BaseActivity implements HomeView {
             e.printStackTrace();
         }
 */
+        try {
+            Method initView = MainActivity.class.getMethod("initView", (Class<?>[]) null);
+            if (initView.isAnnotationPresent(MyAnnotation.class)) {
+                MyAnnotation annotation = initView.getAnnotation(MyAnnotation.class);
+                String value = annotation.value();
+                String myEnum = annotation.value2().name();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
 
         ArrayList<String> list = new ArrayList<>();
         @SuppressWarnings("unchecked")
@@ -165,19 +170,6 @@ public class MainActivity extends BaseActivity implements HomeView {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-
-
-        try {
-            Method initView = MainActivity.class.getMethod("initView", (Class<?>[]) null);
-            if (initView.isAnnotationPresent(MyAnnotation.class)) {
-                MyAnnotation annotation = initView.getAnnotation(MyAnnotation.class);
-                String value = annotation.value();
-                String myEnum = annotation.value2().name();
-            }
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
 
 
     }
@@ -277,7 +269,7 @@ public class MainActivity extends BaseActivity implements HomeView {
         });
     }
 
-    class ViewPageAdapter extends FragmentPagerAdapter {
+    private class ViewPageAdapter extends FragmentPagerAdapter {
         private List<BaseFragment> fragmentList;
 
         ViewPageAdapter(FragmentManager fm, List<BaseFragment> fragmentList) {

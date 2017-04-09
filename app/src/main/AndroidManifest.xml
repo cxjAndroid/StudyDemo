@@ -155,6 +155,8 @@
         <activity android:name="com.example.jonchen.activity.VoiceActivity" />
         <activity android:name=".activity.StudyDaggerActivity"/>
         <activity android:name=".activity.ActionActivity"/>
+        <service android:name=".service.MyService"
+            />
 
 
         <meta-data

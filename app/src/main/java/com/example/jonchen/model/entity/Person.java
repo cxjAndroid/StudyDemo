@@ -37,4 +37,5 @@ public class Person extends BaseObservable {
         this.age = age;
         this.name = name;
     }
+
 }

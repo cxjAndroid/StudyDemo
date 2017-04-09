@@ -34,7 +34,7 @@ import retrofit2.Call;
  * Created by chenxujun on 2016/6/1.
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
-
+    
     public boolean isBindEventBus;
     private Call<?> call;
     private static LoadStatusPage statusPage;

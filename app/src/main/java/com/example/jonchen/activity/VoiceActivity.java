@@ -100,7 +100,7 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
     public void initData() {
 
         chatMessageList = mPresenter.getChatMsgFromDatabase();
-        //mPresenter.getVoiceList();
+        mPresenter.getVoiceList();
 
         voiceListRunnable = new VoiceListRunnable();
         voiceListHandler = new VoiceListHandler(new WeakReference<>(this));

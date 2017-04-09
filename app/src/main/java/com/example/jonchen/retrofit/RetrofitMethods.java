@@ -1,7 +1,12 @@
 package com.example.jonchen.retrofit;
 
+import android.text.Html;
+
 import com.example.jonchen.model.entity.KmResult;
 import com.example.jonchen.utils.RxUtils;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -20,7 +25,7 @@ import rx.schedulers.Schedulers;
 public class RetrofitMethods {
 
     private static ApiService apiService;
-    private static RetrofitMethods retrofitMethods = null;
+    //private static RetrofitMethods retrofitMethods = null;
 
 
     private RetrofitMethods() {
@@ -29,15 +34,23 @@ public class RetrofitMethods {
     }
 
     private static RetrofitMethods getInstance() {
-        if (retrofitMethods == null) {
+        return RetrofitMethodsHolder.retrofitMethods;
+        /*if (retrofitMethods == null) {
             synchronized (RetrofitMethods.class) {
                 if (retrofitMethods == null) {
                     retrofitMethods = new RetrofitMethods();
                 }
             }
         }
-        return retrofitMethods;
+        return retrofitMethods;*/
     }
+
+    private static class RetrofitMethodsHolder{
+        private static final RetrofitMethods retrofitMethods = new RetrofitMethods();
+
+    }
+
+
 
 
     public static ApiService getApiService() {
@@ -67,7 +80,7 @@ public class RetrofitMethods {
         if (observer instanceof CustomObserver) {
             ((CustomObserver) observer).setObservable(observable);
         }
-        Subscription subscription = observable.subscribeOn(Schedulers.newThread())
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<KmResult<T>, T>() {
                     @Override

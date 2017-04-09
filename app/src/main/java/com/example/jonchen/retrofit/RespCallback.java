@@ -4,8 +4,12 @@ package com.example.jonchen.retrofit;
 import com.example.jonchen.model.entity.Doctor;
 import com.example.jonchen.utils.LogUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.ResponseBody;

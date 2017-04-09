@@ -5,7 +5,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.support.v4.util.LruCache;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,19 +32,29 @@ import com.example.jonchen.activity.StudyDaggerActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
+import com.example.jonchen.model.entity.Coder;
 import com.example.jonchen.model.entity.DailyBean;
+import com.example.jonchen.model.entity.NewsPaper;
+import com.example.jonchen.model.entity.People;
+import com.example.jonchen.model.entity.Person;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
+import com.example.jonchen.service.MyService;
 import com.example.jonchen.utils.DpUtils;
 import com.example.jonchen.utils.IntentUtils;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyViewPager;
+import com.facebook.imagepipeline.producers.BaseNetworkFetcher;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,7 +62,7 @@ import butterknife.OnClick;
 /**
  * Created by chenxujun on 2016/6/1.
  */
-public class BannerFragment extends BaseFragment<BannerPresenter> implements BannerView{
+public class BannerFragment extends BaseFragment<BannerPresenter> implements BannerView {
 
     @BindView(R.id.advViewpager)
     MyViewPager advViewpager;
@@ -81,9 +99,47 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     @Override
     protected void initView() {
         //initToolBar(toolbar, R.menu.menu);
+
         adjustAdvLayout();
         syncDrawLayout();
+
+        MetricsUtils.getDensity();
+
+     /*   Coder coder = new Coder();
+        NewsPaper newsPaper = new NewsPaper();
+        newsPaper.addObserver(coder);
+        newsPaper.notifyCoder("  this is content");*/
+
+        Class<People> peopleClass = People.class;
+        try {
+            People people = peopleClass.newInstance();
+            Method[] methods = peopleClass.getMethods();
+            Method method = peopleClass.getMethod("setName", String.class);
+            method.invoke(people, "jon");
+            ToastUtils.show(people.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        new MyHandler(this).sendEmptyMessage(0);
     }
+
+
+    private static class MyHandler extends Handler {
+        private WeakReference<BannerFragment> weakReference;
+        private BannerFragment bannerFragment;
+
+        MyHandler(BannerFragment fragment) {
+            weakReference = new WeakReference<>(fragment);
+            bannerFragment = weakReference.get();
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            bannerFragment.btnTest.setText("handler text");
+        }
+    }
+
 
     @Override
     public void initData() {
@@ -158,17 +214,31 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     }
 
 
-    @OnClick({R.id.btnTest,R.id.btnDemo})
+    @OnClick({R.id.btnTest, R.id.btnDemo})
     public void onClick(View v) {
-         switch (v.getId()){
-             case R.id.btnTest:
-                 //IntentUtils.startActivity(getActivity(), DataBindingActivity.class);
-                 IntentUtils.startActivity(baseActivity, ActionActivity.class);
-                 break;
-             case R.id.btnDemo:
-                 IntentUtils.startActivity(baseActivity, StudyDaggerActivity.class);
-                 break;
-         }
+        switch (v.getId()) {
+            case R.id.btnTest:
+                //IntentUtils.startActivity(getActivity(), DataBindingActivity.class);
+                IntentUtils.startActivity(baseActivity, ActionActivity.class);
+                break;
+            case R.id.btnDemo:
+                //IntentUtils.startActivity(baseActivity, StudyDaggerActivity.class);
+                Intent intent = new Intent(baseActivity, MyService.class);
+                baseActivity.bindService(intent, new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        MyService.MyIBinder myIBinder = (MyService.MyIBinder) service;
+                        myIBinder.show();
+                    }
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+
+                    }
+                }, Context.BIND_AUTO_CREATE);
+
+                break;
+        }
 
     }
 

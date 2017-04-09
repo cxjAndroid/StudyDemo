@@ -21,8 +21,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
         this.layoutId = layoutId;
     }
 
-
-
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
@@ -40,6 +38,5 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
     }
 
     public abstract void refreshView(BaseRecyclerViewHolder holder, T t, int position);
-
 
 }

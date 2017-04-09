@@ -14,18 +14,34 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class BaseApplication extends Application {
     private static BaseApplication mInstance;
-    /** 主线程ID */
+    /**
+     * 主线程ID
+     */
     private static int mMainThreadId = -1;
-    /** 主线程ID */
+    /**
+     * 主线程ID
+     */
     private static Thread mMainThread;
-    /** 主线程Handler */
+    /**
+     * 主线程Handler
+     */
     private static Handler mMainThreadHandler;
-    /** 主线程Looper */
+    /**
+     * 主线程Looper
+     */
     private static Looper mMainLooper;
 
 
     @Override
     public void onCreate() {
+        /*
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }*/
+        LeakCanary.install(this);
+
         mMainThreadId = android.os.Process.myTid();
         mMainThread = Thread.currentThread();
         mMainThreadHandler = new Handler();
@@ -33,36 +49,46 @@ public class BaseApplication extends Application {
         mInstance = this;
         super.onCreate();
 
-        LeakCanary.install(this);
+
         Fresco.initialize(this);
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
     }
 
+
     public static BaseApplication getApplication() {
         return mInstance;
     }
 
-    /** 获取主线程ID */
+    /**
+     * 获取主线程ID
+     */
     public static int getMainThreadId() {
         return mMainThreadId;
     }
 
-    /** 获取主线程 */
+    /**
+     * 获取主线程
+     */
     public static Thread getMainThread() {
         return mMainThread;
     }
 
-    /** 获取主线程的handler */
+    /**
+     * 获取主线程的handler
+     */
     public static Handler getMainThreadHandler() {
         return mMainThreadHandler;
     }
 
-    /** 获取主线程的looper */
+    /**
+     * 获取主线程的looper
+     */
     public static Looper getMainThreadLooper() {
         return mMainLooper;
     }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
