@@ -94,7 +94,6 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     public void getDailyInfo() {
 
-
         RetrofitMethods.modelCommonRequest(getApiService().rxModelGetZhiHuNews(), new CustomObserver<DailyBean>() {
             @Override
             public void doOnNext(DailyBean dailyBean) {

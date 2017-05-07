@@ -18,7 +18,7 @@ import butterknife.BindView;
  * Created by jon on 3/17/17.
  */
 
-public class StudyDaggerActivity extends BaseActivity {
+public class DaggerStudyActivity extends BaseActivity {
 
   /*  @Inject
     @JackSay

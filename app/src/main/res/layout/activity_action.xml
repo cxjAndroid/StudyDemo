@@ -11,4 +11,9 @@
         android:layout_height="wrap_content"
         android:text="click me " />
 
+    <com.example.jonchen.view.MyListView
+        android:id="@+id/mListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </com.example.jonchen.view.MyLayout>

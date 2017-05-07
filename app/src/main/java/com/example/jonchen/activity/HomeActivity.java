@@ -16,6 +16,8 @@ import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.base.MyAnnotation;
 import com.example.jonchen.base.MyEnum;
+import com.example.jonchen.dagger.DaggerHomeActivityComponent;
+import com.example.jonchen.dagger.HomeActivityModule;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
 import com.example.jonchen.utils.LogUtils;
@@ -27,8 +29,9 @@ import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -40,12 +43,14 @@ import rx.functions.Func1;
  * Created by andychen on 2017/1/22.
  */
 
-public class MainActivity extends BaseActivity implements HomeView {
+public class HomeActivity extends BaseActivity implements HomeView {
     @BindView(R.id.navigationBar)
     BottomNavigationBar navigationBar;
     @BindView(R.id.mViewpager)
     MyViewPager mViewpager;
     private ViewPageAdapter pageAdapter;
+    @Inject
+    HomePresenter homePresenter;
 
     @Override
     public int getContentViewLayoutID() {
@@ -55,7 +60,6 @@ public class MainActivity extends BaseActivity implements HomeView {
     @Override
     @MyAnnotation(value = "test", value2 = MyEnum.Sunday)
     protected void initView() {
-
 
       /*  Subscriber<String> subscriber = new Subscriber<String>() {
             @Override
@@ -142,7 +146,7 @@ public class MainActivity extends BaseActivity implements HomeView {
         }
 */
         try {
-            Method initView = MainActivity.class.getMethod("initView", (Class<?>[]) null);
+            Method initView = HomeActivity.class.getMethod("initView", (Class<?>[]) null);
             if (initView.isAnnotationPresent(MyAnnotation.class)) {
                 MyAnnotation annotation = initView.getAnnotation(MyAnnotation.class);
                 String value = annotation.value();
@@ -171,7 +175,9 @@ public class MainActivity extends BaseActivity implements HomeView {
             e.printStackTrace();
         }*/
 
-
+        //DaggerHomeActivityComponent.create().inject(this);
+         DaggerHomeActivityComponent.builder()
+                 .homeActivityModule(new HomeActivityModule(this)).build().inject(this);
     }
 
 
@@ -215,7 +221,7 @@ public class MainActivity extends BaseActivity implements HomeView {
     @Override
     public void initData() {
         mViewpager.setScrollable(true);
-        HomePresenter homePresenter = new HomePresenter(this);
+        //HomePresenter homePresenter = new HomePresenter(this);
         homePresenter.getBottomNavigationData();
         homePresenter.getFragmentPage();
     }

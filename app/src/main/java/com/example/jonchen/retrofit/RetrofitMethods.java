@@ -47,7 +47,6 @@ public class RetrofitMethods {
 
     private static class RetrofitMethodsHolder{
         private static final RetrofitMethods retrofitMethods = new RetrofitMethods();
-
     }
 
 
