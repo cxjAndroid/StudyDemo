@@ -9,11 +9,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.v4.util.LruCache;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,15 +26,12 @@ import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
-import com.example.jonchen.activity.StudyDaggerActivity;
+import com.example.jonchen.activity.DaggerDemo2Activity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
-import com.example.jonchen.model.entity.Coder;
 import com.example.jonchen.model.entity.DailyBean;
-import com.example.jonchen.model.entity.NewsPaper;
 import com.example.jonchen.model.entity.People;
-import com.example.jonchen.model.entity.Person;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
 import com.example.jonchen.service.MyService;
@@ -46,15 +41,12 @@ import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.MetricsUtils;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyViewPager;
-import com.facebook.imagepipeline.producers.BaseNetworkFetcher;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
-import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -222,8 +214,9 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 IntentUtils.startActivity(baseActivity, ActionActivity.class);
                 break;
             case R.id.btnDemo:
-                //IntentUtils.startActivity(baseActivity, StudyDaggerActivity.class);
-                Intent intent = new Intent(baseActivity, MyService.class);
+                IntentUtils.startActivity(baseActivity, DaggerDemo2Activity.class);
+                //IntentUtils.startActivity(baseActivity, DaggerStudyActivity.class);
+                /*Intent intent = new Intent(baseActivity, MyService.class);
                 baseActivity.bindService(intent, new ServiceConnection() {
                     @Override
                     public void onServiceConnected(ComponentName name, IBinder service) {
@@ -235,7 +228,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                     public void onServiceDisconnected(ComponentName name) {
 
                     }
-                }, Context.BIND_AUTO_CREATE);
+                }, Context.BIND_AUTO_CREATE);*/
 
                 break;
         }

@@ -1,17 +1,26 @@
 package com.example.jonchen.activity;
 
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
+import com.example.jonchen.base.BaseListAdapter;
+import com.example.jonchen.base.BaseViewHolder;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyBtn;
 import com.example.jonchen.view.MyLayout;
+import com.example.jonchen.view.MyListView;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -26,7 +35,11 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
     @BindView(R.id.mBtn)
     MyBtn mBtn;
+
+    @BindView(R.id.mListView)
+    MyListView mListView;
     private Thread thread;
+
 
     @Override
     public int getContentViewLayoutID() {
@@ -37,8 +50,6 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     protected void initView() {
     }
 
-
-
     @Override
     public void initData() {
         mLayout.setOnTouchListener(this);
@@ -47,6 +58,17 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         mBtn.setOnClickListener(this);
 
         EventBus.getDefault().post(new EventMessage<>("hahaha"));
+
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for(int i=0;i<20;i++){
+            list.add(1);
+        }
+
+        MyAdapter myAdapter = new MyAdapter(this, list, R.layout.item_watch);
+        mListView.setAdapter(myAdapter);
+
 
         /*   while(true){
 
@@ -69,14 +91,23 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
             }
         });
         thread.start();*/
+    }
 
 
+    class MyAdapter extends BaseListAdapter<Integer>{
+        public MyAdapter(Context context, List data, int layoutId) {
+            super(context, data, layoutId);
+        }
+        @Override
+        public void refreshView(BaseViewHolder holder, Integer o, int p) {
+
+        }
     }
 
 
     @Override
     protected void onDestroy() {
-        thread.interrupt();
+        //thread.interrupt();
         super.onDestroy();
     }
 
