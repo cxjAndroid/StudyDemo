@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
@@ -77,6 +79,7 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         mListView.setAdapter(myAdapter);
 
 
+
         /*   while(true){
 
            }*/
@@ -100,6 +103,8 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         thread.start();*/
 
         payUtils = new PayUtils();
+
+
     }
 
 
@@ -109,7 +114,9 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         }
         @Override
         public void refreshView(BaseViewHolder holder, Integer o, int p) {
+            LinearLayout contentLL = holder.getView(R.id.contentLL);
 
+            //String name = contentLL.getParent().getClass().getName();
         }
     }
 
