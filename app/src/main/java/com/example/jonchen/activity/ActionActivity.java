@@ -11,7 +11,10 @@ import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseListAdapter;
 import com.example.jonchen.base.BaseViewHolder;
 import com.example.jonchen.event.EventMessage;
+import com.example.jonchen.state.AliPayState;
+import com.example.jonchen.state.WeChatPayState;
 import com.example.jonchen.utils.LogUtils;
+import com.example.jonchen.utils.PayUtils;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyBtn;
 import com.example.jonchen.view.MyLayout;
@@ -33,12 +36,15 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     @BindView(R.id.mLayout)
     MyLayout mLayout;
 
-    @BindView(R.id.mBtn)
-    MyBtn mBtn;
+    @BindView(R.id.aliPay)
+    MyBtn aliPay;
+    @BindView(R.id.wxPay)
+    MyBtn wxPay;
 
     @BindView(R.id.mListView)
     MyListView mListView;
     private Thread thread;
+    private PayUtils payUtils;
 
 
     @Override
@@ -53,9 +59,10 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     @Override
     public void initData() {
         mLayout.setOnTouchListener(this);
-        mBtn.setOnTouchListener(this);
+
+        aliPay.setOnClickListener(this);
         mLayout.setOnClickListener(this);
-        mBtn.setOnClickListener(this);
+        wxPay.setOnClickListener(this);
 
         EventBus.getDefault().post(new EventMessage<>("hahaha"));
 
@@ -91,6 +98,8 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
             }
         });
         thread.start();*/
+
+        payUtils = new PayUtils();
     }
 
 
@@ -118,6 +127,16 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
     @Override
     public void onClick(View v) {
-        LogUtils.e("onClick----"+v.getId());
+        //LogUtils.e("onClick----"+v.getId());
+        switch (v.getId()){
+            case R.id.aliPay:
+                payUtils.setPayState(new AliPayState());
+                payUtils.pay();
+                break;
+            case R.id.wxPay:
+                payUtils.setPayState(new WeChatPayState());
+                payUtils.pay();
+                break;
+        }
     }
 }

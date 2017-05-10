@@ -6,10 +6,17 @@
     android:orientation="vertical">
 
     <com.example.jonchen.view.MyBtn
-        android:id="@+id/mBtn"
+        android:id="@+id/aliPay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="click me " />
+        android:text="aliPay" />
+
+    <com.example.jonchen.view.MyBtn
+        android:id="@+id/wxPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wxPay" />
+
 
     <com.example.jonchen.view.MyListView
         android:id="@+id/mListView"
