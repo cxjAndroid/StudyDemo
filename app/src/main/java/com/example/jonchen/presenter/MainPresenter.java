@@ -2,6 +2,7 @@ package com.example.jonchen.presenter;
 
 import android.os.Environment;
 
+import com.example.jonchen.R;
 import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.model.entity.DailyNewspaper;
 import com.example.jonchen.mvpview.MainView;
@@ -93,9 +94,8 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     public void getDailyInfo() {
-
-
-        RetrofitMethods.modelCommonRequest(getApiService().rxModelGetZhiHuNews(), new CustomObserver<DailyBean>() {
+        mView.showLoadingPage(R.id.mainRL);
+        RetrofitMethods.modelCommonRequest(getApiService().rxModelGetZhiHuNews(), new CustomObserver<DailyBean>(mView) {
             @Override
             public void doOnNext(DailyBean dailyBean) {
                 mView.refreshPage(dailyBean.getStories());

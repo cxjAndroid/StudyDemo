@@ -76,7 +76,7 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
     @Override
     protected void onDestroy() {
-        thread.interrupt();
+        //thread.interrupt();
         super.onDestroy();
     }
 

@@ -155,9 +155,9 @@
         <activity android:name="com.example.jonchen.activity.VoiceActivity" />
         <activity android:name=".activity.StudyDaggerActivity"/>
         <activity android:name=".activity.ActionActivity"/>
+        <activity android:name=".activity.NewsDetailActivity"/>
         <service android:name=".service.MyService"
             />
-
 
         <meta-data
             android:name="UMENG_APPKEY"

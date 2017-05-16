@@ -73,7 +73,10 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
     protected void initView() {
         initToolBar(toolbar, R.menu.menu);
         AnimatorUtil.scaleHide(floatBtn, 0, null);
+
     }
+
+
 
 
     @Override

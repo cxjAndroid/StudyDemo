@@ -6,6 +6,7 @@ import com.example.jonchen.model.entity.Doctor;
 import com.example.jonchen.model.entity.Hospital;
 import com.example.jonchen.model.entity.KmResult;
 import com.example.jonchen.model.entity.Movie;
+import com.example.jonchen.model.entity.NewsDetail;
 import com.example.jonchen.model.entity.RecommendDoctors;
 import com.example.jonchen.model.entity.Result;
 import com.example.jonchen.model.entity.ServerChatMessage;
@@ -113,10 +114,11 @@ public interface ApiService {
     @GET("news/latest")
     Observable<ResponseBody> rxGetZhiHuNews();
 
-
-
     @GET("http://news-at.zhihu.com/api/4/news/latest")
     Observable<DailyBean> rxModelGetZhiHuNews();
+
+    @GET("http://news-at.zhihu.com/api/4/news/{id}")
+    Observable<NewsDetail> getNewsDetail(@Path("id") String id);
 
     @GET("news/latest")
     Call<DailyBean> getDaily();
