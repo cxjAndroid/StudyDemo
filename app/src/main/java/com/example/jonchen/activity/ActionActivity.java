@@ -1,17 +1,31 @@
 package com.example.jonchen.activity;
 
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
+import com.example.jonchen.base.BaseListAdapter;
+import com.example.jonchen.base.BaseViewHolder;
 import com.example.jonchen.event.EventMessage;
+import com.example.jonchen.state.AliPayState;
+import com.example.jonchen.state.WeChatPayState;
 import com.example.jonchen.utils.LogUtils;
+import com.example.jonchen.utils.PayUtils;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyBtn;
 import com.example.jonchen.view.MyLayout;
+import com.example.jonchen.view.MyListView;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -24,9 +38,16 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     @BindView(R.id.mLayout)
     MyLayout mLayout;
 
-    @BindView(R.id.mBtn)
-    MyBtn mBtn;
+    @BindView(R.id.aliPay)
+    MyBtn aliPay;
+    @BindView(R.id.wxPay)
+    MyBtn wxPay;
+
+    @BindView(R.id.mListView)
+    MyListView mListView;
     private Thread thread;
+    private PayUtils payUtils;
+
 
     @Override
     public int getContentViewLayoutID() {
@@ -37,16 +58,27 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     protected void initView() {
     }
 
-
-
     @Override
     public void initData() {
         mLayout.setOnTouchListener(this);
-        mBtn.setOnTouchListener(this);
+
+        aliPay.setOnClickListener(this);
         mLayout.setOnClickListener(this);
-        mBtn.setOnClickListener(this);
+        wxPay.setOnClickListener(this);
 
         EventBus.getDefault().post(new EventMessage<>("hahaha"));
+
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for(int i=0;i<20;i++){
+            list.add(1);
+        }
+
+        MyAdapter myAdapter = new MyAdapter(this, list, R.layout.item_watch);
+        mListView.setAdapter(myAdapter);
+
+
 
         /*   while(true){
 
@@ -70,7 +102,22 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         });
         thread.start();*/
 
+        payUtils = new PayUtils();
 
+
+    }
+
+
+    class MyAdapter extends BaseListAdapter<Integer>{
+        public MyAdapter(Context context, List data, int layoutId) {
+            super(context, data, layoutId);
+        }
+        @Override
+        public void refreshView(BaseViewHolder holder, Integer o, int p) {
+            LinearLayout contentLL = holder.getView(R.id.contentLL);
+
+            //String name = contentLL.getParent().getClass().getName();
+        }
     }
 
 
@@ -87,6 +134,16 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
     @Override
     public void onClick(View v) {
-        LogUtils.e("onClick----"+v.getId());
+        //LogUtils.e("onClick----"+v.getId());
+        switch (v.getId()){
+            case R.id.aliPay:
+                payUtils.setPayState(new AliPayState());
+                payUtils.pay();
+                break;
+            case R.id.wxPay:
+                payUtils.setPayState(new WeChatPayState());
+                payUtils.pay();
+                break;
+        }
     }
 }

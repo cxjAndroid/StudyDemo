@@ -140,7 +140,7 @@
         <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>
         <!--+++++++++++++++++++++++++++++++++++++++++++++JPush end+++++++++++++++++++++++++++++++++++++++++-->
 
-        <activity android:name="com.example.jonchen.activity.MainActivity" >
+        <activity android:name="com.example.jonchen.activity.HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -153,11 +153,12 @@
         <activity android:name="com.example.jonchen.activity.DesignActivity">
         </activity>
         <activity android:name="com.example.jonchen.activity.VoiceActivity" />
-        <activity android:name=".activity.StudyDaggerActivity"/>
+        <activity android:name=".activity.DaggerStudyActivity"/>
         <activity android:name=".activity.ActionActivity"/>
-        <activity android:name=".activity.NewsDetailActivity"/>
+        <activity android:name=".activity.DaggerDemo2Activity"/>
         <service android:name=".service.MyService"
             />
+
 
         <meta-data
             android:name="UMENG_APPKEY"

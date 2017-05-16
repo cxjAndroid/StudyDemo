@@ -1,8 +1,6 @@
 package com.example.jonchen.dagger;
 
-import com.example.jonchen.activity.StudyDaggerActivity;
-
-import javax.inject.Singleton;
+import com.example.jonchen.activity.DaggerStudyActivity;
 
 import dagger.Component;
 
@@ -15,5 +13,5 @@ import dagger.Component;
 @Component(dependencies = SayComponent.class)
 public interface StudyComponent {
 
-    void Inject(StudyDaggerActivity activity);
+    void Inject(DaggerStudyActivity activity);
 }
