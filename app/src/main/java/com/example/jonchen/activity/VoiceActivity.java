@@ -104,7 +104,7 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
         mPresenter.getVoiceList();
 
         voiceListRunnable = new VoiceListRunnable();
-        voiceListHandler = new VoiceListHandler(new WeakReference<>(this));
+        voiceListHandler = new VoiceListHandler(this);
         voiceListHandler.sendEmptyMessage(0);
 
         //titleBar.setTextTitle(CacheUtils.getString(chatMessage.getWatchId()+"watchRealName", ""));
@@ -138,16 +138,16 @@ public class VoiceActivity extends BaseActivity<VoicePresenter> implements Voice
 
 
     static class VoiceListHandler extends Handler {
-        private VoiceActivity voiceActivity;
+        private WeakReference<VoiceActivity> weakReference;
 
-        public VoiceListHandler(WeakReference<VoiceActivity> weakReference) {
+        public VoiceListHandler(VoiceActivity voiceActivity) {
             super();
-            VoiceActivity voiceActivity = weakReference.get();
-            this.voiceActivity = voiceActivity;
+            weakReference = new WeakReference<>(voiceActivity);
         }
 
         @Override
         public void handleMessage(Message msg) {
+            VoiceActivity voiceActivity = weakReference.get();
             voiceActivity.mPresenter.getVoiceList();
             postDelayed(voiceActivity.voiceListRunnable, 10000);
         }

@@ -119,15 +119,15 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
     private static class MyHandler extends Handler {
         private WeakReference<BannerFragment> weakReference;
-        private BannerFragment bannerFragment;
 
         MyHandler(BannerFragment fragment) {
             weakReference = new WeakReference<>(fragment);
-            bannerFragment = weakReference.get();
+
         }
 
         @Override
         public void handleMessage(Message msg) {
+            BannerFragment bannerFragment = weakReference.get();
             bannerFragment.btnTest.setText("handler text");
         }
     }
