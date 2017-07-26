@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference;
  * Created by chenxujun on 2016/6/24.
  */
 public class BasePresenter<T> {
-    public T mView;
+    //public T mView;
     //public Context mContext;
     protected Reference<T> mViewRef;
 
@@ -25,7 +25,7 @@ public class BasePresenter<T> {
 
     public void attach(T view) {
         mViewRef = new WeakReference<T>(view);
-        mView = mViewRef.get();
+        //mView = mViewRef.get();
     }
 
     protected T getView() {

@@ -62,13 +62,13 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            mView.showTiming(millisUntilFinished);
+            getView().showTiming(millisUntilFinished);
         }
 
         @Override
         public void onFinish() {
             stopRecording(true);
-            mView.stopTiming();
+            getView().stopTiming();
         }
     };
     private ArrayList<ChatMessage> downLoadList;
@@ -97,7 +97,7 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
     public List<ChatMessage> getChatMsgFromDatabase() {
         messageList = chatMessageDAO.queryChatMessage(chatMessage.getUserId(),
                 chatMessage.getWatchId(), Constants.VOICE_PAGE_SIZE);
-        mView.refreshVoiceList(messageList);
+        getView().refreshVoiceList(messageList);
         return messageList;
     }
 
@@ -106,9 +106,9 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
                 chatMessage.getWatchId(), Constants.VOICE_PAGE_SIZE
                 , chatMessageList.size());
         if (moreMsgList.size() == 0)
-            mView.showNoMoreDataTip();
+            getView().showNoMoreDataTip();
         messageList.addAll(0, moreMsgList);
-        mView.refreshVoiceList(messageList);
+        getView().refreshVoiceList(messageList);
         return messageList;
     }
 
@@ -122,8 +122,8 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
             mediaRecorder = null;
         }
         mCountDownTimer.start();
-        mView.showSlippingUpCancelPic();
-        mView.stopTiming();
+        getView().showSlippingUpCancelPic();
+        getView().stopTiming();
         recordStartTime = System.currentTimeMillis();
 
         Observable.create(new Observable.OnSubscribe<Object>() {
@@ -166,7 +166,7 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
     public void stopRecording(boolean isSend) {
         int recordLength = (int) ((System.currentTimeMillis() - recordStartTime) / 1000);   /*计算出录音时长*/
         mCountDownTimer.cancel();
-        mView.restoreVoicePage();
+        getView().restoreVoicePage();
         if (audioRecFile != null && mediaRecorder != null) {
             try {
                 mediaRecorder.setOnErrorListener(null);
@@ -254,8 +254,8 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
                     voicePresenter.chatMessageDAO.addMessage(chatMessage);
                     voicePresenter.messageList.add(chatMessage);
                 }
-                if (null != voicePresenter.mView)
-                    voicePresenter.mView.refreshVoiceList(voicePresenter.messageList);
+                if (null != voicePresenter.getView())
+                    voicePresenter.getView().refreshVoiceList(voicePresenter.messageList);
             }
         }
     }
@@ -360,7 +360,7 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
                             int errorCode = jsonObject.optInt("errorCode");
                             if (errorCode == 0) {
                                 messageList.add(message);
-                                mView.refreshVoiceList(messageList);
+                                getView().refreshVoiceList(messageList);
                             } else {
                                 showSendFailedMsg(message);
                             }
@@ -382,7 +382,7 @@ public class VoicePresenter extends BasePresenter<VoiceView> {
     private void showSendFailedMsg(ChatMessage message) {
         ChatMessage changeStateMsg = chatMessageDAO.changeUploadState(message);
         messageList.add(changeStateMsg);
-        mView.refreshVoiceList(messageList);
+        getView().refreshVoiceList(messageList);
     }
 
     @NonNull

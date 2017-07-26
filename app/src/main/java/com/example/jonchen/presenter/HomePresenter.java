@@ -18,10 +18,10 @@ public class HomePresenter extends BasePresenter<HomeView> {
     }
 
     public void getBottomNavigationData() {
-        mView.initBottomNavigationBar(homeModel.initBottomNavigationData());
+        getView().initBottomNavigationBar(homeModel.initBottomNavigationData());
     }
 
     public void getFragmentPage() {
-        mView.initFragmentPage(homeModel.initFragmentPage());
+        getView().initFragmentPage(homeModel.initFragmentPage());
     }
 }

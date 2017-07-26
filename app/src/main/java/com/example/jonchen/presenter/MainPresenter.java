@@ -4,7 +4,6 @@ import android.os.Environment;
 
 import com.example.jonchen.R;
 import com.example.jonchen.model.entity.DailyBean;
-import com.example.jonchen.model.entity.DailyNewspaper;
 import com.example.jonchen.mvpview.MainView;
 import com.example.jonchen.retrofit.ApiService;
 import com.example.jonchen.retrofit.CustomObserver;
@@ -21,7 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -90,15 +88,15 @@ public class MainPresenter extends BasePresenter<MainView> {
         for (int i = 0; i < 15; i++) {
             arrayList.add(String.valueOf(i));
         }
-        mView.createSlidingMenuView(arrayList);
+        getView().createSlidingMenuView(arrayList);
     }
 
     public void getDailyInfo() {
-        mView.showLoadingPage(R.id.mainRL);
-        RetrofitMethods.modelCommonRequest(getApiService().rxModelGetZhiHuNews(), new CustomObserver<DailyBean>(mView) {
+        getView().showLoadingPage(R.id.mainRL);
+        RetrofitMethods.modelCommonRequest(getApiService().rxModelGetZhiHuNews(), new CustomObserver<DailyBean>(getView()) {
             @Override
             public void doOnNext(DailyBean dailyBean) {
-                mView.refreshPage(dailyBean.getStories());
+                getView().refreshPage(dailyBean.getStories());
             }
         });
 

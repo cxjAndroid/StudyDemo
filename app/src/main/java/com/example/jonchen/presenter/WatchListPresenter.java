@@ -34,7 +34,7 @@ public class WatchListPresenter extends BasePresenter<WatchListView> {
 
                     @Override
                     public void onNext(List<WatchInfo> watchInfoList) {
-                        mView.RefreshWatchList(watchInfoList);
+                        getView().RefreshWatchList(watchInfoList);
                     }
                 });
     }

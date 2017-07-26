@@ -1,7 +1,5 @@
 package com.example.jonchen.presenter;
 
-import android.content.Context;
-
 import com.example.jonchen.mvpview.DesignView;
 
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ public class DesignPresenter extends BasePresenter<DesignView> {
         for (int i = 0; i < 25; i++) {
             arrayList.add(String.valueOf(i));
         }
-        mView.createBottomSheetDialog(arrayList);
+        getView().createBottomSheetDialog(arrayList);
     }
 
 }
