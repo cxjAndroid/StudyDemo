@@ -2,6 +2,7 @@ package com.example.jonchen.presenter;
 
 import com.example.jonchen.retrofit.ApiService;
 import com.example.jonchen.retrofit.RetrofitMethods;
+import com.example.jonchen.utils.ToastUtils;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
@@ -13,6 +14,7 @@ public class BasePresenter<T> {
     //public T mView;
     //public Context mContext;
     protected Reference<T> mViewRef;
+
 
     public BasePresenter(T mView) {
         attach(mView);

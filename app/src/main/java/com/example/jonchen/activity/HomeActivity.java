@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 
@@ -18,6 +20,8 @@ import com.example.jonchen.base.MyAnnotation;
 import com.example.jonchen.base.MyEnum;
 import com.example.jonchen.dagger.DaggerHomeActivityComponent;
 import com.example.jonchen.dagger.HomeActivityModule;
+import com.example.jonchen.model.entity.Child;
+import com.example.jonchen.model.entity.Parent;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
 import com.example.jonchen.utils.LogUtils;
@@ -156,15 +160,15 @@ public class HomeActivity extends BaseActivity implements HomeView {
             e.printStackTrace();
         }
 
-
         ArrayList<String> list = new ArrayList<>();
-        @SuppressWarnings("unchecked")
-        final Collection<String> proxy = (Collection<String>) getProxy(list);
+
+
+       /* final Collection<String> proxy = (Collection<String>) getProxy(list);
         proxy.add("1");
         proxy.add("1");
         proxy.add("1");
         proxy.add("1");
-        proxy.size();
+        proxy.size();*/
 
 /*
         Class<Jack> jackClass = Jack.class;
@@ -275,7 +279,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         });
     }
 
-    private class ViewPageAdapter extends FragmentPagerAdapter {
+    private class ViewPageAdapter extends FragmentStatePagerAdapter {
         private List<BaseFragment> fragmentList;
 
         ViewPageAdapter(FragmentManager fm, List<BaseFragment> fragmentList) {

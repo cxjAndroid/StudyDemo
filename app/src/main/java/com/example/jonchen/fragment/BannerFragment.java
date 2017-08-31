@@ -5,10 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -34,6 +37,8 @@ import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.model.entity.People;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
+import com.example.jonchen.receiver.AlarmReceiver;
+import com.example.jonchen.service.AlarmService;
 import com.example.jonchen.service.MyService;
 import com.example.jonchen.utils.DpUtils;
 import com.example.jonchen.utils.IntentUtils;
@@ -46,7 +51,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -214,7 +221,10 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 IntentUtils.startActivity(baseActivity, ActionActivity.class);
                 break;
             case R.id.btnDemo:
-                IntentUtils.startActivity(baseActivity, DaggerDemo2Activity.class);
+                addLocalNotification();
+
+
+                //IntentUtils.startActivity(baseActivity, DaggerDemo2Activity.class);
                 //IntentUtils.startActivity(baseActivity, DaggerStudyActivity.class);
                 /*Intent intent = new Intent(baseActivity, MyService.class);
                 baseActivity.bindService(intent, new ServiceConnection() {
@@ -233,6 +243,47 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 break;
         }
 
+    }
+
+
+    private void addLocalNotification() {
+        Date date;
+        long delaySeconds = 5 * 60 * 1000;
+        long start = System.currentTimeMillis();
+        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        try {
+            date = sdf.parse(startTime);
+            start = date.getTime();
+        } catch (Exception e) {
+            SuningLog.e(this, e.getMessage());
+        }*/
+
+        long notifyTime = start + 5 * 1000;
+
+        Intent intent = new Intent(getActivity(), AlarmService.class);
+        intent.putExtra("notifyTime", notifyTime);
+        getActivity().startService(intent);
+
+
+
+
+        /*
+            // 生成一个随机数对象
+        Random r = new Random();
+        Intent intent = new Intent(
+                AlarmReceiver.COUPON_ADD_NOTICE_ACTION);
+        intent.putExtra("title",
+                getActivity().getString(R.string.app_name));
+        PendingIntent pi = PendingIntent.getBroadcast(getActivity(), r.nextInt(),
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) getActivity()
+                .getSystemService(Context.ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            am.setExact(AlarmManager.RTC_WAKEUP,notifyTime, pi);
+        }else {
+            am.set(AlarmManager.RTC_WAKEUP, notifyTime, pi);
+        }*/
     }
 
 
