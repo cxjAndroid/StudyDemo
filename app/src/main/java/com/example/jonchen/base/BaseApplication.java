@@ -40,7 +40,7 @@ public class BaseApplication extends Application {
             // You should not init your app in this process.
             return;
         }*/
-        LeakCanary.install(this);
+        //LeakCanary.install(this);
 
         mMainThreadId = android.os.Process.myTid();
         mMainThread = Thread.currentThread();

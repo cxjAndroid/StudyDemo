@@ -17,6 +17,7 @@ import com.example.jonchen.state.AliPayState;
 import com.example.jonchen.state.WeChatPayState;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.PayUtils;
+import com.example.jonchen.utils.PopupWindowUtils;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyBtn;
 import com.example.jonchen.view.MyLayout;
@@ -71,7 +72,7 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
         ArrayList<Integer> list = new ArrayList<>();
 
-        for(int i=0;i<20;i++){
+        for (int i = 0; i < 20; i++) {
             list.add(1);
         }
 
@@ -103,15 +104,14 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         thread.start();*/
 
         payUtils = new PayUtils();
-
-
     }
 
 
-    class MyAdapter extends BaseListAdapter<Integer>{
+    class MyAdapter extends BaseListAdapter<Integer> {
         public MyAdapter(Context context, List data, int layoutId) {
             super(context, data, layoutId);
         }
+
         @Override
         public void refreshView(BaseViewHolder holder, Integer o, int p) {
             LinearLayout contentLL = holder.getView(R.id.contentLL);
@@ -135,7 +135,7 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     @Override
     public void onClick(View v) {
         //LogUtils.e("onClick----"+v.getId());
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.aliPay:
                 payUtils.setPayState(new AliPayState());
                 payUtils.pay();
@@ -143,6 +143,9 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
             case R.id.wxPay:
                 payUtils.setPayState(new WeChatPayState());
                 payUtils.pay();
+                PopupWindowUtils popupWindowUtils = new PopupWindowUtils();
+                View view = View.inflate(this, R.layout.activity_view, null);
+                popupWindowUtils.showPop(wxPay, view);
                 break;
         }
     }

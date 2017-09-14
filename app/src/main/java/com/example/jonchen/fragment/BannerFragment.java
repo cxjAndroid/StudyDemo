@@ -31,6 +31,7 @@ import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
 import com.example.jonchen.activity.DaggerDemo2Activity;
 import com.example.jonchen.adapter.BannerAdapter;
+import com.example.jonchen.base.BaseApplication;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.DailyBean;
@@ -40,6 +41,7 @@ import com.example.jonchen.presenter.BannerPresenter;
 import com.example.jonchen.receiver.AlarmReceiver;
 import com.example.jonchen.service.AlarmService;
 import com.example.jonchen.service.MyService;
+import com.example.jonchen.utils.CacheUtils;
 import com.example.jonchen.utils.DpUtils;
 import com.example.jonchen.utils.IntentUtils;
 import com.example.jonchen.utils.LogUtils;
@@ -203,6 +205,11 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 LogUtils.e(String.valueOf(DpUtils.px2dip(imageView.getRight())) + "--------");
             }
         });
+
+
+        long start = System.currentTimeMillis();
+        long notifyTime = start + 15 * 1000;
+        CacheUtils.putLong("notifyTime",notifyTime);
     }
 
 
@@ -249,7 +256,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     private void addLocalNotification() {
         Date date;
         long delaySeconds = 5 * 60 * 1000;
-        long start = System.currentTimeMillis();
+
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         try {
             date = sdf.parse(startTime);
@@ -258,14 +265,12 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
             SuningLog.e(this, e.getMessage());
         }*/
 
-        long notifyTime = start + 5 * 1000;
+        long start = System.currentTimeMillis();
+        long notifyTime = start + 15 * 1000;
 
-        Intent intent = new Intent(getActivity(), AlarmService.class);
+        Intent intent = new Intent(BaseApplication.getApplication(), AlarmService.class);
         intent.putExtra("notifyTime", notifyTime);
         getActivity().startService(intent);
-
-
-
 
         /*
             // 生成一个随机数对象

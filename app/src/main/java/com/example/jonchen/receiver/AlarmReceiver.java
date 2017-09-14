@@ -13,6 +13,8 @@ import android.support.v4.app.NotificationCompat;
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
 
+import java.util.List;
+
 
 /**
  * @Description 领券中心 广播接收器
@@ -24,12 +26,17 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static final String COUPON_ADD_NOTICE_ACTION = "coupon_center_add_notice";
     public static final String COUPON_NOTI_JUMP_ACTION = "coupon_center_notice_jump";
     public final static int NOTIFICATION_ID = "baseapi_add_notice".hashCode();
+    private static String saveId = " ";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (COUPON_ADD_NOTICE_ACTION.equals(action)) {
             String title = intent.getStringExtra("title");
+           /*  if (saveId.equals(title)) {
+                return;
+            }
+            saveId = title;*/
             //            String content = intent.getStringExtra("content");
             //            String targetUrl = intent.getStringExtra("targetUrl");
             Bitmap bigIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_location_on_white_24dp);

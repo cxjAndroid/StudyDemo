@@ -4,6 +4,9 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -11,6 +14,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.example.jonchen.receiver.AlarmReceiver;
+import com.example.jonchen.utils.CacheUtils;
+import com.example.jonchen.utils.LogUtils;
 
 import java.util.Random;
 
@@ -21,6 +26,7 @@ import java.util.Random;
 public class AlarmService extends Service {
 
     private final static int GRAY_SERVICE_ID = 1001;
+    private long notifyTime;
 
     @Nullable
     @Override
@@ -30,25 +36,27 @@ public class AlarmService extends Service {
 
     @Override
     public void onCreate() {
+        LogUtils.e("AlarmService -- onCreate");
+        notifyTime = CacheUtils.getLong("notifyTime", 0);
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        LogUtils.e("AlarmService -- onStartCommand");
 
-        if (Build.VERSION.SDK_INT < 18) {
+       /* if (Build.VERSION.SDK_INT < 18) {
             startForeground(GRAY_SERVICE_ID, new Notification());//API < 18 ，此方法能有效隐藏Notification上的图标
         } else {
             Intent innerIntent = new Intent(this, GrayInnerService.class);
             startService(innerIntent);
             startForeground(GRAY_SERVICE_ID, new Notification());
-        }
+        }*/
 
         flags = START_FLAG_REDELIVERY;
 
         if (intent != null) {
-            long notifyTime = intent.getLongExtra("notifyTime", 0);
-
+            //long notifyTime = intent.getLongExtra("notifyTime", 0);
             // 生成一个随机数对象
             Random r = new Random();
             Intent broadIntent = new Intent(
@@ -72,6 +80,7 @@ public class AlarmService extends Service {
 
     @Override
     public void onDestroy() {
+        LogUtils.e("AlarmService -- onDestroy");
         super.onDestroy();
     }
 
@@ -84,7 +93,7 @@ public class AlarmService extends Service {
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
             startForeground(GRAY_SERVICE_ID, new Notification());
-            stopForeground(true);
+            //stopForeground(true);
             stopSelf();
             return super.onStartCommand(intent, flags, startId);
         }

@@ -52,6 +52,7 @@ android {
 
     buildTypes {
         release {
+            debuggable true
             buildConfigField "boolean", "IS_DEBUG", "false"
             //混淆
             minifyEnabled true
