@@ -159,11 +159,13 @@
         <activity android:name=".activity.DaggerStudyActivity" />
         <activity android:name=".activity.ActionActivity" />
         <activity android:name=".activity.DaggerDemo2Activity" />
+        <activity android:name=".activity.TouchEventActivity" />
 
         <service android:name=".service.MyService" />
         <service android:name=".service.AlarmService" />
-        <service android:name=".service.AlarmService$GrayInnerService"/>
-        <service android:name=".service.JobSchedulerService"
+        <service android:name=".service.AlarmService$GrayInnerService" />
+        <service
+            android:name=".service.JobSchedulerService"
             android:permission="android.permission.BIND_JOB_SERVICE"
 
             />

@@ -4,17 +4,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.jonchen.view.MyViewPager
-        android:id="@+id/mViewpager"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <com.ashokvarma.bottomnavigation.BottomNavigationBar
-        android:id="@+id/navigationBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/white" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/red">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="woshiview"
+                    />
+            </RelativeLayout>
+
+            <com.example.jonchen.view.MyViewPager
+                android:id="@+id/mViewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!--<com.ashokvarma.bottomnavigation.BottomNavigationBar
+                android:id="@+id/navigationBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/white" />-->
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
 import com.example.jonchen.activity.DaggerDemo2Activity;
+import com.example.jonchen.activity.TouchEventActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseApplication;
 import com.example.jonchen.base.BaseFragment;
@@ -79,6 +80,8 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     Button btnDemo;
     @BindView(R.id.imageView)
     ImageView imageView;
+    @BindView(R.id.btnTouch)
+    Button btnTouch;
     /*  @BindView(R.id.loadStatusPage)
       LoadStatusPage loadStatusPage;*/
     @BindView(R.id.contentRl)
@@ -159,6 +162,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
         ObjectAnimator translationX = ObjectAnimator.ofFloat(btnTest, "translationX", 0, 200f);
         translationX.setDuration(2000).start();
+
         /*btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,7 +213,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
         long start = System.currentTimeMillis();
         long notifyTime = start + 15 * 1000;
-        CacheUtils.putLong("notifyTime",notifyTime);
+        CacheUtils.putLong("notifyTime", notifyTime);
     }
 
 
@@ -220,7 +224,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     }
 
 
-    @OnClick({R.id.btnTest, R.id.btnDemo})
+    @OnClick({R.id.btnTest, R.id.btnDemo,R.id.btnTouch})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnTest:
@@ -229,8 +233,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 break;
             case R.id.btnDemo:
                 addLocalNotification();
-
-
                 //IntentUtils.startActivity(baseActivity, DaggerDemo2Activity.class);
                 //IntentUtils.startActivity(baseActivity, DaggerStudyActivity.class);
                 /*Intent intent = new Intent(baseActivity, MyService.class);
@@ -246,6 +248,10 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
                     }
                 }, Context.BIND_AUTO_CREATE);*/
+
+                break;
+            case R.id.btnTouch:
+                IntentUtils.startActivity(baseActivity, TouchEventActivity.class);
 
                 break;
         }

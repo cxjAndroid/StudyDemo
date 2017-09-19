@@ -20,8 +20,8 @@ import butterknife.BindView;
 
 public class WatchListFragment extends BaseFragment<WatchListPresenter> implements WatchListView {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+   /* @BindView(R.id.toolbar)
+    Toolbar toolbar;*/
     @BindView(R.id.mRecyclerView)
     MyRecyclerView myRecyclerView;
     private WatchListAdapter adapter;
