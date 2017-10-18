@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
 import com.example.jonchen.activity.DaggerDemo2Activity;
+import com.example.jonchen.activity.NotificationActivity;
 import com.example.jonchen.activity.TouchEventActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseApplication;
@@ -134,13 +135,11 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
         MyHandler(BannerFragment fragment) {
             weakReference = new WeakReference<>(fragment);
-
         }
 
         @Override
         public void handleMessage(Message msg) {
             BannerFragment bannerFragment = weakReference.get();
-            bannerFragment.btnTest.setText("handler text");
         }
     }
 
@@ -179,13 +178,12 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         });*/
 
 
-        /**
-         * onTouch事件返回false会使View执行onTouchEvent方法，imageView默认不可以点击，
-         * 无法进入switch (action)语句中，所以会返回false，导致后续action move等动作无法执行。
-         * 可使用imageView.setClickable(true)使其进入switch (action)语句中返回true解决或直接
-         * 在onTouch中返回true不執行onTouchEvent方法。
-         */
         //imageView.setClickable(true);
+
+        /*onTouch事件返回false会使View执行onTouchEvent方法，imageView默认不可以点击，
+        无法进入switch (action)语句中，所以会返回false，导致后续action move等动作无法执行。
+        可使用imageView.setClickable(true)使其进入switch (action)语句中返回true解决或直接
+        在onTouch中返回true不執行onTouchEvent方法。*/
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -224,7 +222,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     }
 
 
-    @OnClick({R.id.btnTest, R.id.btnDemo,R.id.btnTouch})
+    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnTest:
@@ -232,7 +230,9 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 IntentUtils.startActivity(baseActivity, ActionActivity.class);
                 break;
             case R.id.btnDemo:
-                addLocalNotification();
+                IntentUtils.startActivity(baseActivity, NotificationActivity.class);
+                //addLocalNotification();
+
                 //IntentUtils.startActivity(baseActivity, DaggerDemo2Activity.class);
                 //IntentUtils.startActivity(baseActivity, DaggerStudyActivity.class);
                 /*Intent intent = new Intent(baseActivity, MyService.class);
@@ -257,46 +257,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         }
 
     }
-
-
-    private void addLocalNotification() {
-        Date date;
-        long delaySeconds = 5 * 60 * 1000;
-
-        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        try {
-            date = sdf.parse(startTime);
-            start = date.getTime();
-        } catch (Exception e) {
-            SuningLog.e(this, e.getMessage());
-        }*/
-
-        long start = System.currentTimeMillis();
-        long notifyTime = start + 15 * 1000;
-
-        Intent intent = new Intent(BaseApplication.getApplication(), AlarmService.class);
-        intent.putExtra("notifyTime", notifyTime);
-        getActivity().startService(intent);
-
-        /*
-            // 生成一个随机数对象
-        Random r = new Random();
-        Intent intent = new Intent(
-                AlarmReceiver.COUPON_ADD_NOTICE_ACTION);
-        intent.putExtra("title",
-                getActivity().getString(R.string.app_name));
-        PendingIntent pi = PendingIntent.getBroadcast(getActivity(), r.nextInt(),
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) getActivity()
-                .getSystemService(Context.ALARM_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setExact(AlarmManager.RTC_WAKEUP,notifyTime, pi);
-        }else {
-            am.set(AlarmManager.RTC_WAKEUP, notifyTime, pi);
-        }*/
-    }
-
 
     @Override
     protected void initPresenter() {

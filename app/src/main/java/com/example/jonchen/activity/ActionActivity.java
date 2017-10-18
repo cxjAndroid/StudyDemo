@@ -3,10 +3,7 @@ package com.example.jonchen.activity;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
@@ -18,7 +15,6 @@ import com.example.jonchen.state.WeChatPayState;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.PayUtils;
 import com.example.jonchen.utils.PopupWindowUtils;
-import com.example.jonchen.utils.ToastUtils;
 import com.example.jonchen.view.MyBtn;
 import com.example.jonchen.view.MyLayout;
 import com.example.jonchen.view.MyListView;
@@ -85,7 +81,7 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
            }*/
 
-      /*  thread = new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -93,15 +89,15 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
                     LogUtils.e("no interrupt");
                 }
                 LogUtils.e("interrupt");
-                *//*try {
+                try {
                     Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     LogUtils.e("interrupt");
-                }*//*
+                }
             }
         });
-        thread.start();*/
+        thread.start();
 
         payUtils = new PayUtils();
     }
@@ -123,7 +119,8 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
     @Override
     protected void onDestroy() {
-        //thread.interrupt();
+         thread.interrupt();
+
         super.onDestroy();
     }
 
@@ -138,15 +135,14 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         switch (v.getId()) {
             case R.id.aliPay:
                 payUtils.setPayState(new AliPayState());
-                payUtils.pay();
                 break;
             case R.id.wxPay:
                 payUtils.setPayState(new WeChatPayState());
-                payUtils.pay();
                 PopupWindowUtils popupWindowUtils = new PopupWindowUtils();
                 View view = View.inflate(this, R.layout.activity_view, null);
                 popupWindowUtils.showPop(wxPay, view);
                 break;
         }
+        payUtils.pay();
     }
 }
