@@ -26,7 +26,7 @@ public class BasePresenter<T> {
     }*/
 
     public void attach(T view) {
-        mViewRef = new WeakReference<T>(view);
+        mViewRef = new WeakReference<>(view);
         //mView = mViewRef.get();
     }
 

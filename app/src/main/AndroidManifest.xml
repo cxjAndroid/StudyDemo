@@ -161,6 +161,7 @@
         <activity android:name=".activity.DaggerDemo2Activity" />
         <activity android:name=".activity.TouchEventActivity" />
         <activity android:name=".activity.NotificationActivity" />
+        <activity android:name=".activity.SearchActivity" />
 
         <service android:name=".service.MyService" />
         <service android:name=".service.AlarmService" />

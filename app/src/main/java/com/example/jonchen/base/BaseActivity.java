@@ -46,6 +46,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return statusPage;
     }*/
 
+    public T getPresenter() {
+        return mPresenter;
+    }
+
+    public void setPresenter(T mPresenter) {
+        this.mPresenter = mPresenter;
+    }
+
     public void setStatusPage(LoadStatusPage statusPage) {
         this.statusPage = statusPage;
     }

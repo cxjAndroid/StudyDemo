@@ -28,7 +28,7 @@ public class DoctorListAdapter extends BaseRecyclerAdapter<Doctor> {
     }
 
     /*@Override
-    public void refreshView(BaseViewHolder holder, Doctor doctor, int p) {
+    public void refreshHistoryListView(BaseViewHolder holder, Doctor doctor, int p) {
         TextView text_dep = holder.getView(R.id.text_dep);
         TextView text_doc = holder.getView(R.id.text_doc);
         SimpleDraweeView image_doc = holder.getView(R.id.image_doc);

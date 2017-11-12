@@ -31,6 +31,7 @@ import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
 import com.example.jonchen.activity.DaggerDemo2Activity;
 import com.example.jonchen.activity.NotificationActivity;
+import com.example.jonchen.activity.SearchActivity;
 import com.example.jonchen.activity.TouchEventActivity;
 import com.example.jonchen.adapter.BannerAdapter;
 import com.example.jonchen.base.BaseApplication;
@@ -222,7 +223,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     }
 
 
-    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch})
+    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch,R.id.btnSearch})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnTest:
@@ -252,6 +253,10 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 break;
             case R.id.btnTouch:
                 IntentUtils.startActivity(baseActivity, TouchEventActivity.class);
+
+                break;
+            case R.id.btnSearch:
+                IntentUtils.startActivity(baseActivity, SearchActivity.class);
 
                 break;
         }

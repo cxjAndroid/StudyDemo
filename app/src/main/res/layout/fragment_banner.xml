@@ -43,13 +43,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView"
-                    android:background="@color/red">
+                    android:background="@color/red"
+                    android:orientation="vertical">
 
                     <Button
                         android:id="@+id/btnDemo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="to Notification Activity" />
+
+                    <Button
+                        android:id="@+id/btnSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to Search Activity" />
+
 
                     <Button
                         android:id="@+id/btnTouch"
