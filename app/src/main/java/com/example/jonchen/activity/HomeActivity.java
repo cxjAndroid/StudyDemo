@@ -180,8 +180,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }*/
 
         //DaggerHomeActivityComponent.create().inject(this);
-         DaggerHomeActivityComponent.builder()
-                 .homeActivityModule(new HomeActivityModule(this)).build().inject(this);
+        DaggerHomeActivityComponent.builder()
+                .homeActivityModule(new HomeActivityModule(this)).build().inject(this);
     }
 
 

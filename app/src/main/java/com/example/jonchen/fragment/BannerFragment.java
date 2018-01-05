@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
+import com.example.jonchen.activity.AnnotationActivity;
 import com.example.jonchen.activity.DaggerDemo2Activity;
 import com.example.jonchen.activity.NotificationActivity;
 import com.example.jonchen.activity.SearchActivity;
@@ -84,6 +85,9 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     ImageView imageView;
     @BindView(R.id.btnTouch)
     Button btnTouch;
+    @BindView(R.id.btnAnnotation)
+    Button btnAnnotation;
+
     /*  @BindView(R.id.loadStatusPage)
       LoadStatusPage loadStatusPage;*/
     @BindView(R.id.contentRl)
@@ -96,6 +100,14 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     private int startY;
     private int moveX;
     private int moveY;
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myRunnable != null) {
+            handler.removeCallbacks(myRunnable);
+        }
+    }
 
     @Override
     public int getContentViewLayoutID() {
@@ -223,7 +235,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     }
 
 
-    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch,R.id.btnSearch})
+    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch, R.id.btnSearch, R.id.btnAnnotation})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnTest:
@@ -257,7 +269,9 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 break;
             case R.id.btnSearch:
                 IntentUtils.startActivity(baseActivity, SearchActivity.class);
-
+                break;
+            case R.id.btnAnnotation:
+                IntentUtils.startActivity(baseActivity, AnnotationActivity.class);
                 break;
         }
 
@@ -343,14 +357,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         });
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (myRunnable != null) {
-            handler.removeCallbacks(myRunnable);
-        }
-    }
 
     class MyRunnable implements Runnable {
         @Override

@@ -16,5 +16,4 @@ public interface SearchModel {
 
     void deleteSingleHistory(String keywords);
 
-
 }

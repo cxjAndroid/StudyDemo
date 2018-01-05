@@ -162,6 +162,7 @@
         <activity android:name=".activity.TouchEventActivity" />
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.AnnotationActivity" />
 
         <service android:name=".service.MyService" />
         <service android:name=".service.AlarmService" />
