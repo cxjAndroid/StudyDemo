@@ -32,4 +32,5 @@
     <string name="recording_monitor">录音监控</string>
     <string name="format">"my name is %s"</string>
     <string name="permission_refuse">权限已被禁止！</string>
+    <string name="notification_tip">点我弹通知栏</string>
 </resources>

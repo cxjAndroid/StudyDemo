@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 
 public class HomeModelImpl implements HomeModel {
-
+    
     @Override
     public ArrayList<BottomNavigationItem> initBottomNavigationData() {
         ArrayList<BottomNavigationItem> navigationItems = new ArrayList<>();

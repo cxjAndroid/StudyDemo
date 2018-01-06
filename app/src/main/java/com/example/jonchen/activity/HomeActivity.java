@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 
@@ -18,6 +20,8 @@ import com.example.jonchen.base.MyAnnotation;
 import com.example.jonchen.base.MyEnum;
 import com.example.jonchen.dagger.DaggerHomeActivityComponent;
 import com.example.jonchen.dagger.HomeActivityModule;
+import com.example.jonchen.model.entity.Child;
+import com.example.jonchen.model.entity.Parent;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
 import com.example.jonchen.utils.LogUtils;
@@ -44,8 +48,8 @@ import rx.functions.Func1;
  */
 
 public class HomeActivity extends BaseActivity implements HomeView {
-    @BindView(R.id.navigationBar)
-    BottomNavigationBar navigationBar;
+    /*@BindView(R.id.navigationBar)
+    BottomNavigationBar navigationBar;*/
     @BindView(R.id.mViewpager)
     MyViewPager mViewpager;
     private ViewPageAdapter pageAdapter;
@@ -156,15 +160,15 @@ public class HomeActivity extends BaseActivity implements HomeView {
             e.printStackTrace();
         }
 
-
         ArrayList<String> list = new ArrayList<>();
-        @SuppressWarnings("unchecked")
-        final Collection<String> proxy = (Collection<String>) getProxy(list);
+
+
+       /* final Collection<String> proxy = (Collection<String>) getProxy(list);
         proxy.add("1");
         proxy.add("1");
         proxy.add("1");
         proxy.add("1");
-        proxy.size();
+        proxy.size();*/
 
 /*
         Class<Jack> jackClass = Jack.class;
@@ -176,8 +180,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }*/
 
         //DaggerHomeActivityComponent.create().inject(this);
-         DaggerHomeActivityComponent.builder()
-                 .homeActivityModule(new HomeActivityModule(this)).build().inject(this);
+        DaggerHomeActivityComponent.builder()
+                .homeActivityModule(new HomeActivityModule(this)).build().inject(this);
     }
 
 
@@ -228,7 +232,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void initBottomNavigationBar(List<BottomNavigationItem> itemList) {
-        navigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        /*navigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         navigationBar.setActiveColor(R.color.colorPrimary);
         for (BottomNavigationItem item : itemList) {
             navigationBar.addItem(item);
@@ -249,7 +253,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
             public void onTabReselected(int position) {
 
             }
-        });
+        });*/
 
     }
 
@@ -265,7 +269,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
             @Override
             public void onPageSelected(int position) {
-                navigationBar.selectTab(position);
+                //navigationBar.selectTab(position);
             }
 
             @Override
@@ -275,7 +279,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         });
     }
 
-    private class ViewPageAdapter extends FragmentPagerAdapter {
+    private class ViewPageAdapter extends FragmentStatePagerAdapter {
         private List<BaseFragment> fragmentList;
 
         ViewPageAdapter(FragmentManager fm, List<BaseFragment> fragmentList) {

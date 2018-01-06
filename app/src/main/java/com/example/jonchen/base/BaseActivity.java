@@ -34,7 +34,7 @@ import retrofit2.Call;
  * Created by chenxujun on 2016/6/1.
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
-    
+
     public boolean isBindEventBus;
     private Call<?> call;
     private static LoadStatusPage statusPage;
@@ -45,6 +45,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
    /* public LoadStatusPage getStatusPage() {
         return statusPage;
     }*/
+
+    public T getPresenter() {
+        return mPresenter;
+    }
+
+    public void setPresenter(T mPresenter) {
+        this.mPresenter = mPresenter;
+    }
 
     public void setStatusPage(LoadStatusPage statusPage) {
         this.statusPage = statusPage;
@@ -58,7 +66,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         this.call = call;
     }
 
-    public ApiService getApiService(){
+    public ApiService getApiService() {
         return RetrofitMethods.getApiService();
     }
 
@@ -68,14 +76,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int contentViewLayoutID = getContentViewLayoutID();
-        if (contentViewLayoutID != 0)
-            setContentView(contentViewLayoutID);
-
+        if (contentViewLayoutID != 0) setContentView(contentViewLayoutID);
         if (isNeedBindButterKnife) ButterKnife.bind(this);
         initView();
         initPresenter();
         initData();
-        StatusBarUtil.setColor(this,getResources().getColor(R.color.colorPrimaryDark));
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
     }
 
     public abstract int getContentViewLayoutID();
@@ -116,7 +122,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return layout;
     }
 
-    protected RefreshLayout initRefreshLayout(RefreshLayout layout,RefreshLayoutDirection direction) {
+    protected RefreshLayout initRefreshLayout(RefreshLayout layout, RefreshLayoutDirection direction) {
         layout.setEnabled(true);
         layout.setDirection(direction);
         layout.setDefaultColor();

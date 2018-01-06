@@ -3,16 +3,18 @@ package com.example.jonchen.activity;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseListAdapter;
 import com.example.jonchen.base.BaseViewHolder;
 import com.example.jonchen.event.EventMessage;
+import com.example.jonchen.state.AliPayState;
+import com.example.jonchen.state.WeChatPayState;
 import com.example.jonchen.utils.LogUtils;
-import com.example.jonchen.utils.ToastUtils;
+import com.example.jonchen.utils.PayUtils;
+import com.example.jonchen.utils.PopupWindowUtils;
 import com.example.jonchen.view.MyBtn;
 import com.example.jonchen.view.MyLayout;
 import com.example.jonchen.view.MyListView;
@@ -33,12 +35,15 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     @BindView(R.id.mLayout)
     MyLayout mLayout;
 
-    @BindView(R.id.mBtn)
-    MyBtn mBtn;
+    @BindView(R.id.aliPay)
+    MyBtn aliPay;
+    @BindView(R.id.wxPay)
+    MyBtn wxPay;
 
     @BindView(R.id.mListView)
     MyListView mListView;
     private Thread thread;
+    private PayUtils payUtils;
 
 
     @Override
@@ -53,16 +58,17 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     @Override
     public void initData() {
         mLayout.setOnTouchListener(this);
-        mBtn.setOnTouchListener(this);
+
+        aliPay.setOnClickListener(this);
         mLayout.setOnClickListener(this);
-        mBtn.setOnClickListener(this);
+        wxPay.setOnClickListener(this);
 
         EventBus.getDefault().post(new EventMessage<>("hahaha"));
 
 
         ArrayList<Integer> list = new ArrayList<>();
 
-        for(int i=0;i<20;i++){
+        for (int i = 0; i < 20; i++) {
             list.add(1);
         }
 
@@ -70,44 +76,51 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         mListView.setAdapter(myAdapter);
 
 
+
         /*   while(true){
 
            }*/
 
-      /*  thread = new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
 
-                while(!thread.isInterrupted()){
+                while (!thread.isInterrupted()) {
                     LogUtils.e("no interrupt");
                 }
                 LogUtils.e("interrupt");
-                *//*try {
+                try {
                     Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     LogUtils.e("interrupt");
-                }*//*
+                }
             }
         });
-        thread.start();*/
+        thread.start();
+
+        payUtils = new PayUtils();
     }
 
 
-    class MyAdapter extends BaseListAdapter<Integer>{
+    class MyAdapter extends BaseListAdapter<Integer> {
         public MyAdapter(Context context, List data, int layoutId) {
             super(context, data, layoutId);
         }
+
         @Override
         public void refreshView(BaseViewHolder holder, Integer o, int p) {
+            LinearLayout contentLL = holder.getView(R.id.contentLL);
 
+            //String name = contentLL.getParent().getClass().getName();
         }
     }
 
 
     @Override
     protected void onDestroy() {
-        //thread.interrupt();
+        thread.interrupt();
+
         super.onDestroy();
     }
 
@@ -118,6 +131,18 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
 
     @Override
     public void onClick(View v) {
-        LogUtils.e("onClick----"+v.getId());
+        //LogUtils.e("onClick----"+v.getId());
+        switch (v.getId()) {
+            case R.id.aliPay:
+                payUtils.setPayState(new AliPayState());
+                break;
+            case R.id.wxPay:
+                payUtils.setPayState(new WeChatPayState());
+                PopupWindowUtils popupWindowUtils = new PopupWindowUtils();
+                View view = View.inflate(this, R.layout.activity_view, null);
+                popupWindowUtils.showPop(wxPay, view);
+                break;
+        }
+        payUtils.pay();
     }
 }

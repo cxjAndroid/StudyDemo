@@ -44,10 +44,10 @@ import java.util.List;
 import butterknife.BindView;
 
 public class ZhFragment extends BaseFragment<MainPresenter> implements MainView, MenuAdapter.MenuItemCallBack {
-  /*  @BindView(R.id.btn)
-    Button btn;/
-    @BindView(R.id.tv)
-    TextView tv;*/
+    /*  @BindView(R.id.btn)
+      Button btn;/
+      @BindView(R.id.tv)
+      TextView tv;*/
     @BindView(R.id.recyclerView)
     MyRecyclerView recyclerView;
     /*@BindView(R.id.slidingLayout)
@@ -60,10 +60,11 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
     FloatingActionButton floatBtn;
     @BindView(R.id.mainRL)
     CoordinatorLayout mainRL;
-   /* @BindView(R.id.btn1)
-    Button btn1;*/
+    /* @BindView(R.id.btn1)
+     Button btn1;*/
     private DailyListAdapter dailyListAdapter;
     private final int CAMERA_REQUEST_CODE = 1;
+
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_main;
@@ -75,7 +76,6 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
         AnimatorUtil.scaleHide(floatBtn, 0, null);
     }
 
-
     @Override
     protected void initData() {
 
@@ -84,7 +84,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
         if (dailyListAdapter == null) {
             mPresenter.getDailyInfo();
         } else {
-            LogUtils.e("ZhFragment"+"----"+"setAdapter");
+            LogUtils.e("ZhFragment" + "----" + "setAdapter");
             recyclerView.setAdapter(dailyListAdapter);
         }
     }
@@ -110,10 +110,10 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
     }
 
 
-    private void requestPermission(){
+    private void requestPermission() {
 
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
-                    PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED) {
                /* if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                     new AlertDialog.Builder(getActivity())
                             .setMessage("申请相机权限")
@@ -125,13 +125,13 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
                                 }
                             }).show();
                 } else {*/
-                    //申请相机权限
-                    requestPermissions(
-                            new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
-                //}
-            }else{
-                IntentUtils.startActivityForResult(baseActivity, CaptureActivity.class, 0);
-            }
+            //申请相机权限
+            requestPermissions(
+                    new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+            //}
+        } else {
+            IntentUtils.startActivityForResult(baseActivity, CaptureActivity.class, 0);
+        }
     }
 
 
@@ -156,9 +156,9 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_capture:
-                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermission();
-                }else{
+                } else {
                     IntentUtils.startActivityForResult(baseActivity, CaptureActivity.class, 0);
                 }
                 break;

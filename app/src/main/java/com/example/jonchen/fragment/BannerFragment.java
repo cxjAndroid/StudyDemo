@@ -5,10 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -26,15 +29,23 @@ import android.widget.TextView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
+import com.example.jonchen.activity.AnnotationActivity;
 import com.example.jonchen.activity.DaggerDemo2Activity;
+import com.example.jonchen.activity.NotificationActivity;
+import com.example.jonchen.activity.SearchActivity;
+import com.example.jonchen.activity.TouchEventActivity;
 import com.example.jonchen.adapter.BannerAdapter;
+import com.example.jonchen.base.BaseApplication;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.model.entity.People;
 import com.example.jonchen.mvpview.BannerView;
 import com.example.jonchen.presenter.BannerPresenter;
+import com.example.jonchen.receiver.AlarmReceiver;
+import com.example.jonchen.service.AlarmService;
 import com.example.jonchen.service.MyService;
+import com.example.jonchen.utils.CacheUtils;
 import com.example.jonchen.utils.DpUtils;
 import com.example.jonchen.utils.IntentUtils;
 import com.example.jonchen.utils.LogUtils;
@@ -46,7 +57,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,6 +83,11 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     Button btnDemo;
     @BindView(R.id.imageView)
     ImageView imageView;
+    @BindView(R.id.btnTouch)
+    Button btnTouch;
+    @BindView(R.id.btnAnnotation)
+    Button btnAnnotation;
+
     /*  @BindView(R.id.loadStatusPage)
       LoadStatusPage loadStatusPage;*/
     @BindView(R.id.contentRl)
@@ -82,6 +100,14 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     private int startY;
     private int moveX;
     private int moveY;
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myRunnable != null) {
+            handler.removeCallbacks(myRunnable);
+        }
+    }
 
     @Override
     public int getContentViewLayoutID() {
@@ -119,16 +145,14 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
     private static class MyHandler extends Handler {
         private WeakReference<BannerFragment> weakReference;
-        private BannerFragment bannerFragment;
 
         MyHandler(BannerFragment fragment) {
             weakReference = new WeakReference<>(fragment);
-            bannerFragment = weakReference.get();
         }
 
         @Override
         public void handleMessage(Message msg) {
-            bannerFragment.btnTest.setText("handler text");
+            BannerFragment bannerFragment = weakReference.get();
         }
     }
 
@@ -150,6 +174,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
         ObjectAnimator translationX = ObjectAnimator.ofFloat(btnTest, "translationX", 0, 200f);
         translationX.setDuration(2000).start();
+
         /*btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,13 +191,12 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         });*/
 
 
-        /**
-         * onTouch事件返回false会使View执行onTouchEvent方法，imageView默认不可以点击，
-         * 无法进入switch (action)语句中，所以会返回false，导致后续action move等动作无法执行。
-         * 可使用imageView.setClickable(true)使其进入switch (action)语句中返回true解决或直接
-         * 在onTouch中返回true不執行onTouchEvent方法。
-         */
         //imageView.setClickable(true);
+
+        /*onTouch事件返回false会使View执行onTouchEvent方法，imageView默认不可以点击，
+        无法进入switch (action)语句中，所以会返回false，导致后续action move等动作无法执行。
+        可使用imageView.setClickable(true)使其进入switch (action)语句中返回true解决或直接
+        在onTouch中返回true不執行onTouchEvent方法。*/
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -196,6 +220,11 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 LogUtils.e(String.valueOf(DpUtils.px2dip(imageView.getRight())) + "--------");
             }
         });
+
+
+        long start = System.currentTimeMillis();
+        long notifyTime = start + 15 * 1000;
+        CacheUtils.putLong("notifyTime", notifyTime);
     }
 
 
@@ -206,7 +235,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     }
 
 
-    @OnClick({R.id.btnTest, R.id.btnDemo})
+    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch, R.id.btnSearch, R.id.btnAnnotation})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnTest:
@@ -214,7 +243,10 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 IntentUtils.startActivity(baseActivity, ActionActivity.class);
                 break;
             case R.id.btnDemo:
-                IntentUtils.startActivity(baseActivity, DaggerDemo2Activity.class);
+                IntentUtils.startActivity(baseActivity, NotificationActivity.class);
+                //addLocalNotification();
+
+                //IntentUtils.startActivity(baseActivity, DaggerDemo2Activity.class);
                 //IntentUtils.startActivity(baseActivity, DaggerStudyActivity.class);
                 /*Intent intent = new Intent(baseActivity, MyService.class);
                 baseActivity.bindService(intent, new ServiceConnection() {
@@ -231,10 +263,19 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 }, Context.BIND_AUTO_CREATE);*/
 
                 break;
+            case R.id.btnTouch:
+                IntentUtils.startActivity(baseActivity, TouchEventActivity.class);
+
+                break;
+            case R.id.btnSearch:
+                IntentUtils.startActivity(baseActivity, SearchActivity.class);
+                break;
+            case R.id.btnAnnotation:
+                IntentUtils.startActivity(baseActivity, AnnotationActivity.class);
+                break;
         }
 
     }
-
 
     @Override
     protected void initPresenter() {
@@ -316,14 +357,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         });
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (myRunnable != null) {
-            handler.removeCallbacks(myRunnable);
-        }
-    }
 
     class MyRunnable implements Runnable {
         @Override

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 
 import cn.jpush.android.api.JPushInterface;
@@ -34,14 +35,14 @@ public class BaseApplication extends Application {
 
     @Override
     public void onCreate() {
-        /*
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
             return;
-        }*/
+        }
         LeakCanary.install(this);
 
+        Stetho.initializeWithDefaults(this);
         mMainThreadId = android.os.Process.myTid();
         mMainThread = Thread.currentThread();
         mMainThreadHandler = new Handler();

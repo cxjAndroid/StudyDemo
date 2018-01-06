@@ -1,16 +1,20 @@
 package com.example.jonchen.presenter;
 
-import android.content.Context;
-
 import com.example.jonchen.retrofit.ApiService;
 import com.example.jonchen.retrofit.RetrofitMethods;
+import com.example.jonchen.utils.ToastUtils;
+
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by chenxujun on 2016/6/24.
  */
 public class BasePresenter<T> {
-    public T mView;
+    //public T mView;
     //public Context mContext;
+    protected Reference<T> mViewRef;
+
 
     public BasePresenter(T mView) {
         attach(mView);
@@ -21,16 +25,29 @@ public class BasePresenter<T> {
         attach(mView);
     }*/
 
-    public void attach(T view){
-        this.mView = view;
+    public void attach(T view) {
+        mViewRef = new WeakReference<>(view);
+        //mView = mViewRef.get();
     }
+
+    protected T getView() {
+        return mViewRef.get();
+    }
+
+    protected boolean isViewAttached() {
+        return mViewRef != null && mViewRef.get() != null;
+    }
+
 
     public void detach() {
-        mView = null;
+        if (mViewRef != null) {
+            mViewRef.clear();
+            mViewRef = null;
+        }
     }
 
 
-    public ApiService getApiService(){
+    public ApiService getApiService() {
         return RetrofitMethods.getApiService();
     }
 

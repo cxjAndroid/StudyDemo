@@ -37,27 +37,7 @@ public class OkHttpUtils {
                                     Request request = chain.request()
                                             .newBuilder()
                                             .cacheControl(CacheControl.FORCE_NETWORK)
-                                           /* .addHeader("HK515-App", "CEFDB6B3-38FC-4F11-A324-1B1A7DECD117")
-                                            .addHeader("PlatformType", "3")
-                                            .addHeader("content-type", "application/json")
-                                            .addHeader("PlatformType", "3")
-                                            .addHeader("AppVersion", "206")
-                                            .addHeader("AppNameType", "4")
-                                            .addHeader("PhoneDeviceType", "2")
-                                            .addHeader("PhoneOS", "1")
-                                            .addHeader("CooperationSourceType", "420000")
-                                            .addHeader("LocationCityID", "2157")
-                                            .addHeader("PhoneUuId", "111")*/
                                             .build();
-
-                                   /* Headers requestHeads = request.headers();
-                                    Set<String> requestHeadNames = requestHeads.names();
-                                    for(String name : requestHeadNames){
-                                        List<String> values = requestHeads.values(name);
-                                        for(String value : values){
-                                        }
-                                    }*/
-
 
                                     Response response = chain.proceed(request);
                                     int code = response.code();

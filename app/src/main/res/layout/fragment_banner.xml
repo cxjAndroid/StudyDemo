@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentRl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/contentRl"
     android:orientation="vertical">
 
     <android.support.v4.widget.DrawerLayout
@@ -37,19 +37,40 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/advViewpager"
-                    android:text="test btn" />
+                    android:text="to State Activity" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView"
-                    android:background="@color/red">
+                    android:background="@color/red"
+                    android:orientation="vertical">
 
                     <Button
                         android:id="@+id/btnDemo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="demo btn" />
+                        android:text="to Notification Activity" />
+
+                    <Button
+                        android:id="@+id/btnSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to Search Activity" />
+
+
+                    <Button
+                        android:id="@+id/btnTouch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="demo touch event" />
+
+                    <Button
+                        android:id="@+id/btnAnnotation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to annotation activity" />
+
                 </LinearLayout>
 
                 <ImageView

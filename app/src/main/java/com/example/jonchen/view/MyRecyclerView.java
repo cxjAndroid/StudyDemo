@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import com.example.jonchen.R;
+
 /**
  * Created by chenxujun on 16-9-22.
  */

@@ -5,15 +5,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.jonchen.view.MyBtn
-        android:id="@+id/mBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click me " />
-
-    <com.example.jonchen.view.MyListView
-        android:id="@+id/mListView"
+    <com.example.jonchen.view.MyScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.example.jonchen.view.MyBtn
+                android:id="@+id/aliPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="aliPay" />
+
+            <com.example.jonchen.view.MyBtn
+                android:id="@+id/wxPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="wxPay" />
+
+            <com.example.jonchen.view.MyListView
+                android:id="@+id/mListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </com.example.jonchen.view.MyScrollView>
 
 </com.example.jonchen.view.MyLayout>

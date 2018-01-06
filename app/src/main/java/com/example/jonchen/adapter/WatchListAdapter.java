@@ -1,11 +1,11 @@
 package com.example.jonchen.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.jonchen.R;
 import com.example.jonchen.activity.VoiceActivity;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseRecyclerAdapter;
@@ -13,7 +13,6 @@ import com.example.jonchen.base.BaseRecyclerViewHolder;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.ChatMessage;
 import com.example.jonchen.model.entity.WatchInfo;
-import com.example.jonchen.R;
 import com.example.jonchen.utils.IntentUtils;
 
 import org.greenrobot.eventbus.EventBus;

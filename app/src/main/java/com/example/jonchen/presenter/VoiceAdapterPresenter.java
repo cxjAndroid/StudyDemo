@@ -3,10 +3,10 @@ package com.example.jonchen.presenter;
 import android.media.MediaPlayer;
 import android.widget.ImageView;
 
+import com.example.jonchen.R;
 import com.example.jonchen.base.Constants;
 import com.example.jonchen.model.entity.ChatMessage;
 import com.example.jonchen.mvpview.VoiceAdapterView;
-import com.example.jonchen.R;
 import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.utils.ToastUtils;
 
@@ -27,7 +27,7 @@ public class VoiceAdapterPresenter extends BasePresenter<VoiceAdapterView> {
 
 
     public  void playRecord(final ChatMessage message, final ImageView image_voice) {
-        mView.setMediaAnimationDrawableDirection(message,image_voice);
+        getView().setMediaAnimationDrawableDirection(message,image_voice);
         message.setPlaying(true);
         String voiceDataLocalPath = message.getVoiceDataLocalPath();
         File voiceFile = new File(voiceDataLocalPath);

@@ -41,15 +41,6 @@
                     android:layout_alignParentRight="true" />-->
                 <!--   <include layout="@layout/status_layout" />-->
 
-                <com.example.jonchen.view.MyRecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/ll_btn"
-                    android:layout_below="@+id/toolbar"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:listitem="@layout/item_daily" />
-
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/floatBtn"
                     android:layout_width="wrap_content"
@@ -59,6 +50,14 @@
                     android:src="@drawable/abc_ic_ab_back_top"
                     app:layout_behavior="@string/back_to_top_behavior"
                     app:layout_scrollFlags="scroll|enterAlways|snap" />
+
+                <com.example.jonchen.view.MyRecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:listitem="@layout/item_daily" />
 
             </android.support.design.widget.CoordinatorLayout>
 

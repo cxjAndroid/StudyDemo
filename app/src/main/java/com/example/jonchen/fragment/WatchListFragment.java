@@ -1,12 +1,10 @@
 package com.example.jonchen.fragment;
 
-import android.support.v7.widget.Toolbar;
-
+import com.example.jonchen.R;
 import com.example.jonchen.adapter.WatchListAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.model.entity.WatchInfo;
 import com.example.jonchen.mvpview.WatchListView;
-import com.example.jonchen.R;
 import com.example.jonchen.presenter.WatchListPresenter;
 import com.example.jonchen.view.MyRecyclerView;
 
@@ -20,8 +18,8 @@ import butterknife.BindView;
 
 public class WatchListFragment extends BaseFragment<WatchListPresenter> implements WatchListView {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+   /* @BindView(R.id.toolbar)
+    Toolbar toolbar;*/
     @BindView(R.id.mRecyclerView)
     MyRecyclerView myRecyclerView;
     private WatchListAdapter adapter;
