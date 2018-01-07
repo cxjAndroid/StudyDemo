@@ -16,10 +16,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.jonchen.R;
@@ -87,27 +90,48 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
             LogUtils.e("ZhFragment" + "----" + "setAdapter");
             recyclerView.setAdapter(dailyListAdapter);
         }
-    }
 
-    @Override
-    protected void initPresenter() {
-        mPresenter = new MainPresenter(this);
-    }
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                    //获取最后一个可见view的位置
+                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
+                    //获取第一个可见view的位置
+                    int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                    LogUtils.e("lastItemPosition"+lastItemPosition);
+                    LogUtils.e("firstItemPosition"+firstItemPosition);
+                    View viewByPosition = linearManager.findViewByPosition(10);
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (baseActivity.getSupportActionBar() != null) {
-            if (baseActivity.menuLayout != 0) {
-                menu.clear();
-                baseActivity.getMenuInflater().inflate(baseActivity.menuLayout, menu);
-            } else {
-                baseActivity.getSupportActionBar().setHomeButtonEnabled(true);
-                baseActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            }
+                }
+                }
+            });
+
         }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+
+        @Override
+        protected void initPresenter () {
+            mPresenter = new MainPresenter(this);
+        }
+
+
+        @Override
+        public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
+            if (baseActivity.getSupportActionBar() != null) {
+                if (baseActivity.menuLayout != 0) {
+                    menu.clear();
+                    baseActivity.getMenuInflater().inflate(baseActivity.menuLayout, menu);
+                } else {
+                    baseActivity.getSupportActionBar().setHomeButtonEnabled(true);
+                    baseActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                }
+            }
+            super.onCreateOptionsMenu(menu, inflater);
+        }
 
 
     private void requestPermission() {
