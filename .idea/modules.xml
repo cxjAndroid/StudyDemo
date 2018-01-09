@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/libzxing/libzxing.iml" filepath="$PROJECT_DIR$/libzxing/libzxing.iml" />
       <module fileurl="file://$PROJECT_DIR$/utils-v4/utils-v4.iml" filepath="$PROJECT_DIR$/utils-v4/utils-v4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewinject-annotation/viewinject-annotation.iml" filepath="$PROJECT_DIR$/viewinject-annotation/viewinject-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewinject-api/viewinject-api.iml" filepath="$PROJECT_DIR$/viewinject-api/viewinject-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewinject-compiler/viewinject-compiler.iml" filepath="$PROJECT_DIR$/viewinject-compiler/viewinject-compiler.iml" />
     </modules>
   </component>
 </project>

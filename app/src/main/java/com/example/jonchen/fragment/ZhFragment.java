@@ -53,9 +53,9 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
       TextView tv;*/
     @BindView(R.id.recyclerView)
     MyRecyclerView recyclerView;
-    /*@BindView(R.id.slidingLayout)
+    /*@MyBindView(R.id.slidingLayout)
     SlidingPaneLayout slidingPaneLayout;*/
-  /*  @BindView(R.id.menuList)
+  /*  @MyBindView(R.id.menuList)
     MyListView menuList;*/
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -63,7 +63,7 @@ public class ZhFragment extends BaseFragment<MainPresenter> implements MainView,
     FloatingActionButton floatBtn;
     @BindView(R.id.mainRL)
     CoordinatorLayout mainRL;
-    /* @BindView(R.id.btn1)
+    /* @MyBindView(R.id.btn1)
      Button btn1;*/
     private DailyListAdapter dailyListAdapter;
     private final int CAMERA_REQUEST_CODE = 1;

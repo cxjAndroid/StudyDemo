@@ -18,7 +18,7 @@ public class InjectViewProcess implements ProcessInt<Field> {
 
     @Override
     public void process(Object object, View view, Field field) {
-
+        
         InjectView injectView = field.getAnnotation(InjectView.class);
         int viewId = injectView.value();
         View findView = view.findViewById(viewId);

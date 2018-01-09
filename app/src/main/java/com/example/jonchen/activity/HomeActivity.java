@@ -48,7 +48,7 @@ import rx.functions.Func1;
  */
 
 public class HomeActivity extends BaseActivity implements HomeView {
-    /*@BindView(R.id.navigationBar)
+    /*@MyBindView(R.id.navigationBar)
     BottomNavigationBar navigationBar;*/
     @BindView(R.id.mViewpager)
     MyViewPager mViewpager;

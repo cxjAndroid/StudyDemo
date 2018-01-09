@@ -88,7 +88,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     @BindView(R.id.btnAnnotation)
     Button btnAnnotation;
 
-    /*  @BindView(R.id.loadStatusPage)
+    /*  @MyBindView(R.id.loadStatusPage)
       LoadStatusPage loadStatusPage;*/
     @BindView(R.id.contentRl)
     RelativeLayout contentRl;

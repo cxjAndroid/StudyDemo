@@ -1,1 +1,1 @@
-include ':app', ':libzxing', "library", "utils-v4", ':imagepicker'
+include ':app', ':libzxing', ':viewinject-compiler', ':viewinject-api', ':viewinject-annotation', "library", "utils-v4", ':imagepicker'

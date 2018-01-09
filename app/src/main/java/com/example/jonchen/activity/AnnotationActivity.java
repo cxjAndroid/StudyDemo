@@ -6,8 +6,11 @@ import com.example.jonchen.R;
 import com.example.jonchen.annotation.InjectName;
 import com.example.jonchen.annotation.InjectString;
 import com.example.jonchen.annotation.InjectView;
+import com.example.jonchen.annotation.Injector;
 import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.utils.ToastUtils;
+import com.example.viewinject.BindView;
+import com.example.viewinject.ViewInjector;
 
 import java.lang.reflect.Field;
 
@@ -27,9 +30,11 @@ public class AnnotationActivity extends BaseActivity {
     private Button annotationBtn1;
     @InjectView(R.id.annotationBtn2)
     private Button annotationBtn2;
-    @InjectView(R.id.annotationBtn3)
-    private Button annotationBtn3;
-    @InjectView(R.id.annotationBtn4)
+    @BindView(R.id.annotationBtn3)
+    Button annotationBtn3;
+   /* @InjectView(R.id.annotationBtn4)
+    private Button annotationBtn4;*/
+
     private Button annotationBtn4;
 
     @Override
@@ -39,10 +44,12 @@ public class AnnotationActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        Injector.inject(this);
+        ViewInjector.bind(this);
         annotationBtn1.setText("annotationBtn1");
         annotationBtn2.setText("annotationBtn2");
         annotationBtn3.setText("annotationBtn3");
-        annotationBtn4.setText("annotationBtn4");
+        //annotationBtn4.setText("annotationBtn4");
     }
 
     @Override
