@@ -62,18 +62,23 @@ public class ViewInjectProcessor extends AbstractProcessor {
         messager.printMessage(Diagnostic.Kind.NOTE, "process...");
         mProxyMap.clear();
 
+        //通过roundEnv.getElementsAnnotatedWith拿到我们通过@BindView注解的元素
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(BindView.class);
         for (Element element : elements) {
-            checkAnnotationValid(element, BindView.class);
-
+            //检查类型是否是VariableElement
+            if (!checkAnnotationValid(element, BindView.class)) {
+                return false;
+            }
+            //field type
             VariableElement variableElement = (VariableElement) element;
-            //class type
+            //class type 然后拿到对应的类信息TypeElement
             TypeElement classElement = (TypeElement) variableElement.getEnclosingElement();
             //full class name
             String fqClassName = classElement.getQualifiedName().toString();
 
             ProxyInfo proxyInfo = mProxyMap.get(fqClassName);
             if (proxyInfo == null) {
+                //生成ProxyInfo对象
                 proxyInfo = new ProxyInfo(elementUtils, classElement);
                 mProxyMap.put(fqClassName, proxyInfo);
             }
@@ -83,6 +88,7 @@ public class ViewInjectProcessor extends AbstractProcessor {
             proxyInfo.injectVariables.put(id, variableElement);
         }
 
+        //收集完成信息后，生成代理类
         for (String key : mProxyMap.keySet()) {
             ProxyInfo proxyInfo = mProxyMap.get(key);
             try {
