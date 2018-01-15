@@ -21,7 +21,6 @@ public class BaseViewHolder {
         this.mViews = new SparseArray<>();
         mConvertView = LayoutInflater.from(parent.getContext()).inflate(layoutId,parent,false);
         mConvertView.setTag(this);
-
     }
 
     public BaseViewHolder(Context context,ViewGroup parent, int layoutId, int position) {

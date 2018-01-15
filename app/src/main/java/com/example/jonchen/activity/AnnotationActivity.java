@@ -3,6 +3,7 @@ package com.example.jonchen.activity;
 import android.widget.Button;
 
 import com.example.jonchen.R;
+import com.example.jonchen.annotation.EnumSex;
 import com.example.jonchen.annotation.InjectName;
 import com.example.jonchen.annotation.InjectString;
 import com.example.jonchen.annotation.InjectView;
@@ -37,6 +38,9 @@ public class AnnotationActivity extends BaseActivity {
 
     private Button annotationBtn4;
 
+    @EnumSex(sex = EnumSex.Sex.BOY)
+    private String sex;
+
     @Override
     public int getContentViewLayoutID() {
         return R.layout.activity_annotation;
@@ -50,6 +54,7 @@ public class AnnotationActivity extends BaseActivity {
         annotationBtn2.setText("annotationBtn2");
         annotationBtn3.setText("annotationBtn3");
         //annotationBtn4.setText("annotationBtn4");
+
     }
 
     @Override

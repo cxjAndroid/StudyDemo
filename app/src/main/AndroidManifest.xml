@@ -152,7 +152,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.jonchen.activity.DataBindingActivity"></activity>
         <activity android:name="com.example.jonchen.activity.ThirdActivity" />
         <activity android:name="com.example.jonchen.activity.DesignActivity"></activity>
         <activity android:name="com.example.jonchen.activity.VoiceActivity" />
@@ -163,6 +162,7 @@
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.AnnotationActivity" />
+        <activity android:name=".activity.ListViewDemoActivity" />
 
         <service android:name=".service.MyService" />
         <service android:name=".service.AlarmService" />

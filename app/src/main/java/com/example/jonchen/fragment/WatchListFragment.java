@@ -49,7 +49,7 @@ public class WatchListFragment extends BaseFragment<WatchListPresenter> implemen
     @Override
     public void RefreshWatchList(List<WatchInfo> watchInfoList) {
         showSuccessPage();
-        adapter = new WatchListAdapter(getActivity(), watchInfoList, R.layout.item_watch);
+        adapter = new WatchListAdapter(getActivity(), watchInfoList);
         myRecyclerView.setAdapter(adapter);
     }
 }
