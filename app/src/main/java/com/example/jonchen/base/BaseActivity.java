@@ -69,8 +69,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public ApiService getApiService() {
         return RetrofitMethods.getApiService();
     }
-
-
+    
     //private Object subscriber;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

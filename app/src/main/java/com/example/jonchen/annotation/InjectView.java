@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
  * @since 2017/11/20
  */
 
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InjectView {
     @IdRes int value();

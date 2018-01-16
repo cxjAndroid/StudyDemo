@@ -1,5 +1,6 @@
 package com.example.jonchen.activity;
 
+import android.view.View;
 import android.widget.Button;
 
 import com.example.jonchen.R;
@@ -9,11 +10,13 @@ import com.example.jonchen.annotation.InjectString;
 import com.example.jonchen.annotation.InjectView;
 import com.example.jonchen.annotation.Injector;
 import com.example.jonchen.base.BaseActivity;
+import com.example.jonchen.model.entity.People;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.viewinject.BindView;
 import com.example.viewinject.ViewInjector;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * @author 17041931
@@ -54,7 +57,12 @@ public class AnnotationActivity extends BaseActivity {
         annotationBtn2.setText("annotationBtn2");
         annotationBtn3.setText("annotationBtn3");
         //annotationBtn4.setText("annotationBtn4");
+        annotationBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     @Override
@@ -73,7 +81,8 @@ public class AnnotationActivity extends BaseActivity {
                 email.setAccessible(true);
                 email.set(this, setEmail(annotation.value()));
                 ToastUtils.show(this.email);
-               /* Class<?> aClass = Class.forName("com.example.jonchen.model.entity.People");
+
+                /*Class<?> aClass = Class.forName("com.example.jonchen.model.entity.People");
                 Method emailAddress = aClass.getMethod("setEmailAddress", String.class);
                 People people = (People) aClass.newInstance();
                 emailAddress.invoke(people, annotation.value());

@@ -1,12 +1,7 @@
 package com.example.jonchen.retrofit;
 
-import android.text.Html;
-
 import com.example.jonchen.model.entity.KmResult;
 import com.example.jonchen.utils.RxUtils;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -45,11 +40,9 @@ public class RetrofitMethods {
         return retrofitMethods;*/
     }
 
-    private static class RetrofitMethodsHolder{
+    private static class RetrofitMethodsHolder {
         private static final RetrofitMethods retrofitMethods = new RetrofitMethods();
     }
-
-
 
 
     public static ApiService getApiService() {

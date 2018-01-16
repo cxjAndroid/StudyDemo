@@ -36,6 +36,9 @@ import rx.Observable;
  */
 public interface ApiService {
 
+    @GET("http://news-at.zhihu.com/api/4/news/{id}")
+    Observable<NewsDetail> getNewsDetail(@Path("id") String id);
+
     //String BASE_DOUBAN_API = "https://api.douban.com/";
     //String HK_BASE_URL = "https://patientapi.hk515.com/";
 
@@ -117,8 +120,7 @@ public interface ApiService {
     @GET("http://news-at.zhihu.com/api/4/news/latest")
     Observable<DailyBean> rxModelGetZhiHuNews();
 
-    @GET("http://news-at.zhihu.com/api/4/news/{id}")
-    Observable<NewsDetail> getNewsDetail(@Path("id") String id);
+
 
     @GET("news/latest")
     Call<DailyBean> getDaily();
