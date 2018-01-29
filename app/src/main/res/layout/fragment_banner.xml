@@ -39,6 +39,15 @@
                     android:layout_below="@+id/advViewpager"
                     android:text="to State Activity" />
 
+                <Button
+                    android:id="@+id/btnCoordinator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/advViewpager"
+                    android:layout_toRightOf="@+id/btnTest"
+                    android:text="to Coordinator Activity" />
+
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

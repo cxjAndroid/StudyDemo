@@ -16,6 +16,7 @@ public @interface EnumSex {
     public enum Sex {
         BOY("男"),
         GIRL("女");
+
         private String sex;
 
         Sex(String sex) {

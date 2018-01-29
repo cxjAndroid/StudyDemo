@@ -10,13 +10,13 @@ import com.example.jonchen.annotation.InjectString;
 import com.example.jonchen.annotation.InjectView;
 import com.example.jonchen.annotation.Injector;
 import com.example.jonchen.base.BaseActivity;
-import com.example.jonchen.model.entity.People;
+import com.example.jonchen.pattern.builder.Computer;
+import com.example.jonchen.pattern.builder.ComputerConfig;
 import com.example.jonchen.utils.ToastUtils;
 import com.example.viewinject.BindView;
 import com.example.viewinject.ViewInjector;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 /**
  * @author 17041931
@@ -63,6 +63,20 @@ public class AnnotationActivity extends BaseActivity {
 
             }
         });
+
+        ComputerConfig config = new ComputerConfig.Builder()
+                .setBackground("white")
+                .setBrightness("80")
+                .setColor("black")
+                .setColourTemperature("70℃")
+                .setContrast("60")
+                .setTime("12:00")
+                .setResolution("1080*1920").create();
+
+        Computer computer = new Computer();
+        computer.init(config);
+        ComputerConfig computerConfig = computer.getConfig();
+
     }
 
     @Override

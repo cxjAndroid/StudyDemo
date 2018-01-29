@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
@@ -43,8 +44,8 @@ import rx.functions.Func1;
  */
 
 public class HomeActivity extends BaseActivity implements HomeView {
-    /*@MyBindView(R.id.navigationBar)
-    BottomNavigationBar navigationBar;*/
+    @BindView(R.id.navigationBar)
+    BottomNavigationBar navigationBar;
     @BindView(R.id.mViewpager)
     MyViewPager mViewpager;
     private ViewPageAdapter pageAdapter;
@@ -227,7 +228,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void initBottomNavigationBar(List<BottomNavigationItem> itemList) {
-        /*navigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        navigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         navigationBar.setActiveColor(R.color.colorPrimary);
         for (BottomNavigationItem item : itemList) {
             navigationBar.addItem(item);
@@ -248,7 +249,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
             public void onTabReselected(int position) {
 
             }
-        });*/
+        });
 
     }
 
@@ -264,7 +265,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
             @Override
             public void onPageSelected(int position) {
-                //navigationBar.selectTab(position);
+                navigationBar.selectTab(position);
             }
 
             @Override
