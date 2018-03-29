@@ -1,13 +1,10 @@
-package com.example.jonchen.utils;
-
-import com.example.jonchen.interfaces.PayState;
-import com.example.jonchen.state.AliPayState;
+package com.example.jonchen.pattern.state;
 
 /**
  * Created by jon on 5/7/17.
  */
 
-public class PayUtils {
+public class PayStateController {
     private PayState payState = new AliPayState();
 
     public PayState getPayState() {

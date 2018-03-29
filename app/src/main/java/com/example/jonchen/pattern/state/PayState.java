@@ -1,4 +1,4 @@
-package com.example.jonchen.interfaces;
+package com.example.jonchen.pattern.state;
 
 /**
  * Created by jon on 5/7/17.

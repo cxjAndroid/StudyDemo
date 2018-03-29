@@ -1,6 +1,5 @@
-package com.example.jonchen.state;
+package com.example.jonchen.pattern.state;
 
-import com.example.jonchen.interfaces.PayState;
 import com.example.jonchen.utils.ToastUtils;
 
 /**

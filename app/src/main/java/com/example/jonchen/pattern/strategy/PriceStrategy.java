@@ -5,6 +5,6 @@ package com.example.jonchen.pattern.strategy;
  * @since 3/16/18
  */
 
-public interface PriceStragegy {
+public interface PriceStrategy {
     float calculatePrice(int mile);
 }

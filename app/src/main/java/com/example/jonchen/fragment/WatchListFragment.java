@@ -1,12 +1,17 @@
 package com.example.jonchen.fragment;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.example.jonchen.R;
+import com.example.jonchen.activity.HomeActivity;
 import com.example.jonchen.adapter.WatchListAdapter;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.model.entity.WatchInfo;
 import com.example.jonchen.mvpview.WatchListView;
 import com.example.jonchen.presenter.WatchListPresenter;
+import com.example.jonchen.utils.LogUtils;
 import com.example.jonchen.view.MyRecyclerView;
+import com.facebook.stetho.common.LogUtil;
 
 import java.util.List;
 
@@ -18,8 +23,8 @@ import butterknife.BindView;
 
 public class WatchListFragment extends BaseFragment<WatchListPresenter> implements WatchListView {
 
-   /* @MyBindView(R.id.toolbar)
-    Toolbar toolbar;*/
+    /* @MyBindView(R.id.toolbar)
+     Toolbar toolbar;*/
     @BindView(R.id.mRecyclerView)
     MyRecyclerView myRecyclerView;
     private WatchListAdapter adapter;
@@ -31,8 +36,8 @@ public class WatchListFragment extends BaseFragment<WatchListPresenter> implemen
 
     @Override
     protected void initView() {
-        //initToolBar(toolbar);
     }
+
 
     @Override
     protected void initPresenter() {
@@ -44,6 +49,9 @@ public class WatchListFragment extends BaseFragment<WatchListPresenter> implemen
     public void initData() {
         if (adapter == null) mPresenter.getWatchList("13691993691");
         else myRecyclerView.setAdapter(adapter);
+
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        homeActivity.setView(myRecyclerView);
     }
 
     @Override

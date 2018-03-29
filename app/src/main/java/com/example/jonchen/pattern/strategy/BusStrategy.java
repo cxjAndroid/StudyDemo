@@ -5,7 +5,7 @@ package com.example.jonchen.pattern.strategy;
  * @since 3/16/18
  */
 
-public class BusStragegy implements PriceStrategy {
+public class BusStrategy implements PriceStrategy {
     @Override
     public float calculatePrice(int mile) {
         return 2f;

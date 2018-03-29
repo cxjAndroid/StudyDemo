@@ -5,15 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Build;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -30,21 +22,23 @@ import android.widget.TextView;
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
 import com.example.jonchen.activity.AnnotationActivity;
-import com.example.jonchen.activity.DaggerDemo2Activity;
 import com.example.jonchen.activity.NotificationActivity;
+import com.example.jonchen.activity.ScrollActivity;
 import com.example.jonchen.activity.SearchActivity;
 import com.example.jonchen.activity.TouchEventActivity;
 import com.example.jonchen.adapter.BannerAdapter;
-import com.example.jonchen.base.BaseApplication;
 import com.example.jonchen.base.BaseFragment;
 import com.example.jonchen.event.EventMessage;
 import com.example.jonchen.model.entity.DailyBean;
 import com.example.jonchen.model.entity.People;
 import com.example.jonchen.mvpview.BannerView;
+import com.example.jonchen.pattern.Iterator.Boss;
+import com.example.jonchen.pattern.Iterator.Director;
+import com.example.jonchen.pattern.Iterator.GroupLeader;
+import com.example.jonchen.pattern.Iterator.Manager;
+import com.example.jonchen.pattern.strategy.PriceStrategy;
+import com.example.jonchen.pattern.strategy.TaxiStrategy;
 import com.example.jonchen.presenter.BannerPresenter;
-import com.example.jonchen.receiver.AlarmReceiver;
-import com.example.jonchen.service.AlarmService;
-import com.example.jonchen.service.MyService;
 import com.example.jonchen.utils.CacheUtils;
 import com.example.jonchen.utils.DpUtils;
 import com.example.jonchen.utils.IntentUtils;
@@ -57,9 +51,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -102,13 +94,14 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     private int startY;
     private int moveX;
     private int moveY;
+    private PriceStrategy priceStrategy;
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (myRunnable != null) {
-            handler.removeCallbacks(myRunnable);
-        }
+    public PriceStrategy getPriceStrategy() {
+        return priceStrategy;
+    }
+
+    public void setPriceStrategy(PriceStrategy priceStrategy) {
+        this.priceStrategy = priceStrategy;
     }
 
     @Override
@@ -142,6 +135,22 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         }
 
         new MyHandler(this).sendEmptyMessage(0);
+
+        /*setPriceStrategy(new TaxiStrategy());
+        float price = priceStrategy.calculatePrice(15);
+        ToastUtils.show(String.valueOf(price));*/
+
+        GroupLeader groupLeader = new GroupLeader();
+        Director director = new Director();
+        Manager manager = new Manager();
+        Boss boss = new Boss();
+
+        groupLeader.nextHandler = director;
+        director.nextHandler = manager;
+        manager.nextHandler = boss;
+
+        groupLeader.handleRequest(4999);
+
     }
 
 
@@ -164,7 +173,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         registerEventBus();
         getActivity().setResult(Activity.RESULT_OK);
         if (bannerAdapter == null) {
-
             //loadStatusPage.setStatusType(LoadStatusPage.NETWORK_LOADING);
             mPresenter.getBannerInfo();
         } else {
@@ -237,7 +245,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
     }
 
 
-    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch, R.id.btnSearch, R.id.btnAnnotation})
+    @OnClick({R.id.btnTest, R.id.btnDemo, R.id.btnTouch, R.id.btnSearch, R.id.btnAnnotation, R.id.btnCoordinator})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnTest:
@@ -267,13 +275,15 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 break;
             case R.id.btnTouch:
                 IntentUtils.startActivity(baseActivity, TouchEventActivity.class);
-
                 break;
             case R.id.btnSearch:
                 IntentUtils.startActivity(baseActivity, SearchActivity.class);
                 break;
             case R.id.btnAnnotation:
                 IntentUtils.startActivity(baseActivity, AnnotationActivity.class);
+                break;
+            case R.id.btnCoordinator:
+                IntentUtils.startActivity(baseActivity, ScrollActivity.class);
                 break;
         }
 
@@ -359,6 +369,13 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myRunnable != null) {
+            handler.removeCallbacks(myRunnable);
+        }
+    }
 
     class MyRunnable implements Runnable {
         @Override

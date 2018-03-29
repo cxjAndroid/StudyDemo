@@ -10,10 +10,10 @@ import com.example.jonchen.base.BaseActivity;
 import com.example.jonchen.base.BaseListAdapter;
 import com.example.jonchen.base.BaseViewHolder;
 import com.example.jonchen.event.EventMessage;
-import com.example.jonchen.state.AliPayState;
-import com.example.jonchen.state.WeChatPayState;
+import com.example.jonchen.pattern.state.AliPayState;
+import com.example.jonchen.pattern.state.WeChatPayState;
 import com.example.jonchen.utils.LogUtils;
-import com.example.jonchen.utils.PayUtils;
+import com.example.jonchen.pattern.state.PayStateController;
 import com.example.jonchen.utils.PopupWindowUtils;
 import com.example.jonchen.view.MyBtn;
 import com.example.jonchen.view.MyLayout;
@@ -43,7 +43,7 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
     @BindView(R.id.mListView)
     MyListView mListView;
     private Thread thread;
-    private PayUtils payUtils;
+    private PayStateController payStateController;
 
 
     @Override
@@ -99,7 +99,7 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         });
         thread.start();
 
-        payUtils = new PayUtils();
+        payStateController = new PayStateController();
     }
 
 
@@ -134,15 +134,15 @@ public class ActionActivity extends BaseActivity implements View.OnTouchListener
         //LogUtils.e("onClick----"+v.getId());
         switch (v.getId()) {
             case R.id.aliPay:
-                payUtils.setPayState(new AliPayState());
+                payStateController.setPayState(new AliPayState());
                 break;
             case R.id.wxPay:
-                payUtils.setPayState(new WeChatPayState());
+                payStateController.setPayState(new WeChatPayState());
                 PopupWindowUtils popupWindowUtils = new PopupWindowUtils();
                 View view = View.inflate(this, R.layout.activity_view, null);
                 popupWindowUtils.showPop(wxPay, view);
                 break;
         }
-        payUtils.pay();
+        payStateController.pay();
     }
 }

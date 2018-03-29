@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -51,6 +53,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
     private ViewPageAdapter pageAdapter;
     @Inject
     HomePresenter homePresenter;
+
+    private View view;
 
     @Override
     public int getContentViewLayoutID() {
@@ -273,6 +277,22 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
             }
         });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(view!=null){
+            LogUtils.e(String.valueOf(showViewCanScroll(view,1)));
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
+    public boolean showViewCanScroll(View v, int direction) {
+        return v.canScrollVertically(direction);
     }
 
     private class ViewPageAdapter extends FragmentStatePagerAdapter {
