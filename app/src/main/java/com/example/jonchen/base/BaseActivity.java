@@ -42,6 +42,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public boolean isNeedBindButterKnife = true;
     public int menuLayout;
 
+    private boolean isRefresh;
+
    /* public LoadStatusPage getStatusPage() {
         return statusPage;
     }*/
@@ -81,6 +83,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         initPresenter();
         initData();
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+
+    public boolean isRefresh() {
+        return isRefresh;
+    }
+
+    public void setRefresh(boolean refresh) {
+        isRefresh = refresh;
     }
 
     public abstract int getContentViewLayoutID();
@@ -140,7 +151,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             EventBus.getDefault().unregister(this);
             //Toast.makeText(this, "unregister eventBus", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void changeFragment(int containerId, BaseFragment fragment) {

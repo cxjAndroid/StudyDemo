@@ -32,14 +32,14 @@ public class MyViewPager extends ViewPager {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     downX = event.getX();
-                    LogUtils.e("downX-----" + downX);
+                    //LogUtils.e("downX-----" + downX);
                     break;
                 case MotionEvent.ACTION_MOVE:
                     moveX = event.getX();
-                    LogUtils.e("moveX-----" + moveX);
+                    //LogUtils.e("moveX-----" + moveX);
                    
                     if (moveX - downX > 0 && getCurrentItem() == 0) {
-                        LogUtils.e("return false");
+                        //LogUtils.e("return false");
                         return false;
 
                     }
@@ -47,7 +47,7 @@ public class MyViewPager extends ViewPager {
                 case MotionEvent.ACTION_UP:
                     break;
             }
-            LogUtils.e(" super.onInterceptTouchEvent(event)");
+            //LogUtils.e(" super.onInterceptTouchEvent(event)");
             return super.onInterceptTouchEvent(event);
         }
         return false;

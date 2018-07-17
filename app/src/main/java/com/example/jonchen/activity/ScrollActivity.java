@@ -1,17 +1,11 @@
 package com.example.jonchen.activity;
 
-import android.graphics.Path;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 
 import com.example.jonchen.R;
 import com.example.jonchen.base.BaseActivity;
-import com.example.jonchen.utils.LogUtils;
 
 import butterknife.BindView;
 

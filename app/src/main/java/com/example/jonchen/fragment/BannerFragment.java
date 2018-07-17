@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.example.jonchen.R;
 import com.example.jonchen.activity.ActionActivity;
 import com.example.jonchen.activity.AnnotationActivity;
+import com.example.jonchen.activity.CoordinateActivity;
 import com.example.jonchen.activity.NotificationActivity;
 import com.example.jonchen.activity.ScrollActivity;
 import com.example.jonchen.activity.SearchActivity;
@@ -124,6 +126,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         newsPaper.notifyCoder("  this is content");*/
 
         Class<People> peopleClass = People.class;
+
         try {
             People people = peopleClass.newInstance();
             Method[] methods = peopleClass.getMethods();
@@ -150,7 +153,6 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
         manager.nextHandler = boss;
 
         groupLeader.handleRequest(4999);
-
     }
 
 
@@ -159,6 +161,7 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
 
         MyHandler(BannerFragment fragment) {
             weakReference = new WeakReference<>(fragment);
+
         }
 
         @Override
@@ -283,7 +286,8 @@ public class BannerFragment extends BaseFragment<BannerPresenter> implements Ban
                 IntentUtils.startActivity(baseActivity, AnnotationActivity.class);
                 break;
             case R.id.btnCoordinator:
-                IntentUtils.startActivity(baseActivity, ScrollActivity.class);
+                //IntentUtils.startActivity(baseActivity, ScrollActivity.class);
+                IntentUtils.startActivity(baseActivity, CoordinateActivity.class);
                 break;
         }
 

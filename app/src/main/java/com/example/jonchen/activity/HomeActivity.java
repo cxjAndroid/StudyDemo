@@ -20,6 +20,8 @@ import com.example.jonchen.base.MyAnnotation;
 import com.example.jonchen.base.MyEnum;
 import com.example.jonchen.dagger.DaggerHomeActivityComponent;
 import com.example.jonchen.dagger.HomeActivityModule;
+import com.example.jonchen.model.entity.Coder;
+import com.example.jonchen.model.entity.NewsPaper;
 import com.example.jonchen.mvpview.HomeView;
 import com.example.jonchen.presenter.HomePresenter;
 import com.example.jonchen.utils.LogUtils;
@@ -228,6 +230,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
         //HomePresenter homePresenter = new HomePresenter(this);
         homePresenter.getBottomNavigationData();
         homePresenter.getFragmentPage();
+
+        NewsPaper paper = new NewsPaper();
+        Coder coder = new Coder();
+        paper.addObserver(coder);
+        paper.notifyCoder("wakakakak~~~");
+
     }
 
     @Override
@@ -281,8 +289,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(view!=null){
-            LogUtils.e(String.valueOf(showViewCanScroll(view,1)));
+        if (view != null) {
+            LogUtils.e(String.valueOf(showViewCanScroll(view, 1)));
         }
         return super.dispatchTouchEvent(ev);
     }

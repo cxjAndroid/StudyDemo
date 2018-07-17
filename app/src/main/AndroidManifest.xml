@@ -164,6 +164,7 @@
         <activity android:name=".activity.AnnotationActivity" />
         <activity android:name=".activity.ListViewDemoActivity" />
         <activity android:name=".activity.ScrollActivity" />
+        <activity android:name=".activity.CoordinateActivity" />
 
         <service android:name=".service.MyService" />
         <service android:name=".service.AlarmService" />
